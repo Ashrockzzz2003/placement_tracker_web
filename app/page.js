@@ -19,6 +19,12 @@ export default function Home() {
     setLoading(false);
   }, []);
 
+  const handleLogout = () => {
+    secureLocalStorage.removeItem("SECRET_TOKEN");
+    secureLocalStorage.removeItem("currentUser");
+    setCurrentUser(null);
+  }
+
   return (
     loading ? (
       <>
@@ -47,7 +53,7 @@ export default function Home() {
             <div className="w-full flex flex-row justify-center align-middle items-center m-2">
               <Image src="/logo.png" alt="Amrita logo" width={80} height={80} />
               <h1 className="text-2xl font-bold ml-4">Placement Tracker</h1>
-              <button className="ml-auto bg-[#f79f9f] text-[#400101] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#ffc9c9]">
+              <button onClick={handleLogout} className="ml-auto bg-[#f79f9f] text-[#400101] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#ffc9c9]">
                 <span className="material-icons mx-1">logout</span>
                 {"Logout"}
               </button>

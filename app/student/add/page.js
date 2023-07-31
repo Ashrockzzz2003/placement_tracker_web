@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import secureLocalStorage from 'react-secure-storage';
-import { ADD_STUDENT_URL } from '../constants';
+import { ADD_STUDENT_URL } from '../../constants';
 import { useRouter } from 'next/navigation';
 
-export default function Login() {
+export default function AddStudent() {
     const [rollNo, setrollNo] = useState('')
     const [fullName, setfullName] = useState('')
     const [gender, setgender] = useState('');
@@ -36,18 +36,6 @@ export default function Login() {
         e.preventDefault();
         try {
             const token = secureLocalStorage.getItem('SECRET_TOKEN');
-
-            console.log(JSON.stringify({
-                rollNo: rollNo,
-                fullName: fullName,
-                gender: gender,
-                section: section,
-                batch: batch,
-                campus: campus,
-                dept: dept,
-                isHigherStudies: isHigherStudies ? "1" : "0"
-            }));
-
 
             if (!token) {
                 alert("You are not logged in. Please login to continue.");

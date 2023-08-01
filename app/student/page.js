@@ -48,6 +48,10 @@ export default function AllStudents() {
     const [isOnCampusValue, setIsOnCampusValue] = useState('');
     const [isOnCampus, setIsOnCampus] = useState(null);
 
+    const isPPOOptions = ['PPO', 'Normal'];
+    const [isPPOValue, setIsPPOValue] = useState('');
+    const [isPPO, setIsPPO] = useState(null);
+
     useEffect(() => {
 
         setLoading(true);
@@ -98,11 +102,11 @@ export default function AllStudents() {
         if (students.length) {
             setFilteredStudents(students.filter(student => {
                 return (student.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    student.rollNo.toLowerCase().includes(searchTerm.toLowerCase())) && (student.gender === gender || gender === "") && (selectedSections === null || selectedSections.includes(student.section) || selectedSections.length === 0) && (selectedCompanies === null || student.companies.some(companyName => selectedCompanies.includes(companyName)) || selectedCompanies.length === 0) && (isPlaced === true ? student.noOfOffers > 0 : student.noOfOffers === 0 || isPlaced === null) && (isHigherStudies === student.isHigherStudies || isHigherStudies === null) && (student.placement.some(placementType => placementType.isOnCampus !== (isOnCampus === "0" ? "1" : "0")) || isOnCampus === null)
+                    student.rollNo.toLowerCase().includes(searchTerm.toLowerCase())) && (student.gender === gender || gender === "") && (selectedSections === null || selectedSections.includes(student.section) || selectedSections.length === 0) && (selectedCompanies === null || student.companies.some(companyName => selectedCompanies.includes(companyName)) || selectedCompanies.length === 0) && (isPlaced === true ? student.noOfOffers > 0 : student.noOfOffers === 0 || isPlaced === null) && (isHigherStudies === student.isHigherStudies || isHigherStudies === null) && (student.placement.some(placementType => placementType.isOnCampus !== (isOnCampus === "0" ? "1" : "0")) || isOnCampus === null) && (student.placement.some(placementType => placementType.isPPO !== (isPPO === "0" ? "1" : "0")) || isPPO === null)
             }
             ))
         }
-    }, [searchTerm, students, gender, isPlaced, selectedSections, selectedCompanies, isHigherStudies, isOnCampus])
+    }, [searchTerm, students, gender, isPlaced, selectedSections, selectedCompanies, isHigherStudies, isOnCampus, isPPO])
 
     return loading ?
         <>
@@ -182,6 +186,14 @@ export default function AllStudents() {
                                     setIsHigherStudies(e.value === "Higher Studies" ? "1" : e.value === "Not Higher Studies" ? "0" : null)
                                 }} options={isHigherStudiesOptions} />
                             </div>
+
+                            <div className="p-4">
+                                <SelectButton value={isPPOValue} onChange={(e) => {
+                                    setIsPPOValue(e.value)
+                                    setIsPPO(e.value === "PPO" ? "1" : e.value === "Normal" ? "0" : null)
+                                }} options={isPPOOptions} />
+                            </div>
+                            
 
                             <div className="p-4">
                                 <SelectButton value={isOnCampusValue} onChange={(e) => {

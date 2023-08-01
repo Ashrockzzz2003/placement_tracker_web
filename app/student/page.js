@@ -6,20 +6,47 @@ import Image from "next/image"
 import Searchbar from "../components/SearchBar"
 import secureLocalStorage from "react-secure-storage"
 import 'material-icons/iconfont/material-icons.css';
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
+import { SelectButton } from 'primereact/selectbutton';
+import { MultiSelect } from 'primereact/multiselect';
 import Link from "next/link";
 
 
 export default function AllStudents() {
     const [students, setStudents] = useState([])
     const [filteredStudents, setFilteredStudents] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [searchTerm, setSearchTerm] = useState('')
 
-    const [gender, setGender] = useState('')
-    const [section, setSection] = useState('')
-    const [isPlaced, setIsPlaced] = useState(false)
-    const [noOfOffers, setNoOfOffers] = useState(0)
-    const isValidOffer = noOfOffers >= 0;
+    const genderOptions = ['M', 'F'];
+    const [gender, setGender] = useState('');
+
+
+    const sections = [
+        { name: 'A' },
+        { name: 'B' },
+        { name: 'C' },
+        { name: 'D' },
+        { name: 'E' },
+        { name: 'F' }
+    ];
+    const [selectedSections, setSelectedSections] = useState(null);
+
+    const [companies, setCompanies] = useState([]);
+    const [selectedCompanies, setSelectedCompanies] = useState(null);
+
+    const isPlacedOptions = ['Placed', 'Not Placed'];
+    const [isPlacedValue, setIsPlacedValue] = useState('');
+    const [isPlaced, setIsPlaced] = useState(null);
+
+    const isHigherStudiesOptions = ['Higher Studies', 'Not Higher Studies'];
+    const [isHigherStudiesValue, setIsHigherStudiesValue] = useState('');
+    const [isHigherStudies, setIsHigherStudies] = useState(null);
+
+    const isOnCampusOptions = ['On Campus', 'Off Campus'];
+    const [isOnCampusValue, setIsOnCampusValue] = useState('');
+    const [isOnCampus, setIsOnCampus] = useState(null);
 
     useEffect(() => {
 
@@ -29,6 +56,8 @@ export default function AllStudents() {
 
         if (!token) {
             alert('Session expired. Please login again.');
+            secureLocalStorage.removeItem('SECRET_TOKEN');
+            secureLocalStorage.removeItem('currentUser');
             window.location.href = '/login';
             setLoading(false);
             return;
@@ -60,6 +89,7 @@ export default function AllStudents() {
         }).then(data => {
             setStudents(data.data);
             setFilteredStudents(data.data);
+            setCompanies(data.companies);
             setLoading(false);
         })
     }, [])
@@ -68,19 +98,19 @@ export default function AllStudents() {
         if (students.length) {
             setFilteredStudents(students.filter(student => {
                 return (student.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    student.rollNo.toLowerCase().includes(searchTerm.toLowerCase())) && (student.gender === gender || gender === "") && (student.section === section || section === "") && (isPlaced ? student.noOfOffers > 0 : true) && (student.noOfOffers >= noOfOffers)
+                    student.rollNo.toLowerCase().includes(searchTerm.toLowerCase())) && (student.gender === gender || gender === "") && (selectedSections === null || selectedSections.includes(student.section) || selectedSections.length === 0) && (selectedCompanies === null || student.companies.some(companyName => selectedCompanies.includes(companyName)) || selectedCompanies.length === 0) && (isPlaced === true ? student.noOfOffers > 0 : student.noOfOffers === 0 || isPlaced === null) && (isHigherStudies === student.isHigherStudies || isHigherStudies === null) && (student.placement.some(placementType => placementType.isOnCampus !== (isOnCampus === "0" ? "1" : "0")) || isOnCampus === null)
             }
             ))
         }
-    }, [searchTerm, students, gender, section, isPlaced, noOfOffers])
+    }, [searchTerm, students, gender, isPlaced, selectedSections, selectedCompanies, isHigherStudies, isOnCampus])
 
     return loading ?
         <>
             <header className="bg-white flex px-4">
-                <div className="w-full flex flex-row justify-center align-middle items-center m-2 my-4">
-                    <Image src="/logo.png" alt="Amrita logo" width={80} height={80} />
-                    <h1 className="text-2xl font-bold ml-4">Placement Tracker</h1>
-                </div>
+                <Link href={"/"} className="w-full flex flex-row justify-center align-middle items-center m-2 my-4">
+                        <Image src="/logo.png" alt="Amrita logo" width={80} height={80} />
+                        <h1 className="text-2xl font-bold ml-4">Placement Tracker</h1>
+                </Link>
             </header>
             <div className="flex flex-col justify-center items-center align-middle mt-[25%]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" className="bi bi-arrow-repeat animate-spin" viewBox="0 0 16 16">
@@ -93,71 +123,85 @@ export default function AllStudents() {
         :
         <>
             <header className="bg-white flex px-4">
-                <div className="w-full flex flex-row justify-center align-middle items-center m-2 my-4">
+                <Link href={"/"} className="w-full flex flex-row justify-center align-middle items-center m-2 my-4">
                     <Image src="/logo.png" alt="Amrita logo" width={80} height={80} />
                     <h1 className="text-2xl font-bold ml-4">Placement Tracker</h1>
-                </div>
+                </Link>
             </header>
             <div className="mt-16">
                 <h1 className="text-2xl font-bold text-center">Students</h1>
-                <div className="w-full ml-auto mr-auto">
-                    <Searchbar onChange={
-                        (value) => setSearchTerm(value)
-                    } placeholderText={"Search by Name or Roll Number"} />
-                    <br />
+                <div className="w-full ml-auto mr-auto my-4">
                     {/* FILTERS */}
                     <div className="w-fit ml-auto mr-auto text-md bg-white rounded-xl border border-bGray">
                         <h1 className="text-xl font-bold text-center p-2">Filters</h1>
 
                         <hr className="w-full border-bGray" />
 
-                        <div className="flex flex-row text-center space-x-2">
-                            <div className="border-r border-bGray p-4">
-                                <h4>Gender</h4>
-                                <select className="m-2" onChange={(e) => setGender(e.target.value)} defaultValue={""} placeholder="Gender">
-                                    <option value="">All</option>
-                                    <option value="M">Male</option>
-                                    <option value="F">Female</option>
-                                </select>
+                        <Searchbar onChange={
+                            (value) => setSearchTerm(value)
+                        } placeholderText={"Search by Name or Roll Number"} />
+
+                        <div className="flex flex-col border-t border-bGray justify-center items-center xl:flex-row">
+                            <div className="border-bGray p-4 xl:border-b-0 xl:border-r">
+                                <SelectButton value={gender} onChange={(e) => {
+                                    setGender(e.value || '')
+                                }} options={genderOptions} />
                             </div>
 
-                            <div className="border-r border-bGray p-4">
-                                <h4>Section</h4>
-                                <select className="m-2" onChange={(e) => setSection(e.target.value)} defaultValue={""} placeholder="Section">
-                                    <option value="">All</option>
-                                    <option value="A">A</option>
-                                    <option value="B">B</option>
-                                    <option value="C">C</option>
-                                    <option value="D">D</option>
-                                    <option value="E">E</option>
-                                    <option value="F">F</option>
-                                </select>
+                            <div className="border-bGray p-4 xl:border-b-0 xl:border-r">
+                                <MultiSelect value={selectedSections} onChange={
+                                    (e) => {
+                                        setSelectedSections(e.value);
+                                        console.log(selectedSections);
+                                    }
+                                } options={sections} optionLabel="name" optionValue="name" display="chip"
+                                    showClear={true}
+                                    placeholder="Select Sections" maxSelectedLabels={2} className="w-full md:w-20rem" />
                             </div>
 
-                            <div className="p-4 border-r border-bGray ml-auto mr-auto">
-                                <label htmlFor="isPlaced">Placed</label>
-                                <br />
-                                <input type="checkbox" className="h-8 w-8 mr-auto ml-auto" id="isPlaced" onChange={(e) => setIsPlaced(e.target.checked)} />
+                            <div className="border-bGray p-4 xl:border-b-0 xl:border-r">
+                                <MultiSelect value={selectedCompanies} onChange={
+                                    (e) => {
+                                        setSelectedCompanies(e.value);
+                                    }
+                                } options={companies} filter filterPlaceholder="Enter Company Name" optionLabel="companyName" optionValue="companyName" display="chip"
+                                    showClear={true}
+                                    placeholder="Select Companies" maxSelectedLabels={2} className="w-full md:w-20rem" />
+                            </div>
+                            <div className="p-4">
+                                <SelectButton value={isPlacedValue} onChange={(e) => {
+                                    setIsPlacedValue(e.value)
+                                    setIsPlaced(e.value === "Placed" ? true : e.value === "Not Placed" ? false : null)
+                                }} options={isPlacedOptions} />
+                            </div>
+                        </div>
+                        <div className="flex flex-col border-t border-bGray justify-center items-center xl:flex-row">
+                            <div className="p-4">
+                                <SelectButton value={isHigherStudiesValue} onChange={(e) => {
+                                    setIsHigherStudiesValue(e.value)
+                                    setIsHigherStudies(e.value === "Higher Studies" ? "1" : e.value === "Not Higher Studies" ? "0" : null)
+                                }} options={isHigherStudiesOptions} />
                             </div>
 
                             <div className="p-4">
-                                <h4>No Of Offers</h4>
-                                <input type="number" className={"block text-lg w-24 p-2 rounded-md text-black shadow-sm ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:leading-6 !outline-none"} id="noOfOffers" onChange={(e) => setNoOfOffers(e.target.value)} />
+                                <SelectButton value={isOnCampusValue} onChange={(e) => {
+                                    setIsOnCampusValue(e.value)
+                                    setIsOnCampus(e.value === "On Campus" ? "1" : e.value === "Off Campus" ? "0" : null)
+                                }} options={isOnCampusOptions} />
                             </div>
                         </div>
                     </div>
 
                     <br />
 
-                    <table className="w-11/12 ml-auto mr-auto my-4 rounded-t-2xl bg-white text-center border-collapse">
+                    <table className="max-w-11/12 ml-auto mr-auto my-4 rounded-t-2xl bg-white text-center border-collapse">
                         <thead className="border-0">
                             <tr>
                                 <th className="px-4 py-2">Roll No</th>
-                                <th className="px-4 py-2 border border-bGray">Full Name</th>
-                                <th className="px-4 py-2 border border-bGray">Gender</th>
-                                <th className="px-4 py-2 border border-bGray">Section</th>
-                                <th className="px-4 py-2 border border-bGray">Batch</th>
-                                <th className="px-4 py-2 border border-bGray">No of offers</th>
+                                <th className="px-4 py-2">Full Name</th>
+                                <th className="px-4 py-2">Gender</th>
+                                <th className="px-4 py-2">Section</th>
+                                <th className="px-4 py-2">No of offers</th>
                                 <th className="px-4 py-2">Offers</th>
                             </tr>
                         </thead>
@@ -170,34 +214,39 @@ export default function AllStudents() {
                                             <td className="border border-bGray px-4 py-2">{student.fullName}</td>
                                             <td className="border border-bGray px-4 py-2">{student.gender === "M" ? "Male" : "Female"}</td>
                                             <td className="border border-bGray px-4 py-2">{student.section}</td>
-                                            <td className="border border-bGray px-4 py-2">{student.batch}</td>
                                             <td className="border border-bGray px-4 py-2">{student.noOfOffers}</td>
-                                            <td rowSpan={student.noOfOffers} className="border border-bGray px-4 py-2">
-                                                {student.isHigherStudies === "1" ? (
-                                                    <span className="w-fit ml-auto mr-auto bg-[#f79f9f] text-[#400101] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#ffc9c9]">Higher Studies</span>
-                                                ) : (
-                                                    student.noOfOffers > 0 ? (
-                                                        <div className="flex flex-row space-x-2">
-                                                            {student.placement.map((offer, index) => {
-                                                                return (
-                                                                    <span key={index} className="w-fit ml-auto mr-auto bg-[#f79f9f] text-[#400101] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#ffc9c9]">
-
-                                                                        {offer.company.companyName}<br />
-                                                                        {offer.ctc}<br />
-                                                                        {offer.role}<br /> {offer.location}<br />
-                                                                        {(offer.isPPO === "1" ? "PPO" : "Not PPO")}<br />
-                                                                        {(offer.isOnCampus === "1" ? "On-Campus" : "Off-Campus")}<br />
-                                                                        {offer.datePlaced}
-                                                                    </span>
-                                                                )
-                                                            })}
-                                                        </div>
+                                            {parseInt(student.noOfOffers) > 0 ? (
+                                                <td colSpan={student.noOfOffers} className="border border-bGray px-4 py-2">
+                                                    {student.isHigherStudies === "1" ? (
+                                                        <span className="w-fit ml-auto mr-auto bg-[#f79f9f] text-[#400101] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#ffc9c9]">Higher Studies</span>
                                                     ) : (
-                                                        <span className="w-fit ml-auto mr-auto bg-[#f79f9f] text-[#400101] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#ffc9c9]">Not placed</span>
-                                                    )
+                                                        student.noOfOffers > 0 ? (
+                                                            <div className="flex flex-row space-x-2">
+                                                                {student.placement.map((offer, index) => {
+                                                                    return (
+                                                                        <span key={index} className="w-fit ml-auto mr-auto bg-[#9ff7e4] text-[#01402e] rounded-xl py-2 items-center align-middle flex flex-col hover:bg-[#fcffc9]">
+                                                                            <span className="font-semibold border-b border-[#01402f] w-full px-2">{offer.companyName}</span>
+                                                                            <span className="px-2">{offer.ctc + " LPA"}</span>
+                                                                            <span className="px-2">{offer.role}</span>
+                                                                            <span className="px-2">{offer.location}</span>
+                                                                            <span className="px-2">{(offer.isPPO === "1" ? "PPO" : "Not PPO")}</span>
+                                                                            <span className="px-2">{(offer.isOnCampus === "1" ? "On-Campus" : "Off-Campus")}</span>
+                                                                            <span className="px-2">{offer.datePlaced}</span>
+                                                                        </span>
+                                                                    )
+                                                                })}
+                                                            </div>
+                                                        ) : (
+                                                            null
+                                                        )
 
-                                                )}
-                                            </td>
+                                                    )}
+                                                </td>
+                                            ) : (
+                                                <td className="border border-bGray px-4 py-2">
+                                                    <span className="w-fit ml-auto mr-auto bg-[#f79f9f] text-[#400101] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#ffc9c9]">Not placed</span>
+                                                </td>
+                                            )}
                                         </tr>
                                     )
 

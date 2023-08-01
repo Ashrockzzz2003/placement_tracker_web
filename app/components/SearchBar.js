@@ -10,7 +10,7 @@ const Searchbar = ({ keyword, onChange, placeholderText }) => {
     boxShadow: "0 16px 64px 0 rgba(255, 255, 255, .05)",
     backdropFilter: "blur(5px)",
     borderRadius: "10px",
-    border: "2px solid #beb7a4ff",
+    border: "1px solid #e5e7eb",
     outline: "none",
     fontSize: "18px",
     fontWeight: "500",

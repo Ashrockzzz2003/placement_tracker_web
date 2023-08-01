@@ -5,6 +5,9 @@ import Link from 'next/link'
 import 'material-icons/iconfont/material-icons.css';
 import { useEffect, useState } from 'react';
 import secureLocalStorage from 'react-secure-storage';
+import "primereact/resources/themes/lara-light-indigo/theme.css";     
+import "primereact/resources/primereact.min.css";                                       
+        
 
 export default function Home() {
 
@@ -60,10 +63,16 @@ export default function Home() {
             </div>
           </header>
 
-          <h1 className="text-2xl font-bold ml-4 mt-4">Welcome {currentUser.fullName}</h1>
+          <h1 className="text-2xl font-bold ml-4 mt-4 text-center">Welcome {currentUser.fullName}</h1>
+          <br />
           <Link href={"/student"} className="w-fit ml-auto mr-auto bg-[#c7f79f] text-[#0d4001] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#e5ffc9]">
             <span className="material-icons mx-1">admin_panel_settings</span>
             {"Students"}
+          </Link>L
+          <br />
+          <Link href={"/company"} className="w-fit ml-auto mr-auto bg-[#c7f79f] text-[#0d4001] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#e5ffc9]">
+            <span className="material-icons mx-1">business</span>
+            {"Companies"}
           </Link>
         </main>
       ) :

@@ -5,16 +5,35 @@ import Image from 'next/image';
 import secureLocalStorage from 'react-secure-storage';
 import { ADD_STUDENT_URL } from '../../constants';
 import { useRouter } from 'next/navigation';
+import { SelectButton } from 'primereact/selectbutton';
+import { Dropdown } from 'primereact/dropdown';
+
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
 
 export default function AddStudent() {
     const [rollNo, setrollNo] = useState('')
     const [fullName, setfullName] = useState('')
-    const [gender, setgender] = useState('');
-    const [section, setsection] = useState('');
     const [batch, setbatch] = useState('');
-    const [campus, setcampus] = useState('');
     const [dept, setdept] = useState('');
-    const [isHigherStudies, setisHigherStudies] = useState(false);
+
+    const genderOptions = ['M', 'F'];
+    const [gender, setGender] = useState('');
+
+    const sections = [
+        { name: 'A' },
+        { name: 'B' },
+        { name: 'C' },
+        { name: 'D' },
+        { name: 'E' },
+        { name: 'F' }
+    ];
+    const [section, setSelectedSection] = useState(null);
+
+
+    const isHigherStudiesOptions = ['Yes', 'No'];
+    const [isHigherStudiesValue, setIsHigherStudiesValue] = useState('');
+    const [isHigherStudies, setIsHigherStudies] = useState(null);
 
 
     const isValidRollNo = rollNo.length > 0;
@@ -26,7 +45,6 @@ export default function AddStudent() {
     const isValidGender = gender === "M" || gender === "F";
     const isValidSection = ['A', 'B', 'C', 'D', 'E', 'F'].includes(section);
     const isValidBatch = batch > 0;
-    const isValidCampus = campus.length > 0;
     const isValidDept = dept.length > 0;
     const isValidIsHigherStudies = typeof isHigherStudies === 'boolean';
 
@@ -55,7 +73,7 @@ export default function AddStudent() {
                     gender: gender,
                     section: section,
                     batch: batch,
-                    campus: campus,
+                    campus: "CB",
                     dept: dept,
                     isHigherStudies: isHigherStudies ? "1" : "0"
                 })
@@ -138,58 +156,17 @@ export default function AddStudent() {
                             <div>
                                 <label className="block text-md font-medium leading-6 text-black">Gender</label>
                                 <div className="mt-2">
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="gender"
-                                            value="M"
-                                            checked={gender === "M"}
-                                            onChange={(e) => setgender(e.target.value)}
-                                            className={
-                                                "form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out " +
-                                                (!isValidGender ? "ring-red-500" : "")
-                                            }
-                                        />
-                                        <span className="ml-2">Male</span>
-                                    </label>
-                                    <label className="inline-flex items-center ml-6">
-                                        <input
-                                            type="radio"
-                                            name="gender"
-                                            value="F"
-                                            checked={gender === "F"}
-                                            onChange={(e) => setgender(e.target.value)}
-                                            className={
-                                                "form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out " +
-                                                (!isValidGender ? "ring-red-500" : "")
-                                            }
-                                        />
-                                        <span className="ml-2">Female</span>
-                                    </label>
+                                    <SelectButton value={gender} onChange={(e) => {
+                                        setGender(e.value || '')
+                                    }} options={genderOptions} />
                                 </div>
                             </div>
 
                             <div>
                                 <label className="block text-md font-medium leading-6 text-black">Section</label>
                                 <div className="mt-2">
-                                    <select
-                                        value={section}
-                                        onChange={(e) => setsection(e.target.value)}
-                                        className={
-                                            "block w-full text-lg rounded-md py-2 px-2 text-black shadow-sm ring-1 ring-inset " +
-                                            (!isValidSection && section ? " ring-red-500" : isValidSection && section ? " ring-green-500" : " ring-bGray") +
-                                            " outline-none placeholder:text-gray-400 sm:text-md sm:leading-6"
-                                        }
-                                        required
-                                    >
-                                        <option value="">Select Section</option>
-                                        <option value="A">A</option>
-                                        <option value="B">B</option>
-                                        <option value="C">C</option>
-                                        <option value="D">D</option>
-                                        <option value="E">E</option>
-                                        <option value="F">F</option>
-                                    </select>
+                                    <Dropdown value={section} onChange={(e) => setSelectedSection(e.value)} options={sections} optionLabel="name" optionValue='name'
+                                        placeholder="Select a section" className="w-full md:w-14rem" />
                                 </div>
                             </div>
 
@@ -216,30 +193,6 @@ export default function AddStudent() {
 
                             <div>
                                 <label className="block text-md font-medium leading-6 text-black">
-                                    Campus
-                                </label>
-                                <div className="mt-2">
-                                    <select
-                                        value={campus}
-                                        onChange={(e) => setcampus(e.target.value)}
-                                        className={
-                                            "block w-full text-lg rounded-md py-2 px-2 text-black shadow-sm ring-1 ring-inset " +
-                                            (!isValidCampus && campus ? "ring-red-500" : isValidCampus && campus ? "ring-green-500" : "ring-bGray") +
-                                            " outline-none placeholder:text-gray-400 sm:text-md sm:leading-6"}
-                                        required
-                                    >
-                                        <option value="">Select Campus</option>
-                                        <option value="CB">CB</option>
-                                        <option value="KL">Kollam</option>
-                                        <option value="CH">Chennai</option>
-                                        <option value="BN">Bengaluru</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div>
-                                <label className="block text-md font-medium leading-6 text-black">
                                     Department
                                 </label>
                                 <div className="mt-2">
@@ -260,17 +213,10 @@ export default function AddStudent() {
                                     Higher Studies?
                                 </label>
                                 <div className="mt-2">
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="checkbox"
-                                            name="isHigherStudies"
-                                            onChange={(e) => setisHigherStudies(e.target.checked)}
-                                            className={
-                                                "form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out " +
-                                                (isHigherStudies ? " ring-green-500" : " ring-bGray")
-                                            }
-                                        />
-                                    </label>
+                                    <SelectButton value={isHigherStudiesValue} onChange={(e) => {
+                                        setIsHigherStudiesValue(e.value)
+                                        setIsHigherStudies(e.value === "Yes" ? true : e.value === "No" ? false : null)
+                                    }} options={isHigherStudiesOptions} />
                                 </div>
                             </div>
 
@@ -285,7 +231,6 @@ export default function AddStudent() {
                                         !isValidGender ||
                                         !isValidSection ||
                                         !isValidBatch ||
-                                        !isValidCampus ||
                                         !isValidDept ||
                                         !isValidIsHigherStudies
                                     }

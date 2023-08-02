@@ -7,3 +7,6 @@ export const REGISTER_URL = `${API_URL}/register`;
 export const ADD_STUDENT_URL = `${API_URL}/student/add`;
 export const ALL_STUDENTS_URL = `${API_URL}/allStudents`;
 export const ALL_COMPANIES_URL = `${API_URL}/allCompanies`;
+export const ADD_PLACEMENT_URL = `${API_URL}/placement/add`;
+export const ADD_PLACEMENT_UTIL_URL = `${API_URL}/addPlacementList`;
+export const ADD_COMPANY_URL = `${API_URL}/company/add`;

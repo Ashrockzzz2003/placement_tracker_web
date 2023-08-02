@@ -60,8 +60,7 @@ export default function AllStudents() {
 
         if (!token) {
             alert('Session expired. Please login again.');
-            secureLocalStorage.removeItem('SECRET_TOKEN');
-            secureLocalStorage.removeItem('currentUser');
+            secureLocalStorage.clear();
             window.location.href = '/login';
             setLoading(false);
             return;
@@ -80,6 +79,7 @@ export default function AllStudents() {
             }
             else if (res.status === 401) {
                 alert('Session expired. Please login again.');
+                secureLocalStorage.clear();
                 window.location.href = '/login';
             } else {
                 const data = res.json();
@@ -112,8 +112,8 @@ export default function AllStudents() {
         <>
             <header className="bg-white flex px-4">
                 <Link href={"/"} className="w-full flex flex-row justify-center align-middle items-center m-2 my-4">
-                        <Image src="/logo.png" alt="Amrita logo" width={80} height={80} />
-                        <h1 className="text-2xl font-bold ml-4">Placement Tracker</h1>
+                    <Image src="/logo.png" alt="Amrita logo" width={80} height={80} />
+                    <h1 className="text-2xl font-bold ml-4">Placement Tracker</h1>
                 </Link>
             </header>
             <div className="flex flex-col justify-center items-center align-middle mt-[25%]">
@@ -132,8 +132,12 @@ export default function AllStudents() {
                     <h1 className="text-2xl font-bold ml-4">Placement Tracker</h1>
                 </Link>
             </header>
-            <div className="mt-16">
+            <div className="mt-8">
                 <h1 className="text-2xl font-bold text-center">Students</h1>
+                <Link href={"/student/add"} className="w-fit ml-auto mr-auto bg-[#c7f79f] text-[#0d4001] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#e5ffc9] mt-4">
+                    <span className="material-icons mx-1">person_add</span>
+                    {"Add Student"}
+                </Link>
                 <div className="w-full ml-auto mr-auto my-4">
                     {/* FILTERS */}
                     <div className="w-fit ml-auto mr-auto text-md bg-white rounded-xl border border-bGray">
@@ -193,7 +197,7 @@ export default function AllStudents() {
                                     setIsPPO(e.value === "PPO" ? "1" : e.value === "Normal" ? "0" : null)
                                 }} options={isPPOOptions} />
                             </div>
-                            
+
 
                             <div className="p-4">
                                 <SelectButton value={isOnCampusValue} onChange={(e) => {

@@ -52,6 +52,7 @@ export default function AllCompanies() {
 
         if (!token) {
             alert('Session expired. Please login again.');
+            secureLocalStorage.clear();
             window.location.href = '/login';
             setLoading(false);
             return;
@@ -69,6 +70,7 @@ export default function AllCompanies() {
             }
             else if (res.status === 401) {
                 alert('Session expired. Please login again.');
+                secureLocalStorage.clear();
                 window.location.href = '/login';
             } else {
                 const data = res.json();
@@ -93,7 +95,7 @@ export default function AllCompanies() {
                 return ((company.companyName.toLowerCase().includes(searchTerm.toLowerCase())) &&
                     (selectedCompanies === null || selectedCompanies.length === 0 || selectedCompanies.includes(company.companyName)) &&
                     (isPlaced === null || (isPlaced !== null && isPlaced === true ? company.placementData.length > 0 : company.placementData.length === 0)) &&
-                    (selectedSections === null || selectedSections.length === 0 || company.placementData.some(placement => placement.sectionData.some(setctionData => selectedSections.includes(setctionData.section)))) && (isPPO === null || (isPPO !== null && company.placementData.some(placement => placement.isPPO === isPPO)))
+                    (selectedSections === null || selectedSections.length === 0 || company.placementData.some(placement => placement.sectionData.some(sectionData => selectedSections.includes(sectionData.section) && ((isPlaced === true && sectionData.noOfStudents >= 1) || (isPlaced === false && sectionData.noOfStudents === 0) || (isPlaced === null)) ))) && (isPPO === null || (isPPO !== null && company.placementData.some(placement => placement.isPPO === isPPO)))
                 )
             }))
         }
@@ -108,8 +110,19 @@ export default function AllCompanies() {
                         <h1 className="text-2xl font-bold ml-4">Placement Tracker</h1>
                     </Link>
                 </header>
-                <div className="mt-16">
+                <div className="mt-8">
                     <h1 className="text-2xl font-bold text-center">Companies and Placements</h1>
+                    <br />
+                    <Link href={"/company/add"} className="w-fit ml-auto mr-auto bg-[#c7f79f] text-[#0d4001] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#e5ffc9]">
+                        <span className="material-icons mx-1">post_add</span>
+                        {"Add Company"}
+                    </Link>
+                    <br />
+                    <Link href={"/placement/add"} className="w-fit ml-auto mr-auto bg-[#c7f79f] text-[#0d4001] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#e5ffc9]">
+                        <span className="material-icons mx-1">work</span>
+                        {"Add Placement"}
+                    </Link>
+
                     <div className="w-full ml-auto mr-auto my-4">
                         {/* FILTERS */}
                         <div className="w-fit ml-auto mr-auto text-md bg-white rounded-xl border border-bGray">

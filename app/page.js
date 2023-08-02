@@ -68,11 +68,27 @@ export default function Home() {
           <Link href={"/student"} className="w-fit ml-auto mr-auto bg-[#c7f79f] text-[#0d4001] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#e5ffc9]">
             <span className="material-icons mx-1">admin_panel_settings</span>
             {"Students"}
-          </Link>L
+          </Link>
           <br />
+          <Link href={"/student/add"} className="w-fit ml-auto mr-auto bg-[#c7f79f] text-[#0d4001] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#e5ffc9]">
+            <span className="material-icons mx-1">person_add</span>
+            {"Add Student"}
+          </Link>
+          <br />
+
           <Link href={"/company"} className="w-fit ml-auto mr-auto bg-[#c7f79f] text-[#0d4001] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#e5ffc9]">
             <span className="material-icons mx-1">business</span>
             {"Companies"}
+          </Link>
+          <br />
+          <Link href={"/company/add"} className="w-fit ml-auto mr-auto bg-[#c7f79f] text-[#0d4001] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#e5ffc9]">
+            <span className="material-icons mx-1">post_add</span>
+            {"Add Company"}
+          </Link>
+          <br />
+          <Link href={"/placement/add"} className="w-fit ml-auto mr-auto bg-[#c7f79f] text-[#0d4001] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#e5ffc9]">
+            <span className="material-icons mx-1">work</span>
+            {"Add Placement"}
           </Link>
         </main>
       ) :

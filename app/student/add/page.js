@@ -88,7 +88,7 @@ export default function AddStudent() {
                 return;
             } else {
                 alert("Student added successfully.")
-                router.push('/');
+                router.push('/student');
             }
 
         } catch (error) {
@@ -158,7 +158,7 @@ export default function AddStudent() {
                                 <div className="mt-2">
                                     <SelectButton value={gender} onChange={(e) => {
                                         setGender(e.value || '')
-                                    }} options={genderOptions} />
+                                    }} options={genderOptions} required/>
                                 </div>
                             </div>
 
@@ -166,7 +166,7 @@ export default function AddStudent() {
                                 <label className="block text-md font-medium leading-6 text-black">Section</label>
                                 <div className="mt-2">
                                     <Dropdown value={section} onChange={(e) => setSelectedSection(e.value)} options={sections} optionLabel="name" optionValue='name'
-                                        placeholder="Select a section" className="w-full md:w-14rem" />
+                                        placeholder="Select a section" className="w-full md:w-14rem" required/>
                                 </div>
                             </div>
 
@@ -216,7 +216,7 @@ export default function AddStudent() {
                                     <SelectButton value={isHigherStudiesValue} onChange={(e) => {
                                         setIsHigherStudiesValue(e.value)
                                         setIsHigherStudies(e.value === "Yes" ? true : e.value === "No" ? false : null)
-                                    }} options={isHigherStudiesOptions} />
+                                    }} options={isHigherStudiesOptions}  required/>
                                 </div>
                             </div>
 

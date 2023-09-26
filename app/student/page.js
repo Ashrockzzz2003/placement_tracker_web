@@ -10,6 +10,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import { SelectButton } from 'primereact/selectbutton';
 import { MultiSelect } from 'primereact/multiselect';
+import { Slider } from "primereact/slider";
 import Link from "next/link";
 
 
@@ -51,6 +52,8 @@ export default function AllStudents() {
     const isPPOOptions = ['PPO', 'Normal'];
     const [isPPOValue, setIsPPOValue] = useState('');
     const [isPPO, setIsPPO] = useState(null);
+
+    const [range, setRange] = useState([0, 100]);
 
     useEffect(() => {
 
@@ -102,11 +105,11 @@ export default function AllStudents() {
         if (students.length) {
             setFilteredStudents(students.filter(student => {
                 return (student.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    student.rollNo.toLowerCase().includes(searchTerm.toLowerCase())) && (student.gender === gender || gender === "") && (selectedSections === null || selectedSections.includes(student.section) || selectedSections.length === 0) && (selectedCompanies === null || student.companies.some(companyName => selectedCompanies.includes(companyName)) || selectedCompanies.length === 0) && (isPlaced === true ? student.noOfOffers > 0 : student.noOfOffers === 0 || isPlaced === null) && (isHigherStudies === student.isHigherStudies || isHigherStudies === null) && (student.placement.some(placementType => placementType.isOnCampus !== (isOnCampus === "0" ? "1" : "0")) || isOnCampus === null) && (student.placement.some(placementType => placementType.isPPO !== (isPPO === "0" ? "1" : "0")) || isPPO === null)
+                    student.rollNo.toLowerCase().includes(searchTerm.toLowerCase())) && (student.gender === gender || gender === "") && (selectedSections === null || selectedSections.includes(student.section) || selectedSections.length === 0) && (selectedCompanies === null || student.companies.some(companyName => selectedCompanies.includes(companyName)) || selectedCompanies.length === 0) && (isPlaced === true ? student.noOfOffers > 0 : student.noOfOffers === 0 || isPlaced === null) && (isHigherStudies === student.isHigherStudies || isHigherStudies === null) && (student.placement.some(placementType => placementType.isOnCampus !== (isOnCampus === "0" ? "1" : "0")) || isOnCampus === null) && (student.placement.some(placementType => placementType.isPPO !== (isPPO === "0" ? "1" : "0")) || isPPO === null) && (student.placement.every(placementType => parseFloat(placementType.ctc) in range))
             }
             ))
         }
-    }, [searchTerm, students, gender, isPlaced, selectedSections, selectedCompanies, isHigherStudies, isOnCampus, isPPO])
+    }, [searchTerm, students, gender, isPlaced, selectedSections, selectedCompanies, isHigherStudies, isOnCampus, isPPO, range])
 
     return loading ?
         <>

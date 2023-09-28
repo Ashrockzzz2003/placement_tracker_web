@@ -6,7 +6,7 @@ This is a web application for tracking the placement activities of the students 
 
 ## Technologies Used
 
-`NextJS`, `ReactJS`, `NodeJS`, `ExpressJS`, `MySQL`, `TailwindCSS`
+`NextJS` `ReactJS` `NodeJS` `ExpressJS` `MySQL` `TailwindCSS`
 
 ## Getting Started
 

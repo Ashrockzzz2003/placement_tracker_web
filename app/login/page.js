@@ -1,9 +1,9 @@
 'use client';
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import secureLocalStorage from "react-secure-storage";
-import "primereact/resources/primereact.min.css"; 
+import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 import { Toast } from 'primereact/toast';
@@ -12,6 +12,10 @@ import { hashPassword } from "@/util/hash";
 import Link from "next/link";
 
 export default function Login() {
+    useEffect(() => {
+        secureLocalStorage.clear();
+    }, []);
+
     const [userEmail, setUserEmail] = useState("");
     const [userPassword, setUserPassword] = useState("");
 
@@ -50,7 +54,7 @@ export default function Login() {
             const data = await response.json();
 
             if (response.status === 200) {
-                alertSuccess('Login Successful', 'Redirecting to Home Page');
+                alertSuccess('Login Successful', 'Redirecting to Dashboard ...');
                 /* manager
                 accountStatus: "1"
                 managerEmail: "ashrockzzz2003@gmail.com"

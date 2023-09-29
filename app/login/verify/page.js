@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import secureLocalStorage from "react-secure-storage";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-blue/theme.css";
+import { hashPassword } from "@/util/hash";
 
 export default function RegisterVerify() {
     const toast = useRef(null);
@@ -61,7 +62,7 @@ export default function RegisterVerify() {
                 },
                 body: JSON.stringify({
                     otp: otpString,
-                    newPassword: newPassword,
+                    newPassword: hashPassword(newPassword),
                 }),
             });
 

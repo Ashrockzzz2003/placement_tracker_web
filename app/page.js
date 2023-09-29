@@ -3,11 +3,23 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import 'material-icons/iconfont/material-icons.css';
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from 'react';
 
 export default function Welcome() {
+  useEffect(() => {
+    AOS.init({
+      duration: 500,
+      once: true,
+      easing: 'ease-in-out',
+      delay: 100,
+    });
+  })
+
   return (
     <main>
-      <div className="bg-white">
+      <div data-aos="fade-in">
         <header className="absolute inset-x-0 top-0 z-50">
           <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
             <div className="lg:flex lg:gap-x-12">

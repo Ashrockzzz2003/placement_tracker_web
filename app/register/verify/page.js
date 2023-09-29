@@ -63,7 +63,7 @@ export default function RegisterVerify() {
             const data = await response.json();
 
             if (response.status === 200) {
-                alertSuccess("Registered", "OTP verified successfully.");
+                alertSuccess("Registration Successful", "OTP verified successfully.");
                 console.log(data);
                 secureLocalStorage.clear();
                 setTimeout(() => {

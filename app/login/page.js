@@ -145,7 +145,7 @@ export default function Login() {
                     </div>
                 </nav>
             </header>
-            <div className="border border-gray-300 rounded-2xl mx-auto w-11/12 sm:max-w-11/12 md:max-w-md lg:max-w-md backdrop-blur-xl bg-gray-50 ">
+            <div className="border border-gray-300 rounded-2xl mx-auto w-11/12 sm:max-w-11/12 md:max-w-md lg:max-w-md backdrop-blur-xl bg-gray-50">
                 <div
                     className="absolute inset-x-0 -top-10 -z-10 transform-gpu overflow-hidden blur-2xl"
                     aria-hidden="true"
@@ -158,6 +158,7 @@ export default function Login() {
                         }}
                     />
                 </div>
+
                 <div className="mx-auto w-full sm:max-w-11/12 md:max-w-md lg:max-w-md">
                     <div className='flex flex-row justify-center'>
                         <h1 className='px-4 py-4 w-full text-2xl font-semibold text-center'>Sign In</h1>

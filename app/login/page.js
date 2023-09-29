@@ -10,6 +10,7 @@ import { Toast } from 'primereact/toast';
 import { LOGIN_URL } from "@/util/constants";
 import { hashPassword } from "@/util/hash";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
     useEffect(() => {
@@ -23,8 +24,10 @@ export default function Login() {
 
     const emailRegex = new RegExp(/^[a-zA-Z0-9._-]+@(cb.students.amrita.edu|cb.amrita.edu)$/);
 
-    const isValidEmail = emailRegex.test(userEmail) || userEmail === "ashrockzzz2003@gmail.com";
+    const isValidEmail = emailRegex.test(userEmail) || userEmail === "ashrockzzz2003@gmail.com" || userEmail === "hsheadone@gmail.com";
     const isValidPassword = userPassword.length >= 8;
+
+    const router = useRouter();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -80,8 +83,15 @@ export default function Login() {
                 "CGPA": null
                 */
                 console.log(data);
-                secureLocalStorage.setItem("currentUser", data);
+            } else if (response.status === 201) {
+                alertSuccess("First Time Login!", "Verify OTP sent to your email ID and set your password!");
+                console.log(data);
+                secureLocalStorage.setItem("loginVerifyToken", data["SECRET_TOKEN"]);
+                secureLocalStorage.setItem("loginVerifyEmail", userEmail);
 
+                setTimeout(() => {
+                    router.push("/login/verify");
+                }, 1000);
             } else if (response.status === 500) {
                 alertError('Oops!', 'Something went wrong! Please try again later!');
             } else if (data.message !== undefined || data.message !== null) {

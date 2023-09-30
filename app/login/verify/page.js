@@ -70,8 +70,16 @@ export default function RegisterVerify() {
 
             if (response.status === 200) {
                 alertSuccess("Login Successful", "OTP verified successfully. Redirecting to dashboard.");
-                console.log(data);
+                // console.log(data);
                 secureLocalStorage.clear();
+                secureLocalStorage.setItem("userAccess", data["SECRET_TOKEN"]);
+                secureLocalStorage.setItem("currentUser", JSON.stringify({
+                    managerId: data["managerId"],
+                    managerName: data["managerName"],
+                    managerEmail: data["managerEmail"],
+                    managerRole: data["managerRole"],
+                    accountStatus: data["accountStatus"],
+                }));
                 setTimeout(() => {
                     // redirect to Manager dashboard
                 }, 2000);

@@ -11,6 +11,7 @@ import { LOGIN_URL } from "@/util/constants";
 import { hashPassword } from "@/util/hash";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import 'material-icons/iconfont/material-icons.css';
 
 export default function Login() {
     useEffect(() => {
@@ -82,12 +83,52 @@ export default function Login() {
                 "isPlaced": "0",
                 "CGPA": null
                 */
-                console.log(data);
+                // console.log(data);
+                secureLocalStorage.clear();
+
+                if (data["studentEmail"] !== undefined) {
+                    secureLocalStorage.setItem("userAccess", data["SECRET_TOKEN"]);
+                    secureLocalStorage.setItem("currentUser", JSON.stringify({
+                        studentId: data["studentId"],
+                        studentName: data["studentName"],
+                        studentEmail: data["studentEmail"],
+                        studentRollNo: data["studentRollNo"],
+                        studentSection: data["studentSection"],
+                        studentGender: data["studentGender"],
+                        studentBatch: data["studentBatch"],
+                        studentDept: data["studentDept"],
+                        isHigherStudies: data["isHigherStudies"],
+                        isPlaced: data["isPlaced"],
+                        CGPA: data["CGPA"],
+                        accountStatus: data["accountStatus"],
+                    }));
+                } else if (data["managerEmail"] !== undefined) {
+                    secureLocalStorage.setItem("userAccess", data["SECRET_TOKEN"]);
+                    secureLocalStorage.setItem("currentUser", JSON.stringify({
+                        managerId: data["managerId"],
+                        managerName: data["managerName"],
+                        managerEmail: data["managerEmail"],
+                        managerRole: data["managerRole"],
+                        accountStatus: data["accountStatus"],
+                    }));
+
+                    if (data["managerRole"] === "1") {
+                        setTimeout(() => {
+                            router.replace("/dashboard/admin");
+                        });
+                    } else if (data["managerRole"] === "0") {
+                        setTimeout(() => {
+                            router.replace("/dashboard/manager");
+                        });
+                    }
+                }
+
             } else if (response.status === 201) {
                 alertSuccess("First Time Login!", "Verify OTP sent to your email ID and set your password!");
                 console.log(data);
                 secureLocalStorage.setItem("loginVerifyToken", data["SECRET_TOKEN"]);
                 secureLocalStorage.setItem("loginVerifyEmail", userEmail);
+
 
                 setTimeout(() => {
                     router.push("/login/verify");

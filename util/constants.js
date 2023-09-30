@@ -8,3 +8,6 @@ export const MANGER_LOGIN_VERFIY_URL = BASE_URL + "/loginVerify";
 export const FORGOT_PASSWORD_URL = BASE_URL + "/forgotPassword";
 export const FORGOT_PASSWORD_VERIFY_URL = BASE_URL + "/resetPasswordVerify";
 export const RESET_PASSWORD_URL = BASE_URL + "/resetPassword";
+
+export const GET_COMPANY_DATA_URL = BASE_URL + "/getCompanyHireData";
+export const GET_TOP_5_PLACEMENTS_URL = BASE_URL + "/getTopFivePlacements";

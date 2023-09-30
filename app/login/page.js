@@ -135,7 +135,7 @@ export default function Login() {
                         </Link>
                     </div>
                     <div className="flex flex-1 justify-end space-x-1">
-                        <Link href={"/register"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
+                        <Link replace={true} href={"/register"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
                             {"Register"}
                             <span className="material-icons ml-2">app_registration</span>
                         </Link>
@@ -191,9 +191,9 @@ export default function Login() {
                                     Password
                                 </label>
                                 <div className="text-md">
-                                    <a href="#" className="font-medium text-blue-600 hover:underline">
+                                    <Link replace={true} href={"/forgotPassword"} className="font-medium text-blue-600 hover:underline">
                                         Forgot password?
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="mt-2">

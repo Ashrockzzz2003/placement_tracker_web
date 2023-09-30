@@ -119,8 +119,8 @@ export default function RegisterVerify() {
                             </Link>
                         </div>
                         <div className="flex flex-1 justify-end space-x-1">
-                            <Link href={"/"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
-                                <span className="material-icons">home</span>
+                            <Link replace={true} href={"/register"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
+                                <span className="material-icons">app_registration</span>
                             </Link>
                         </div>
                     </nav>

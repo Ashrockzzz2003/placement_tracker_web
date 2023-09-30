@@ -41,7 +41,7 @@ export default function RegisterVerify() {
 
         const otpString = otp[0] + otp[1] + otp[2] + otp[3] + otp[4] + otp[5];
 
-        if (registerEmail === null || registerToken === null || registerToken.length == 0 || registerEmail.length == 0) {
+        if (registerEmail === null || registerToken === null || registerToken.length == 0 || registerEmail.length == 0 || otpString === null || otpString.length == 0) {
             alertError("Error", "Session expired. Please try again.");
             secureLocalStorage.clear();
             setTimeout(() => {
@@ -126,7 +126,7 @@ export default function RegisterVerify() {
                             </Link>
                         </div>
                         <div className="flex flex-1 justify-end space-x-1">
-                            <Link href={"/login"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
+                            <Link replace={true} href={"/login"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
                                 <span className="material-icons">login</span>
                             </Link>
                         </div>

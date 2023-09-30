@@ -192,11 +192,11 @@ export default function Register() {
                             </Link>
                         </div>
                         <div className="flex flex-1 justify-end space-x-1">
-                            <Link href={"/register"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
+                            <Link replace={true} href={"/login"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
                                 {"Sign In"}
                                 <span className="material-icons ml-2">login</span>
                             </Link>
-                            <Link href={"/"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
+                            <Link replace={true} href={"/"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
                                 <span className="material-icons">home</span>
                             </Link>
                         </div>

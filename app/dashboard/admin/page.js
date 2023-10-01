@@ -113,6 +113,7 @@ export default function AdminDashboard() {
                                     () => {
                                         secureLocalStorage.removeItem("currentUser");
                                         secureLocalStorage.removeItem("userAccess");
+                                        router.replace("/login");
                                     }
                                 } className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ml-2">
                                     {"Logout"}
@@ -149,6 +150,80 @@ export default function AdminDashboard() {
                             </div>
                         </div>
 
+                        <h1 className="text-3xl text-center mb-2">Quick Actions</h1>
+                        <div className="relative mx-6 my-8 py-2 flex flex-wrap justify-center gap-4 items-center md:mx-16">
+                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#e6e6e6] w-fit max-w-4/5">
+                                <h1 className="px-4 pt-2 text-[#000000] text-center text-xl">Manage Placements</h1>
+                                <hr className="w-full border-black my-2" />
+                                <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
+                                    <Link href="/dashboard/admin/placement">
+                                        <div className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                            <span className="material-icons mr-2">work</span>
+                                            {"All Placements"}
+                                        </div>
+                                    </Link>
+                                    <Link href={"/dashboard/admin/placement/new"}>
+                                        <div className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                            <span className="material-icons">add</span>
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
+                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#e6e6e6] ">
+                                <h1 className="px-4 pt-2 text-[#000000] text-center text-xl">Manage Officials</h1>
+                                <hr className="w-full border-black my-2" />
+                                <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
+                                    <Link href="/dashboard/admin/official">
+                                        <button className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                            <span className="material-icons mr-2">manage_accounts</span>
+                                            {"All Officials"}
+                                        </button>
+                                    </Link>
+                                    <button>
+                                        <div className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                            <span className="material-icons">add</span>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#e6e6e6] ">
+                                <h1 className="px-4 pt-2 text-[#000000] text-center text-xl">Manage Students</h1>
+                                <hr className="w-full border-black my-2" />
+                                <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
+                                    <Link href="/dashboard/admin/student">
+                                        <button className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                            <span className="material-icons mr-2">badge</span>
+                                            {"All Students"}
+                                        </button>
+                                    </Link>
+                                    <button>
+                                        <div className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                            <span className="material-icons">add</span>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#e6e6e6] ">
+                                <h1 className="px-4 pt-2 text-[#000000] text-center text-xl">Manage Companies</h1>
+                                <hr className="w-full border-black my-2" />
+                                <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
+                                    <Link href="/dashboard/company/student">
+                                        <button className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                            <span className="material-icons mr-2">badge</span>
+                                            {"All Companies"}
+                                        </button>
+                                    </Link>
+                                    <button>
+                                        <div className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                            <span className="material-icons">add</span>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                         <h1 className="text-3xl text-center mb-2">Top Placements</h1>
                         <div className="relative mx-6 my-8 py-2 flex flex-wrap justify-center gap-4 items-center md:mx-16">
                             {top5Placements.length === 0 ? (
@@ -163,8 +238,6 @@ export default function AdminDashboard() {
                                 })
                             )}
                         </div>
-
-
                     </div>
                 </div>
             </main>

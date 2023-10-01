@@ -11,3 +11,6 @@ export const RESET_PASSWORD_URL = BASE_URL + "/resetPassword";
 
 export const GET_COMPANY_DATA_URL = BASE_URL + "/getCompanyHireData";
 export const GET_TOP_5_PLACEMENTS_URL = BASE_URL + "/getTopFivePlacements";
+export const GET_COMPANY_LIST_URL = BASE_URL + "/getCompanies";
+export const ADD_NEW_COMPANY_URL = BASE_URL + "/addCompany";
+export const ADD_NEW_PLACEMENT_URL = BASE_URL + "/addPlacementData";

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
     "aos": "^2.3.4",
     "material-icons": "^1.13.12",
     "next": "latest",

@@ -1,9 +1,9 @@
 "use client";
 
-import { GET_ALL_PLACEMENTS_URL, GET_COMPANY_LIST_URL } from "@/util/constants";
+import { GET_ALL_STUDENTS_URL, GET_COMPANY_LIST_URL } from "@/util/constants";
 import Aos from "aos";
 import { useRouter } from "next/navigation";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import secureLocalStorage from "react-secure-storage";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
@@ -17,6 +17,7 @@ import { SelectButton } from "primereact/selectbutton";
 import { MultiSelect } from 'primereact/multiselect';
 import Searchbar from "@/util/SearchBar";
 import { Dialog, Transition } from "@headlessui/react";
+import { Fragment } from "react";
 
 export default function AllPlacedStudentsScreen() {
     const [allPlacedStudentData, setAllPlacedStudentData] = useState([]);
@@ -48,14 +49,14 @@ export default function AllPlacedStudentsScreen() {
     useEffect(() => {
         setUserAccess(secureLocalStorage.getItem("userAccess"));
 
-        fetch(GET_ALL_PLACEMENTS_URL, {
+        fetch(GET_ALL_STUDENTS_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
             },
             body: JSON.stringify({
-                "batch": new Date().getFullYear() + 1,
+                "batch": (new Date().getFullYear() + 1).toString(),
                 // "batch": "2022",
             })
         }).then((res) => {
@@ -63,7 +64,7 @@ export default function AllPlacedStudentsScreen() {
                 res.json().then((data) => {
                     const sections = [];
 
-                    const groupedData = data["placementData"].reduce((acc, obj) => {
+                    const groupedData = data["students"].reduce((acc, obj) => {
                         const key = obj["studentId"];
                         if (!acc[key]) {
                             if (sections.length === 0 || sections[sections.length - 1].name !== obj["studentSection"]) {
@@ -71,50 +72,72 @@ export default function AllPlacedStudentsScreen() {
                                     "name": obj["studentSection"],
                                 });
                             }
-                            acc[key] = {
-                                "studentId": obj["studentId"],
-                                "studentRollNo": obj["studentRollNo"],
-                                "studentEmail": obj["studentEmail"],
-                                "studentName": obj["studentName"],
-                                "studentGender": obj["studentGender"],
-                                "studentDept": obj["studentDept"],
-                                "studentBatch": obj["studentBatch"],
-                                "studentSection": obj["studentSection"],
-                                "isHigherStudies": obj["isHigherStudies"],
-                                "cgpa": obj["cgpa"],
-                                "studentAccountStatus": obj["studentAccountStatus"],
-                                "placements": [
-                                    {
-                                        "placementId": obj["placementId"],
-                                        "companyId": obj["companyId"],
-                                        "companyName": obj["companyName"],
-                                        "ctc": obj["ctc"],
-                                        "jobRole": obj["jobRole"],
-                                        "jobLocation": obj["jobLocation"],
-                                        "placementDate": obj["placementDate"],
-                                        "isIntern": obj["isIntern"],
-                                        "isPPO": obj["isPPO"],
-                                        "isOnCampus": obj["isOnCampus"],
-                                        "isGirlsDrive": obj["isGirlsDrive"],
-                                        "extraData": obj["extraData"],
-                                    }
-                                ],
-                            };
+
+                            if (obj["placementId"] !== null) {
+                                acc[key] = {
+                                    "studentId": obj["studentId"],
+                                    "studentRollNo": obj["studentRollNo"],
+                                    "studentEmail": obj["studentEmail"],
+                                    "isPlaced": obj["isPlaced"],
+                                    "studentName": obj["studentName"],
+                                    "studentGender": obj["studentGender"],
+                                    "studentDept": obj["studentDept"],
+                                    "studentBatch": obj["studentBatch"],
+                                    "studentSection": obj["studentSection"],
+                                    "isHigherStudies": obj["isHigherStudies"],
+                                    "cgpa": obj["cgpa"],
+                                    "studentAccountStatus": obj["studentAccountStatus"],
+                                    "placements": [
+                                        {
+                                            "placementId": obj["placementId"],
+                                            "companyId": obj["companyId"],
+                                            "companyName": obj["companyName"],
+                                            "ctc": obj["ctc"],
+                                            "jobRole": obj["jobRole"],
+                                            "jobLocation": obj["jobLocation"],
+                                            "placementDate": obj["placementDate"],
+                                            "isIntern": obj["isIntern"],
+                                            "isPPO": obj["isPPO"],
+                                            "isOnCampus": obj["isOnCampus"],
+                                            "isGirlsDrive": obj["isGirlsDrive"],
+                                            "extraData": obj["extraData"],
+                                        }
+                                    ],
+                                };
+                            } else if (obj["placementId"] === null) {
+                                acc[key] = {
+                                    "studentId": obj["studentId"],
+                                    "studentRollNo": obj["studentRollNo"],
+                                    "studentEmail": obj["studentEmail"],
+                                    "studentName": obj["studentName"],
+                                    "isPlaced": obj["isPlaced"],
+                                    "studentGender": obj["studentGender"],
+                                    "studentDept": obj["studentDept"],
+                                    "studentBatch": obj["studentBatch"],
+                                    "studentSection": obj["studentSection"],
+                                    "isHigherStudies": obj["isHigherStudies"],
+                                    "cgpa": obj["cgpa"],
+                                    "studentAccountStatus": obj["studentAccountStatus"],
+                                    "placements": [],
+                                };
+                            }
                         } else {
-                            acc[key]["placements"].push({
-                                "placementId": obj["placementId"],
-                                "companyId": obj["companyId"],
-                                "companyName": obj["companyName"],
-                                "ctc": obj["ctc"],
-                                "jobRole": obj["jobRole"],
-                                "jobLocation": obj["jobLocation"],
-                                "placementDate": obj["placementDate"],
-                                "isIntern": obj["isIntern"],
-                                "isPPO": obj["isPPO"],
-                                "isOnCampus": obj["isOnCampus"],
-                                "isGirlsDrive": obj["isGirlsDrive"],
-                                "extraData": obj["extraData"],
-                            });
+                            if (obj["placementId"] !== null) {
+                                acc[key]["placements"].push({
+                                    "placementId": obj["placementId"],
+                                    "companyId": obj["companyId"],
+                                    "companyName": obj["companyName"],
+                                    "ctc": obj["ctc"],
+                                    "jobRole": obj["jobRole"],
+                                    "jobLocation": obj["jobLocation"],
+                                    "placementDate": obj["placementDate"],
+                                    "isIntern": obj["isIntern"],
+                                    "isPPO": obj["isPPO"],
+                                    "isOnCampus": obj["isOnCampus"],
+                                    "isGirlsDrive": obj["isGirlsDrive"],
+                                    "extraData": obj["extraData"],
+                                });
+                            }
                         }
                         return acc;
                     }, {});
@@ -198,9 +221,13 @@ export default function AllPlacedStudentsScreen() {
     const [isGirlsDriveValue, setIsGirlsDriveValue] = useState('');
     const [isGirlsDrive, setIsGirlsDrive] = useState(null);
 
-    const genderOptions = ["Male", "Female", "Other"];
+    const genderOptions = ["Male", "Female"];
     const [genderValue, setGenderValue] = useState('');
     const [gender, setGender] = useState('');
+
+    const isPlacedOptions = ["Placed", "Not Placed"];
+    const [isPlacedValue, setIsPlacedValue] = useState("Placed");
+    const [isPlaced, setIsPlaced] = useState("1");
 
     useEffect(() => {
         if (allPlacedStudentData.length && companyList.length) {
@@ -220,11 +247,11 @@ export default function AllPlacedStudentsScreen() {
                         return placement["isOnCampus"] === isOnCampus;
                     })) && (isGirlsDrive === null || isGirlsDrive === '' || student["placements"].some((placement) => {
                         return placement["isGirlsDrive"] === isGirlsDrive;
-                    }))
+                    })) && (isPlaced === null || isPlaced === '' || (isPlaced === "1" && student["placements"].length > 0) || (isPlaced === "0" && student["placements"].length === 0))
                 );
             }));
         }
-    }, [searchText, selectedSections, selectedCompanies, isHigherStudies, isIntern, isPPO, isOnCampus, allPlacedStudentData, companyList, gender, isGirlsDrive]);
+    }, [searchText, selectedSections, selectedCompanies, isHigherStudies, isIntern, isPPO, isOnCampus, allPlacedStudentData, companyList, gender, isGirlsDrive, isPlaced]);
 
 
     const [studentBatch, setStudentBatch] = useState(new Date().getFullYear() + 1);
@@ -251,22 +278,29 @@ export default function AllPlacedStudentsScreen() {
             return;
         }
 
-        fetch(GET_ALL_PLACEMENTS_URL, {
+        fetch(GET_ALL_STUDENTS_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
             },
             body: JSON.stringify({
-                "batch": studentBatch,
-                // "batch": "2022",
+                "batch": studentBatch.toString(),
             })
         }).then((res) => {
             if (res.status === 200) {
                 res.json().then((data) => {
                     const sections = [];
 
-                    const groupedData = data["placementData"].reduce((acc, obj) => {
+                    if (data["students"].length === 0) {
+                        alertError("No Data Found", "No data found for the batch " + studentBatch.toString() + ".");
+                        setIsLoading(false);
+                        setAllPlacedStudentData([]);
+                        setAllPlacedStudentDataFiltered([]);
+                        return;
+                    }
+
+                    const groupedData = data["students"].reduce((acc, obj) => {
                         const key = obj["studentId"];
                         if (!acc[key]) {
                             if (sections.length === 0 || sections[sections.length - 1].name !== obj["studentSection"]) {
@@ -274,50 +308,72 @@ export default function AllPlacedStudentsScreen() {
                                     "name": obj["studentSection"],
                                 });
                             }
-                            acc[key] = {
-                                "studentId": obj["studentId"],
-                                "studentRollNo": obj["studentRollNo"],
-                                "studentEmail": obj["studentEmail"],
-                                "studentName": obj["studentName"],
-                                "studentGender": obj["studentGender"],
-                                "studentDept": obj["studentDept"],
-                                "studentBatch": obj["studentBatch"],
-                                "studentSection": obj["studentSection"],
-                                "isHigherStudies": obj["isHigherStudies"],
-                                "cgpa": obj["cgpa"],
-                                "studentAccountStatus": obj["studentAccountStatus"],
-                                "placements": [
-                                    {
-                                        "placementId": obj["placementId"],
-                                        "companyId": obj["companyId"],
-                                        "companyName": obj["companyName"],
-                                        "ctc": obj["ctc"],
-                                        "jobRole": obj["jobRole"],
-                                        "jobLocation": obj["jobLocation"],
-                                        "placementDate": obj["placementDate"],
-                                        "isIntern": obj["isIntern"],
-                                        "isPPO": obj["isPPO"],
-                                        "isOnCampus": obj["isOnCampus"],
-                                        "isGirlsDrive": obj["isGirlsDrive"],
-                                        "extraData": obj["extraData"],
-                                    }
-                                ],
-                            };
+
+                            if (obj["placementId"] !== null) {
+                                acc[key] = {
+                                    "studentId": obj["studentId"],
+                                    "studentRollNo": obj["studentRollNo"],
+                                    "studentEmail": obj["studentEmail"],
+                                    "isPlaced": obj["isPlaced"],
+                                    "studentName": obj["studentName"],
+                                    "studentGender": obj["studentGender"],
+                                    "studentDept": obj["studentDept"],
+                                    "studentBatch": obj["studentBatch"],
+                                    "studentSection": obj["studentSection"],
+                                    "isHigherStudies": obj["isHigherStudies"],
+                                    "cgpa": obj["cgpa"],
+                                    "studentAccountStatus": obj["studentAccountStatus"],
+                                    "placements": [
+                                        {
+                                            "placementId": obj["placementId"],
+                                            "companyId": obj["companyId"],
+                                            "companyName": obj["companyName"],
+                                            "ctc": obj["ctc"],
+                                            "jobRole": obj["jobRole"],
+                                            "jobLocation": obj["jobLocation"],
+                                            "placementDate": obj["placementDate"],
+                                            "isIntern": obj["isIntern"],
+                                            "isPPO": obj["isPPO"],
+                                            "isOnCampus": obj["isOnCampus"],
+                                            "isGirlsDrive": obj["isGirlsDrive"],
+                                            "extraData": obj["extraData"],
+                                        }
+                                    ],
+                                };
+                            } else if (obj["placementId"] === null) {
+                                acc[key] = {
+                                    "studentId": obj["studentId"],
+                                    "studentRollNo": obj["studentRollNo"],
+                                    "studentEmail": obj["studentEmail"],
+                                    "studentName": obj["studentName"],
+                                    "isPlaced": obj["isPlaced"],
+                                    "studentGender": obj["studentGender"],
+                                    "studentDept": obj["studentDept"],
+                                    "studentBatch": obj["studentBatch"],
+                                    "studentSection": obj["studentSection"],
+                                    "isHigherStudies": obj["isHigherStudies"],
+                                    "cgpa": obj["cgpa"],
+                                    "studentAccountStatus": obj["studentAccountStatus"],
+                                    "placements": [],
+                                };
+                            }
                         } else {
-                            acc[key]["placements"].push({
-                                "placementId": obj["placementId"],
-                                "companyId": obj["companyId"],
-                                "companyName": obj["companyName"],
-                                "ctc": obj["ctc"],
-                                "jobRole": obj["jobRole"],
-                                "jobLocation": obj["jobLocation"],
-                                "placementDate": obj["placementDate"],
-                                "isIntern": obj["isIntern"],
-                                "isPPO": obj["isPPO"],
-                                "isOnCampus": obj["isOnCampus"],
-                                "isGirlsDrive": obj["isGirlsDrive"],
-                                "extraData": obj["extraData"],
-                            });
+                            if (obj["placementId"] !== null) {
+                                acc[key]["placements"].push({
+                                    "placementId": obj["placementId"],
+                                    "companyId": obj["companyId"],
+                                    "companyName": obj["companyName"],
+                                    "ctc": obj["ctc"],
+                                    "jobRole": obj["jobRole"],
+                                    "jobLocation": obj["jobLocation"],
+                                    "placementDate": obj["placementDate"],
+                                    "isIntern": obj["isIntern"],
+                                    "isPPO": obj["isPPO"],
+                                    "isOnCampus": obj["isOnCampus"],
+                                    "isGirlsDrive": obj["isGirlsDrive"],
+                                    "extraData": obj["extraData"],
+                                });
+                            }
                         }
                         return acc;
                     }, {});
@@ -389,7 +445,7 @@ export default function AllPlacedStudentsScreen() {
                         <div className="mx-auto max-w-2xl pt-16 lg:pt-24 ">
                             <div className="text-center">
                                 <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                                    {"Placements | " + studentBatch + " Batch"}
+                                    Students | {studentBatch} Batch
                                 </h1>
                                 <br />
                                 <input
@@ -406,9 +462,11 @@ export default function AllPlacedStudentsScreen() {
 
                             <hr className="w-full border-bGray" />
 
+
                             <Searchbar onChange={
                                 (value) => setSearchText(value)
                             } placeholderText={"Student Name or Roll Number"} />
+
 
                             <div className="flex flex-wrap border-t border-bGray justify-center items-center xl:flex-row">
                                 <div className="border-bGray p-4 xl:border-b-0 xl:border-r">
@@ -416,6 +474,13 @@ export default function AllPlacedStudentsScreen() {
                                         setGender((e.value === null || e.value === '') ? '' : e.value[0])
                                         setGenderValue(e.value || '')
                                     }} options={genderOptions} />
+                                </div>
+
+                                <div className="border-bGray p-4 xl:border-b-0 xl:border-r">
+                                    <SelectButton value={isPlacedValue} onChange={(e) => {
+                                        setIsPlacedValue(e.value || '')
+                                        setIsPlaced(e.value === "Placed" ? "1" : e.value === "Not Placed" ? "0" : null)
+                                    }} options={isPlacedOptions} />
                                 </div>
 
                                 <div className="border-bGray p-4 xl:border-b-0 xl:border-r">
@@ -504,7 +569,24 @@ export default function AllPlacedStudentsScreen() {
                                 ) : (
                                     allPlacedStudentDataFiltered.map((student, index) => {
                                         return [
-                                            (<tr key={index}>
+                                            (student["placements"].length === 0 ? (
+                                                <tr key={index}>
+
+                                                    <td className={"border border-gray-200 px-2 py-1" + (index === allPlacedStudentDataFiltered.length - 1 ? "border-separate rounded-bl-2xl" : "")}>{student["studentRollNo"]}</td>
+                                                    <td className="border border-gray-200 px-2 py-1">{student["studentName"]}</td>
+                                                    <td className="border border-gray-200 px-2 py-1">{student["studentGender"]}</td>
+                                                    <td className="border border-gray-200 px-2 py-1">{student["studentDept"]}</td>
+                                                    <td className="border border-gray-200 px-2 py-1">{student["studentSection"]}</td>
+                                                    <td className="border border-gray-200 px-2 py-1">{student["cgpa"] ?? "-"}</td>
+                                                    <td className="border border-gray-200 py-4" colSpan={5}>
+                                                        {student["isHigherStudies"] === '1' ? (
+                                                            <span className="bg-blue-100 rounded-xl p-2 w-fit text-[#0e1d3a]">Higher Studies</span>
+                                                        ) : (
+                                                            <span className="bg-red-100 rounded-xl p-2 text-[#320f0f] w-fit">Not Placed</span>
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            ) : (<tr key={index}>
 
                                                 <td className={"border border-gray-200 px-2 py-1" + (index === allPlacedStudentDataFiltered.length - 1 ? "border-separate rounded-bl-2xl" : "")} rowSpan={student["placements"].length + 1}>{student["studentRollNo"]}</td>
                                                 <td className="border border-gray-200 px-2 py-1" rowSpan={student["placements"].length + 1}>{student["studentName"]}</td>
@@ -512,39 +594,46 @@ export default function AllPlacedStudentsScreen() {
                                                 <td className="border border-gray-200 px-2 py-1" rowSpan={student["placements"].length + 1}>{student["studentDept"]}</td>
                                                 <td className="border border-gray-200 px-2 py-1" rowSpan={student["placements"].length + 1}>{student["studentSection"]}</td>
                                                 <td className="border border-gray-200 px-2 py-1" rowSpan={student["placements"].length + 1}>{student["cgpa"] ?? "-"}</td>
-                                            </tr>),
-                                            student["placements"].map((placement, pindex) => {
-                                                return (
-                                                    <tr key={pindex}>
-                                                        <td className="border border-gray-200 px-2 py-1">{placement["companyName"]}</td>
-                                                        <td className="border border-gray-200 px-2 py-1">{placement["jobRole"]}</td>
-                                                        <td className="border border-gray-200 px-2 py-1">{placement["ctc"] + " LPA"}</td>
-                                                        <td className="border border-gray-200 px-2 py-1">{placement["jobLocation"] ?? "-"}</td>
-                                                        <td className={"border border-gray-200 px-2 py-1" + (index === allPlacedStudentDataFiltered.length - 1 ? " border-separate rounded-br-2xl" : "")}>
-                                                            <div className="flex flex-wrap">
-                                                                {placement["isIntern"] === "1" ? (
-                                                                    <div className="bg-yellow-100 rounded-xl p-2 m-1 text-[#544a15]">Intern</div>
-                                                                ) : null}
-                                                                {placement["isPPO"] === "1" ? (
-                                                                    <div className="bg-green-100 rounded-xl p-2 m-1 text-[#21430e]">PPO</div>
-                                                                ) : null}
-                                                                {placement["isOnCampus"] === '1' ? (
-                                                                    <div className="bg-purple-100 rounded-xl p-2 m-1 text-[#1d0e3a]">On Campus</div>
-                                                                ) : (
-                                                                    <div className="bg-red-100 rounded-xl p-2 m-1 text-[#320f0f]">Off Campus</div>
-                                                                )}
-                                                                {placement["isGirlsDrive"] === '1' ? (
-                                                                    <div className="bg-pink-100 rounded-xl p-2 m-1 text-[#461348]">Girls Drive</div>
-                                                                ) : (
-                                                                    null
-                                                                )}
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                );
-                                            })
+                                            </tr>)
+                                            ),
+                                            (
+                                                student["placements"].map((placement, pindex) => {
+                                                    return (
+                                                        <tr key={pindex}>
+                                                            <td className="border border-gray-200 px-2 py-1">{placement["companyName"]}</td>
+                                                            <td className="border border-gray-200 px-2 py-1">{placement["jobRole"]}</td>
+                                                            <td className="border border-gray-200 px-2 py-1">{placement["ctc"] + " LPA"}</td>
+                                                            <td className="border border-gray-200 px-2 py-1">{placement["jobLocation"] ?? "-"}</td>
+                                                            <td className={"border border-gray-200 px-2 py-1" + (index === allPlacedStudentDataFiltered.length - 1 ? " border-separate rounded-br-2xl" : "")}>
+                                                                <div className="flex flex-wrap">
+                                                                    {placement["isIntern"] === "1" ? (
+                                                                        <div className="bg-yellow-100 rounded-xl p-2 m-1 text-[#544a15]">Intern</div>
+                                                                    ) : null}
+                                                                    {placement["isPPO"] === "1" ? (
+                                                                        <div className="bg-green-100 rounded-xl p-2 m-1 text-[#21430e]">PPO</div>
+                                                                    ) : null}
+                                                                    {placement["isOnCampus"] === '1' ? (
+                                                                        <div className="bg-purple-100 rounded-xl p-2 m-1 text-[#1d0e3a]">On Campus</div>
+                                                                    ) : (
+                                                                        <div className="bg-red-100 rounded-xl p-2 m-1 text-[#320f0f]">Off Campus</div>
+                                                                    )}
+                                                                    {placement["isGirlsDrive"] === '1' ? (
+                                                                        <div className="bg-pink-100 rounded-xl p-2 m-1 text-[#461348]">Girls Drive</div>
+                                                                    ) : (
+                                                                        null
+                                                                    )}
+                                                                    {student["isHigherStudies"] === '1' ? (
+                                                                        <div className="bg-blue-100 rounded-xl p-2 m-1 text-[#0e1d3a]">Higher Studies</div>
+                                                                    ) : (
+                                                                        null
+                                                                    )}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })
+                                            )
                                         ];
-
                                     })
                                 )}
                             </tbody>
@@ -624,6 +713,8 @@ export default function AllPlacedStudentsScreen() {
                         </Dialog>
                     </Transition>
                 </main>
+
+
             )}
             <Toast ref={toast} position="bottom-center" />
         </>

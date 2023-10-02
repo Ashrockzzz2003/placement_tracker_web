@@ -15,3 +15,4 @@ export const GET_COMPANY_LIST_URL = BASE_URL + "/getCompanies";
 export const ADD_NEW_COMPANY_URL = BASE_URL + "/addCompany";
 export const ADD_NEW_PLACEMENT_URL = BASE_URL + "/addPlacementData";
 export const GET_ALL_PLACEMENTS_URL = BASE_URL + "/getAllPlacedStudentData";
+export const GET_ALL_STUDENTS_URL = BASE_URL + "/getAllStudentData";

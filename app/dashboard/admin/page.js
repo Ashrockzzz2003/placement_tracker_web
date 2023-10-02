@@ -106,7 +106,7 @@ export default function AdminDashboard() {
                                 </Link>
                             </div>
                             <div className="flex lg:flex lg:flex-1 lg:justify-end">
-                                <Link href={"/dashboard/admin/profile"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
+                                <Link href={"/dashboard/admin/profile"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 ">
                                     <span className="material-icons">person</span>
                                 </Link>
                                 <button onClick={
@@ -115,7 +115,7 @@ export default function AdminDashboard() {
                                         secureLocalStorage.removeItem("userAccess");
                                         router.replace("/login");
                                     }
-                                } className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ml-2">
+                                } className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 ml-2">
                                     {"Logout"}
                                     <span className="material-icons ml-2">logout</span>
                                 </button>
@@ -152,71 +152,71 @@ export default function AdminDashboard() {
 
                         <h1 className="text-3xl text-center mb-2">Quick Actions</h1>
                         <div className="relative mx-6 my-8 py-2 flex flex-wrap justify-center gap-4 items-center md:mx-16">
-                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#f4f4f4] w-fit max-w-4/5">
-                                <h1 className="px-4 pt-2 text-[#000000] text-center text-xl">Manage Placements</h1>
-                                <hr className="w-full border-black my-2" />
+                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-red-50 bg-opacity-30 w-fit max-w-4/5">
+                                <h1 className="px-4 pt-2 text-[#1d0e3a] text-center text-xl">Manage Placements</h1>
+                                <hr className="w-full border-[#1d0e3a] my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
                                     <Link href="/dashboard/admin/placement">
-                                        <div className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                        <div className="bg-purple-100 text-[#1d0e3a] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons mr-2">work</span>
                                             {"All Placements"}
                                         </div>
                                     </Link>
                                     <Link href={"/dashboard/admin/placement/new"}>
-                                        <div className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                        <div className="bg-purple-100 text-[#1d0e3a] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons">add</span>
                                         </div>
                                     </Link>
                                 </div>
                             </div>
-                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#f4f4f4] ">
-                                <h1 className="px-4 pt-2 text-[#000000] text-center text-xl">Manage Officials</h1>
-                                <hr className="w-full border-black my-2" />
+                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-red-50 bg-opacity-30 ">
+                                <h1 className="px-4 pt-2 text-[#21430e] text-center text-xl">Manage Officials</h1>
+                                <hr className="w-full border-[#21430e] my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
                                     <Link href="/dashboard/admin/official">
-                                        <button className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                        <button className="bg-green-100 text-[#21430e] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons mr-2">manage_accounts</span>
                                             {"All Officials"}
                                         </button>
                                     </Link>
                                     <button>
-                                        <div className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                        <div className="bg-green-100 text-[#21430e] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons">add</span>
                                         </div>
                                     </button>
                                 </div>
                             </div>
 
-                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#f4f4f4] ">
-                                <h1 className="px-4 pt-2 text-[#000000] text-center text-xl">Manage Students</h1>
-                                <hr className="w-full border-black my-2" />
+                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-red-50 bg-opacity-30 ">
+                                <h1 className="px-4 pt-2 text-[#403914] text-center text-xl">Manage Students</h1>
+                                <hr className="w-full border-[#544a15] my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
                                     <Link href="/dashboard/admin/student">
-                                        <button className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                        <button className="bg-yellow-100 text-[#544a15] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons mr-2">badge</span>
                                             {"All Students"}
                                         </button>
                                     </Link>
                                     <button>
-                                        <div className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                        <div className="bg-yellow-100 text-[#544a15] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons">add</span>
                                         </div>
                                     </button>
                                 </div>
                             </div>
 
-                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#f4f4f4] ">
-                                <h1 className="px-4 pt-2 text-[#000000] text-center text-xl">Manage Companies</h1>
-                                <hr className="w-full border-black my-2" />
+                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-red-50 bg-opacity-30 ">
+                                <h1 className="px-4 pt-2 text-[#461348] text-center text-xl">Manage Companies</h1>
+                                <hr className="w-full border-[#461348] my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
                                     <Link href="/dashboard/company/student">
-                                        <button className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                        <button className="bg-pink-100 text-[#461348] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons mr-2">badge</span>
                                             {"All Companies"}
                                         </button>
                                     </Link>
                                     <button>
-                                        <div className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                                        <div className="bg-pink-100 text-[#461348] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons">add</span>
                                         </div>
                                     </button>

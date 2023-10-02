@@ -56,7 +56,7 @@ export default function AllPlacedStudentsScreen() {
                 "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
             },
             body: JSON.stringify({
-                "batch": (new Date().getFullYear() + 1).toString(),
+                "batch": (new Date().getFullYear()).toString(),
                 // "batch": "2022",
             })
         }).then((res) => {
@@ -253,10 +253,10 @@ export default function AllPlacedStudentsScreen() {
         }
     }, [searchText, selectedSections, selectedCompanies, isHigherStudies, isIntern, isPPO, isOnCampus, allPlacedStudentData, companyList, gender, isGirlsDrive, isPlaced]);
 
-
-    const [studentBatch, setStudentBatch] = useState(new Date().getFullYear() + 1);
+    const [studentBatch, setStudentBatch] = useState(new Date().getFullYear());
+    const [currentBatch, setCurrentBatch] = useState(studentBatch);
     const batchRegex = new RegExp("^[0-9]{4}$");
-    const isValidBatch = batchRegex.test(studentBatch) && parseInt(studentBatch) >= 2018 && parseInt(studentBatch) <= new Date().getFullYear() + 1;
+    const isValidBatch = batchRegex.test(studentBatch) && parseInt(studentBatch) >= 2018 && parseInt(studentBatch) <= new Date().getFullYear() + 2 && parseInt(studentBatch) != currentBatch;
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -379,6 +379,8 @@ export default function AllPlacedStudentsScreen() {
                     }, {});
 
                     setSections(sections);
+                    setStudentBatch(studentBatch);
+                    setCurrentBatch(studentBatch);
                     setAllPlacedStudentData(Object.values(groupedData));
                     setAllPlacedStudentDataFiltered(Object.values(groupedData));
                 });
@@ -398,6 +400,8 @@ export default function AllPlacedStudentsScreen() {
             }
         }).finally(() => {
             setIsLoading(false);
+            setStudentBatch(studentBatch);
+            setCurrentBatch(studentBatch);
         })
     }
 
@@ -445,7 +449,7 @@ export default function AllPlacedStudentsScreen() {
                         <div className="mx-auto max-w-2xl pt-16 lg:pt-24 ">
                             <div className="text-center">
                                 <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                                    Students | {studentBatch} Batch
+                                    Students | {currentBatch} Batch
                                 </h1>
                                 <br />
                                 <input
@@ -682,6 +686,7 @@ export default function AllPlacedStudentsScreen() {
                                                             <div className="mt-2">
                                                                 <input
                                                                     type="number"
+                                                                    value={studentBatch}
                                                                     placeholder='eg. 2025 (Year of Completion)'
                                                                     onChange={(e) => {
                                                                         setStudentBatch(e.target.value);

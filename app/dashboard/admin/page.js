@@ -5,15 +5,16 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import secureLocalStorage from "react-secure-storage";
 import 'material-icons/iconfont/material-icons.css';
-import { GET_TOP_5_PLACEMENTS_URL } from "@/util/constants";
+import { ADD_NEW_COMPANY_URL, GET_TOP_5_PLACEMENTS_URL, REGISTER_OFFICAL_URL } from "@/util/constants";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
 import Top5PlacementCard from "@/util/Top5PlacementCard";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
+import { Dialog, Transition } from "@headlessui/react";
 
 
 export default function AdminDashboard() {
@@ -92,6 +93,160 @@ export default function AdminDashboard() {
         setIsLoading(false);
     }, [router]);
 
+    const [companyName, setCompanyName] = useState("");
+    const isValidCompanyName = companyName.length > 0;
+    const [isOpen, setIsOpen] = useState(false);
+
+    function closeModal() {
+        setIsOpen(false)
+    }
+
+    function openModal() {
+        setCompanyName("");
+        setIsOpen(true)
+    }
+
+    const addNewCompany = async (e) => {
+        setIsLoading(true);
+        e.preventDefault();
+        if (userAccess === null || userAccess === undefined) {
+            alertError("Session Expired", "Please login again to continue.");
+            secureLocalStorage.clear();
+            setTimeout(() => {
+                router.replace("/login");
+            }, 3000);
+        } else {
+            if (!isValidCompanyName) {
+                alertError("Error", "Please enter a valid company name.");
+                return;
+            }
+
+            try {
+                const response = await fetch(ADD_NEW_COMPANY_URL, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
+                    },
+                    method: "POST",
+                    body: JSON.stringify({
+                        "companyName": companyName,
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.status === 200) {
+                    // console.log(data);
+                    if (data["companyId"] !== undefined && data["companyName"] !== undefined) {
+                        alertSuccess("Success", "Company added successfully.");
+                    } else {
+                        // console.log(data["companyId"]);
+                        // console.log(data["companyName"]);
+                        alertError("Error", "Something went wrong. Please try again later.");
+                    }
+                } else if (response.status === 401) {
+                    secureLocalStorage.clear();
+                    alertError("Session Expired", "Please login again to continue.");
+                    setTimeout(() => {
+                        router.replace("/login");
+                    }, 3000);
+                } else if (data["message"] !== undefined) {
+                    alertError("Error", data["message"]);
+                } else {
+                    alertError("Error", "Something went wrong. Please try again later.");
+                }
+
+                closeModal();
+            } catch (err) {
+                console.log(err);
+                alertError("Error", "Something went wrong. Please try again later.");
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        return;
+    }
+
+
+    // Register Official
+    const [officialName, setOfficialName] = useState("");
+    const [officialEmail, setOfficialEmail] = useState("");
+
+    const nameRegex = new RegExp(/^[a-zA-Z ]+$/);
+    const isValidOfficialName = nameRegex.test(officialName);
+
+    const emailRegex = new RegExp(/^[a-zA-Z0-9._-]+@(cb.amrita.edu)$/);
+    const isValidOfficialEmail = emailRegex.test(officialEmail) || officialEmail === "umasivamani@gmail.com";
+
+    const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
+
+    function closeRegisterOfficalModal() {
+        setRegisterModalIsOpen(false)
+    }
+
+    function openRegisterOfficalModal() {
+        setOfficialName("");
+        setOfficialEmail("");
+        setRegisterModalIsOpen(true)
+    }
+
+    const registerOfficial = async (e) => {
+        setIsLoading(true);
+        e.preventDefault();
+        if (userAccess === null || userAccess === undefined) {
+            alertError("Session Expired", "Please login again to continue.");
+            secureLocalStorage.clear();
+            setTimeout(() => {
+                router.replace("/login");
+            }, 3000);
+        } else {
+            if (!isValidOfficialEmail || !isValidOfficialName) {
+                alertError("Error", "Invalid name or email.");
+                return;
+            }
+
+            try {
+                const response = await fetch(REGISTER_OFFICAL_URL, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
+                    },
+                    method: "POST",
+                    body: JSON.stringify({
+                        "managerName": officialName,
+                        "managerEmail": officialEmail,
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.status === 200) {
+                    alertSuccess("Success", "Official added successfully.");
+                } else if (response.status === 401) {
+                    secureLocalStorage.clear();
+                    alertError("Session Expired", "Please login again to continue.");
+                    setTimeout(() => {
+                        router.replace("/login");
+                    }, 3000);
+                } else if (data["message"] !== undefined) {
+                    alertError("Error", data["message"]);
+                } else {
+                    alertError("Error", "Something went wrong. Please try again later.");
+                }
+
+                closeRegisterOfficalModal();
+            } catch (err) {
+                console.log(err);
+                alertError("Error", "Something went wrong. Please try again later.");
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        return;
+    }
+
     return <>
         {isLoading || userAccess === null || userAccess === undefined || managerEmail === "" || managerName === "" || managerRole === "" || managerId === "" || accountStatus === "" || top5Placements === undefined || top5Placements === null ? (
             <LoadingScreen />
@@ -153,7 +308,7 @@ export default function AdminDashboard() {
                         <h1 className="text-3xl text-center mb-2">Quick Actions</h1>
                         <div className="relative mx-6 my-8 py-2 flex flex-wrap justify-center gap-4 items-center md:mx-16">
                             <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-red-50 bg-opacity-30 w-fit max-w-4/5">
-                                <h1 className="px-4 pt-2 text-[#1d0e3a] text-center text-xl">Manage Placements</h1>
+                                <h1 className="px-4 pt-2 text-[#1d0e3a] text-center text-xl">Placements</h1>
                                 <hr className="w-full border-[#1d0e3a] my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
                                     <Link href="/dashboard/admin/placement">
@@ -170,7 +325,7 @@ export default function AdminDashboard() {
                                 </div>
                             </div>
                             <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-red-50 bg-opacity-30 ">
-                                <h1 className="px-4 pt-2 text-[#21430e] text-center text-xl">Manage Officials</h1>
+                                <h1 className="px-4 pt-2 text-[#21430e] text-center text-xl">Officials</h1>
                                 <hr className="w-full border-[#21430e] my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
                                     <Link href="/dashboard/admin/official">
@@ -179,7 +334,7 @@ export default function AdminDashboard() {
                                             {"All Officials"}
                                         </button>
                                     </Link>
-                                    <button>
+                                    <button onClick={openRegisterOfficalModal}>
                                         <div className="bg-green-100 text-[#21430e] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons">add</span>
                                         </div>
@@ -188,7 +343,7 @@ export default function AdminDashboard() {
                             </div>
 
                             <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-red-50 bg-opacity-30 ">
-                                <h1 className="px-4 pt-2 text-[#403914] text-center text-xl">Manage Students</h1>
+                                <h1 className="px-4 pt-2 text-[#403914] text-center text-xl">Students</h1>
                                 <hr className="w-full border-[#544a15] my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
                                     <Link href="/dashboard/admin/student">
@@ -206,16 +361,16 @@ export default function AdminDashboard() {
                             </div>
 
                             <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-red-50 bg-opacity-30 ">
-                                <h1 className="px-4 pt-2 text-[#461348] text-center text-xl">Manage Companies</h1>
+                                <h1 className="px-4 pt-2 text-[#461348] text-center text-xl">Companies</h1>
                                 <hr className="w-full border-[#461348] my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
-                                    <Link href="/dashboard/company/student">
+                                    <Link href="/dashboard/admin/company">
                                         <button className="bg-pink-100 text-[#461348] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons mr-2">badge</span>
                                             {"All Companies"}
                                         </button>
                                     </Link>
-                                    <button>
+                                    <button onClick={openModal}>
                                         <div className="bg-pink-100 text-[#461348] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons">add</span>
                                         </div>
@@ -240,6 +395,169 @@ export default function AdminDashboard() {
                         </div>
                     </div>
                 </div>
+
+                <Transition appear show={registerModalIsOpen} as={Fragment}>
+                    <Dialog as="div" className="relative z-10" onClose={closeRegisterOfficalModal}>
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <div className="fixed inset-0 bg-black bg-opacity-25" />
+                        </Transition.Child>
+
+                        <div className="fixed inset-0 overflow-y-auto">
+                            <div className="flex min-h-full items-center justify-center p-4 text-center">
+                                <Transition.Child
+                                    as={Fragment}
+                                    enter="ease-out duration-300"
+                                    enterFrom="opacity-0 scale-95"
+                                    enterTo="opacity-100 scale-100"
+                                    leave="ease-in duration-200"
+                                    leaveFrom="opacity-100 scale-100"
+                                    leaveTo="opacity-0 scale-95"
+                                >
+                                    <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                        <Dialog.Title
+                                            as="h3"
+                                            className="text-lg font-medium leading-6 text-gray-900"
+                                        >
+                                            Register New Official
+                                        </Dialog.Title>
+                                        <form onSubmit={registerOfficial}>
+                                            <div className="mt-2">
+                                                <p className="text-sm text-gray-500">
+                                                    Please enter the name and email of the new official.
+                                                </p>
+                                                <div className="mt-4 space-y-6">
+                                                    <div className="mt-2">
+                                                        <label className="block text-md font-medium leading-6 text-black">
+                                                            {"New Official's Name"}
+                                                        </label>
+                                                        <input
+                                                            type="name"
+                                                            placeholder="Enter official's name"
+                                                            onChange={(e) => {
+                                                                setOfficialName(e.target.value);
+                                                            }}
+                                                            className={"block text-lg w-full rounded-md py-2 px-2 text-black shadow-sm ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 !outline-none" +
+                                                                (!isValidOfficialName && officialName ? ' ring-red-500' : isValidOfficialName && officialName ? ' ring-green-500' : ' ring-bGray')}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="mt-2">
+                                                        <label className="block text-md font-medium leading-6 text-black">
+                                                            {"New Official's Email ID"}
+                                                        </label>
+                                                        <input
+                                                            type="email"
+                                                            placeholder="Enter official's email"
+                                                            onChange={(e) => {
+                                                                setOfficialEmail(e.target.value);
+                                                            }}
+                                                            className={"block text-lg w-full rounded-md py-2 px-2 text-black shadow-sm ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 !outline-none" +
+                                                                (!isValidOfficialEmail && officialEmail ? ' ring-red-500' : isValidOfficialEmail && officialEmail ? ' ring-green-500' : ' ring-bGray')}
+                                                            required
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="mt-4">
+                                                <input
+                                                    value={"Register Official"}
+                                                    disabled={!isValidOfficialEmail || !isValidOfficialName}
+                                                    type="submit"
+                                                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
+                                                    onClick={closeRegisterOfficalModal}
+                                                />
+                                            </div>
+                                        </form>
+
+                                    </Dialog.Panel>
+                                </Transition.Child>
+                            </div>
+                        </div>
+                    </Dialog>
+                </Transition>
+
+
+
+                <Transition appear show={isOpen} as={Fragment}>
+                    <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <div className="fixed inset-0 bg-black bg-opacity-25" />
+                        </Transition.Child>
+
+                        <div className="fixed inset-0 overflow-y-auto">
+                            <div className="flex min-h-full items-center justify-center p-4 text-center">
+                                <Transition.Child
+                                    as={Fragment}
+                                    enter="ease-out duration-300"
+                                    enterFrom="opacity-0 scale-95"
+                                    enterTo="opacity-100 scale-100"
+                                    leave="ease-in duration-200"
+                                    leaveFrom="opacity-100 scale-100"
+                                    leaveTo="opacity-0 scale-95"
+                                >
+                                    <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                        <Dialog.Title
+                                            as="h3"
+                                            className="text-lg font-medium leading-6 text-gray-900"
+                                        >
+                                            New Company
+                                        </Dialog.Title>
+                                        <form onSubmit={addNewCompany}>
+                                            <div className="mt-2">
+                                                <p className="text-sm text-gray-500">
+                                                    Please enter the name of the new company.
+                                                </p>
+                                                <div className="space-y-6">
+                                                    <div>
+                                                        <div className="mt-2">
+                                                            <input
+                                                                type="name"
+                                                                placeholder='Enter the company name'
+                                                                onChange={(e) => {
+                                                                    setCompanyName(e.target.value);
+                                                                }}
+                                                                className={"block text-lg w-full rounded-md py-2 px-2 text-black shadow-sm ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 !outline-none" +
+                                                                    (!isValidCompanyName && companyName ? ' ring-red-500' : isValidCompanyName && companyName ? ' ring-green-500' : ' ring-bGray')}
+                                                                required
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="mt-4">
+                                                <input
+                                                    value={"Add Company"}
+                                                    type="submit"
+                                                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                                    onClick={closeModal}
+                                                />
+                                            </div>
+                                        </form>
+
+                                    </Dialog.Panel>
+                                </Transition.Child>
+                            </div>
+                        </div>
+                    </Dialog>
+                </Transition>
             </main>
         )}
         <Toast ref={toast} position="bottom-center" />

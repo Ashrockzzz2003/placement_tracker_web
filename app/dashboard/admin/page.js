@@ -152,7 +152,7 @@ export default function AdminDashboard() {
 
                         <h1 className="text-3xl text-center mb-2">Quick Actions</h1>
                         <div className="relative mx-6 my-8 py-2 flex flex-wrap justify-center gap-4 items-center md:mx-16">
-                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#e6e6e6] w-fit max-w-4/5">
+                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#f4f4f4] w-fit max-w-4/5">
                                 <h1 className="px-4 pt-2 text-[#000000] text-center text-xl">Manage Placements</h1>
                                 <hr className="w-full border-black my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
@@ -169,7 +169,7 @@ export default function AdminDashboard() {
                                     </Link>
                                 </div>
                             </div>
-                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#e6e6e6] ">
+                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#f4f4f4] ">
                                 <h1 className="px-4 pt-2 text-[#000000] text-center text-xl">Manage Officials</h1>
                                 <hr className="w-full border-black my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
@@ -187,7 +187,7 @@ export default function AdminDashboard() {
                                 </div>
                             </div>
 
-                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#e6e6e6] ">
+                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#f4f4f4] ">
                                 <h1 className="px-4 pt-2 text-[#000000] text-center text-xl">Manage Students</h1>
                                 <hr className="w-full border-black my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
                                 </div>
                             </div>
 
-                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#e6e6e6] ">
+                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-[#f4f4f4] ">
                                 <h1 className="px-4 pt-2 text-[#000000] text-center text-xl">Manage Companies</h1>
                                 <hr className="w-full border-black my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">

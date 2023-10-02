@@ -182,11 +182,12 @@ export default function NewPlacementScreen() {
             const data = await response.json();
 
             if (response.status === 200) {
+                setIsLoading(true);
                 alertSuccess("Success", "Placement added successfully.");
 
                 setTimeout(() => {
                     router.replace("/dashboard/admin");
-                }, 4000);
+                }, 2000);
 
             } else if (response.status === 401) {
                 secureLocalStorage.clear();
@@ -297,6 +298,7 @@ export default function NewPlacementScreen() {
                                 () => {
                                     secureLocalStorage.removeItem("currentUser");
                                     secureLocalStorage.removeItem("userAccess");
+                                    router.replace("/");
                                 }
                             } className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ml-2">
                                 {"Logout"}
@@ -331,6 +333,22 @@ export default function NewPlacementScreen() {
                     <div className="mt-10 mx-auto w-full sm:max-w-11/12 md:max-w-md lg:max-w-md px-6 pb-8 lg:px-8">
                         <form className="space-y-6" onSubmit={handleNewPlacement}>
                             <div>
+                                <label className="block text-md font-medium leading-6 text-black">Company</label>
+                                <div className="mt-2">
+                                    <Dropdown
+                                        value={companyId} onChange={(e) => setCompanyId(e.value || '')} options={companyList} optionLabel="companyName" optionValue='id'
+                                        placeholder="Select the company" className="w-full md:w-14rem" required
+                                        filter={true}
+                                    />
+                                </div>
+                            </div>
+
+                            <p className="my-8 text-center text-md text-gray-500">
+                                {"Can't find the company? "}
+                                <button onClick={openModal} className="font-medium leading-6 text-blue-600 hover:underline">Add Company</button>
+                            </p>
+
+                            <div>
                                 <label className="block text-md font-medium leading-6 text-black">
                                     Student Roll No
                                 </label>
@@ -348,22 +366,6 @@ export default function NewPlacementScreen() {
                                     />
                                 </div>
                             </div>
-
-                            <div>
-                                <label className="block text-md font-medium leading-6 text-black">Company</label>
-                                <div className="mt-2">
-                                    <Dropdown
-                                        value={companyId} onChange={(e) => setCompanyId(e.value || '')} options={companyList} optionLabel="companyName" optionValue='id'
-                                        placeholder="Select the company" className="w-full md:w-14rem" required
-                                        filter={true}
-                                    />
-                                </div>
-                            </div>
-
-                            <p className="my-8 text-center text-md text-gray-500">
-                                {"Can't find the company? "}
-                                <button onClick={openModal} className="font-medium leading-6 text-blue-600 hover:underline">Add Company</button>
-                            </p>
 
                             <div>
                                 <label className="block text-md font-medium leading-6 text-black">
@@ -494,7 +496,6 @@ export default function NewPlacementScreen() {
                                             setExtraData(e.target.value);
                                         }}
                                         className={"block text-lg w-full rounded-md py-2 px-2 text-black shadow-sm ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 !outline-none"}
-                                        required
                                     />
                                 </div>
                             </div>

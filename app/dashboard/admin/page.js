@@ -256,12 +256,12 @@ export default function AdminDashboard() {
                     <header className="absolute inset-x-0 top-0 z-50">
                         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
                             <div className="lg:flex lg:gap-x-12">
-                                <Link href={"/dashboard/admin"}>
+                                <Link className="hover:cursor-pointer" href={"/dashboard/admin"}>
                                     <Image src="/logo.png" alt="Amrita logo" width={128} height={128} className='ml-auto mr-auto my-4' />
                                 </Link>
                             </div>
                             <div className="flex lg:flex lg:flex-1 lg:justify-end">
-                                <Link href={"/dashboard/admin/profile"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 ">
+                                <Link href={"/dashboard/admin/profile"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer">
                                     <span className="material-icons">person</span>
                                 </Link>
                                 <button onClick={
@@ -291,7 +291,7 @@ export default function AdminDashboard() {
 
                         <div className="mx-auto max-w-2xl py-16 lg:py-24">
                             <div className="sm:mb-2 flex justify-center text-center">
-                                <Link href={"https://www.amrita.edu"} target='_blank'><div className="relative rounded-full px-3 py-1 my-8 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+                                <Link className="hover:cursor-pointer" href={"https://www.amrita.edu"} target='_blank'><div className="relative rounded-full px-3 py-1 my-8 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                                     Administrator
                                 </div></Link>
                             </div>
@@ -311,13 +311,13 @@ export default function AdminDashboard() {
                                 <h1 className="px-4 pt-2 text-[#1d0e3a] text-center text-xl">Placements</h1>
                                 <hr className="w-full border-[#1d0e3a] my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
-                                    <Link href="/dashboard/admin/placement">
+                                    <Link className="hover:cursor-pointer" href="/dashboard/admin/placement">
                                         <div className="bg-purple-100 text-[#1d0e3a] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons mr-2">work</span>
                                             {"All Placements"}
                                         </div>
                                     </Link>
-                                    <Link href={"/dashboard/admin/placement/new"}>
+                                    <Link className="hover:cursor-pointer" href={"/dashboard/admin/placement/new"}>
                                         <div className="bg-purple-100 text-[#1d0e3a] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons">add</span>
                                         </div>
@@ -328,7 +328,7 @@ export default function AdminDashboard() {
                                 <h1 className="px-4 pt-2 text-[#21430e] text-center text-xl">Officials</h1>
                                 <hr className="w-full border-[#21430e] my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
-                                    <Link href="/dashboard/admin/official">
+                                    <Link className="hover:cursor-pointer" href="/dashboard/admin/official">
                                         <button className="bg-green-100 text-[#21430e] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons mr-2">manage_accounts</span>
                                             {"All Officials"}
@@ -346,7 +346,7 @@ export default function AdminDashboard() {
                                 <h1 className="px-4 pt-2 text-[#403914] text-center text-xl">Students</h1>
                                 <hr className="w-full border-[#544a15] my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
-                                    <Link href="/dashboard/admin/student">
+                                    <Link className="hover:cursor-pointer" href="/dashboard/admin/student">
                                         <button className="bg-yellow-100 text-[#544a15] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons mr-2">badge</span>
                                             {"All Students"}
@@ -360,11 +360,11 @@ export default function AdminDashboard() {
                                 </div>
                             </div>
 
-                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-red-50 bg-opacity-30 ">
+                            <div className="border flex flex-col rounded-xl backdrop-blur-xl bg-red-50 bg-opacity-30">
                                 <h1 className="px-4 pt-2 text-[#461348] text-center text-xl">Companies</h1>
                                 <hr className="w-full border-[#461348] my-2" />
                                 <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
-                                    <Link href="/dashboard/admin/company">
+                                    <Link className="hover:cursor-pointer" href="/dashboard/admin/company">
                                         <button className="bg-pink-100 text-[#461348] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons mr-2">badge</span>
                                             {"All Companies"}

@@ -18,3 +18,6 @@ export const GET_ALL_PLACEMENTS_URL = BASE_URL + "/getAllPlacedStudentData";
 export const GET_ALL_STUDENTS_URL = BASE_URL + "/getAllStudentData";
 export const REGISTER_OFFICAL_URL = BASE_URL + "/registerOfficial";
 export const GET_REGISTERED_OFFICIALS_URL = BASE_URL + "/getRegisteredOfficials";
+export const TOGGLE_ACCOUNT_STATUS_URL = BASE_URL + "/toggleOfficialStatus";
+export const GET_COMPANY_HIRE_DATA_URL = BASE_URL + "/getCompanyHireDataById";
+export const GET_COMPANY_DATA_BY_BATCH_URL = BASE_URL + "/getCompanyHireDataByBatch";

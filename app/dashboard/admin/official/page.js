@@ -4,17 +4,20 @@ import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import 'material-icons/iconfont/material-icons.css';
 import "aos/dist/aos.css";
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { GET_REGISTERED_OFFICIALS_URL } from "@/util/constants";
+import { GET_REGISTERED_OFFICIALS_URL, TOGGLE_ACCOUNT_STATUS_URL } from "@/util/constants";
 import secureLocalStorage from "react-secure-storage";
 import { LoadingScreen } from "@/util/LoadingScreen/LoadingScreen";
 import { Toast } from "primereact/toast";
 import Link from "next/link";
 import Image from "next/image";
+import Searchbar from "@/util/SearchBar";
+import { SelectButton } from "primereact/selectbutton";
 
 export default function AllOfficialsScreen() {
     const [officials, setOfficials] = useState([]);
+    const [officialsFiltered, setOfficialsFiltered] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [userAccess, setUserAccess] = useState(null);
 
@@ -57,6 +60,7 @@ export default function AllOfficialsScreen() {
                 if (res.status === 200) {
                     res.json().then((data) => {
                         setOfficials(data["managers"]);
+                        setOfficialsFiltered(data["managers"]);
                         setIsLoading(false);
                     });
                 } else if (res.status === 401) {
@@ -76,6 +80,89 @@ export default function AllOfficialsScreen() {
             })
         }
     }, [router]);
+
+    const toggleAccountStatus = async (e, managerId, accountStatus) => {
+        setIsLoading(true);
+        e.preventDefault();
+        if (userAccess === null || userAccess === undefined) {
+            alertError("Session Expired", "Please login again to continue.");
+            secureLocalStorage.clear();
+            setTimeout(() => {
+                router.replace("/login");
+            }, 3000);
+
+        } else {
+            try {
+                const response = await fetch(TOGGLE_ACCOUNT_STATUS_URL, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
+                    },
+                    method: "POST",
+                    body: JSON.stringify({
+                        "managerId": managerId,
+                        "accountStatus": accountStatus
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.status === 200) {
+                    if (data["accountStatus"] !== undefined) {
+                        setOfficials(officials.map((manager) => {
+                            if (manager["id"] === managerId) {
+                                manager["accountStatus"] = accountStatus;
+                            }
+                            return manager;
+                        }));
+                        setOfficialsFiltered(officials);
+                        alertSuccess("Success", "Account Status updated successfully.");
+                    } else {
+                        alertError("Error", "Something went wrong. Please try again later.");
+                    }
+                } else if (response.status === 401) {
+                    secureLocalStorage.clear();
+                    alertError("Session Expired", "Please login again to continue.");
+                    setTimeout(() => {
+                        router.replace("/login");
+                    }, 3000);
+                } else if (data["message"] !== undefined) {
+                    alertError("Error", data["message"]);
+                } else {
+                    alertError("Error", "Something went wrong. Please try again later.");
+                }
+
+            } catch (err) {
+                console.log(err);
+                alertError("Error", "Something went wrong. Please try again later.");
+            } finally {
+                setIsLoading(false);
+            }
+        }
+    }
+
+    const [searchText, setSearchText] = useState("");
+
+    const roleOptions = ["Teacher", "Admin", "Unknown"];
+    const [roleValue, setRoleValue] = useState(null);
+    const [role, setRole] = useState(null);
+
+    const statusOptions = ["Active", "Waitlist", "Blocked", "Unknown"];
+    const [statusValue, setStatusValue] = useState(null);
+    const [status, setStatus] = useState(null);
+
+    useEffect(() => {
+        if (officials.length) {
+            setOfficialsFiltered(officials.filter((official) => {
+                return (official["managerName"].toLowerCase().includes(searchText.toLowerCase()) || official["managerEmail"].toLowerCase().includes(searchText.toLowerCase()) || official["id"].toString().includes(searchText)) &&
+                    (role === null ? true : official["managerRole"] === role) &&
+                    (status === null ? true : official["accountStatus"] === status);
+            }));
+        }
+    }, [officials, searchText, role, status])
+
+
+
 
     return <>
         {isLoading ? <LoadingScreen /> : (
@@ -123,6 +210,33 @@ export default function AllOfficialsScreen() {
                         </div>
                     </div>
 
+                    <div className="w-fit ml-auto mr-auto text-md bg-white rounded-xl border border-bGray my-16">
+                        <h1 className="text-xl font-bold text-center p-2">Power Search</h1>
+
+                        <hr className="w-full border-bGray" />
+
+
+                        <Searchbar onChange={
+                            (value) => setSearchText(value)
+                        } placeholderText={"Manager Name or Email or ID"} />
+
+                        <div className="flex flex-wrap border-t border-bGray justify-center items-center xl:flex-row">
+                            <div className="border-bGray p-4 xl:border-b-0 xl:border-r">
+                                <SelectButton value={roleValue} onChange={(e) => {
+                                    setRoleValue(e.value);
+                                    setRole(e.value === "Teacher" ? "0" : e.value === "Admin" ? "1" : e.value === "Unknown" ? "2" : null);
+                                }} options={roleOptions} />
+                            </div>
+
+                            <div className="border-bGray p-4 xl:border-b-0 xl:border-r">
+                                <SelectButton value={statusValue} onChange={(e) => {
+                                    setStatusValue(e.value);
+                                    setStatus(e.value === "Active" ? "1" : e.value === "Waitlist" ? "0" : e.value === "Blocked" ? "2" : null);
+                                }} options={statusOptions} />
+                            </div>
+                        </div>
+                    </div>
+
                     <table className="max-w-11/12 ml-auto mr-auto my-4 rounded-2xl backdrop-blur-2xl bg-red-50 bg-opacity-30 text-center text-sm border-black border-separate border-spacing-0 border-solid">
                         <thead className="border-0 text-lg font-medium">
                             <tr className="bg-black text-white bg-opacity-90 backdrop-blur-xl">
@@ -136,10 +250,15 @@ export default function AllOfficialsScreen() {
                         </thead>
 
                         <tbody>
-                            {officials.map((official, index) => {
+                            {officialsFiltered.length === 0 ? (
+                                <tr>
+                                    <td className="border border-gray-200 rounded-b-2xl px-2 py-8 text-center text-lg" colSpan={6}>No Data Found</td>
+                                </tr>
+                            ) : (
+                                officialsFiltered.map((official, index) => {
                                 return (
                                     <tr key={index} className="border-black border-opacity-50 border-2">
-                                        <td className={"border px-8 py-4" + (index === officials.length - 1 ? " border-separate rounded-bl-2xl" : "")}>{official["id"]}</td>
+                                        <td className={"border px-8 py-4" + (index === officialsFiltered.length - 1 ? " border-separate rounded-bl-2xl" : "")}>{official["id"]}</td>
                                         <td className="border px-8 py-4">{official["managerName"]}</td>
                                         <td className="border px-8 py-4"><span className="italic">{official["managerEmail"]}</span></td>
                                         {official["managerRole"] === "0" ?
@@ -168,17 +287,19 @@ export default function AllOfficialsScreen() {
                                         }
 
                                         {
-                                            official["accountStatus"] === "2" ? <td className={"border items-center p-2" + (index === officials.length - 1 ? " border-separate rounded-br-2xl" : "")}>
-                                                <button className="bg-green-100 rounded-xl p-2 w-fit text-[#21430e] flex flex-row"><span className="material-icons mr-2">verified</span>{"Activate"}</button>
-                                            </td> : official["accountStatus"] === "1" ? <td className={"border items-center p-2" + (index === officials.length - 1 ? " border-separate rounded-br-2xl" : "")}>
-                                                <button className="bg-red-100 rounded-xl p-2 w-fit text-[#320f0f] flex flex-row"><span className="material-icons mr-2">dangerous</span>{"Deactivate"}</button>
-                                            </td> : <td className={"border items-center" + (index === officials.length - 1 ? " border-separate rounded-br-2xl" : "")}>
+                                            official["accountStatus"] === "2" ? <td className={"border flex justify-center items-center p-2" + (index === officialsFiltered.length - 1 ? " border-separate rounded-br-2xl" : "")}>
+                                                <button onClick={(e) => toggleAccountStatus(e, official["id"], "0")} className="bg-green-100 rounded-xl p-2 w-fit text-[#21430e] flex flex-row"><span className="material-icons mr-2">verified</span>{"Activate"}</button>
+                                            </td> : official["accountStatus"] === "1" ? <td className={"border flex justify-center items-center p-2" + (index === officialsFiltered.length - 1 ? " border-separate rounded-br-2xl" : "")}>
+                                                <button onClick={(e) => toggleAccountStatus(e, official["id"], "2")} className="bg-red-100 rounded-xl p-2 w-fit text-[#320f0f] flex flex-row"><span className="material-icons mr-2">dangerous</span>{"Block"}</button>
+                                            </td> : official["accountStatus"] === "0" ? <td className={"border flex justify-center items-center p-2" + (index === officialsFiltered.length - 1 ? " border-separate rounded-br-2xl" : "")}>
+                                                <button onClick={(e) => toggleAccountStatus(e, official["id"], "2")} className="bg-red-100 rounded-xl p-2 w-fit text-[#320f0f] flex flex-row"><span className="material-icons mr-2">dangerous</span>{"Block"}</button>
+                                            </td> : <td className={"border flex justify-center items-center" + (index === officialsFiltered.length - 1 ? " border-separate rounded-br-2xl" : "")}>
                                                 <button className="bg-gray-100 rounded-xl p-2 w-fit text-[#5e5e5e] hover:cursor-not-allowed">No Action</button>
                                             </td>
                                         }
                                     </tr>
-                                )
-                            })}
+                                );
+                            }))}
                         </tbody>
                     </table>
                 </div>

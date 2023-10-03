@@ -81,7 +81,7 @@ export default function RegisterVerify() {
                     accountStatus: data["accountStatus"],
                 }));
                 setTimeout(() => {
-                    // redirect to Manager dashboard
+                    router.replace("/dashboard/manager");
                 }, 2000);
 
             } else if (response.status === 500) {

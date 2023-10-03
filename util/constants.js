@@ -17,3 +17,4 @@ export const ADD_NEW_PLACEMENT_URL = BASE_URL + "/addPlacementData";
 export const GET_ALL_PLACEMENTS_URL = BASE_URL + "/getAllPlacedStudentData";
 export const GET_ALL_STUDENTS_URL = BASE_URL + "/getAllStudentData";
 export const REGISTER_OFFICAL_URL = BASE_URL + "/registerOfficial";
+export const GET_REGISTERED_OFFICIALS_URL = BASE_URL + "/getRegisteredOfficials";

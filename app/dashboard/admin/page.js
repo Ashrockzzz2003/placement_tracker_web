@@ -177,7 +177,7 @@ export default function AdminDashboard() {
     const isValidOfficialName = nameRegex.test(officialName);
 
     const emailRegex = new RegExp(/^[a-zA-Z0-9._-]+@(cb.amrita.edu)$/);
-    const isValidOfficialEmail = emailRegex.test(officialEmail) || officialEmail === "umasivamani@gmail.com";
+    const isValidOfficialEmail = emailRegex.test(officialEmail) || officialEmail === "umasivamani@gmail.com" || "cb.en.u4cse21056@cb.students.amrita.edu";
 
     const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
 

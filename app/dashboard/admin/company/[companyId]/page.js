@@ -11,7 +11,6 @@ import Image from "next/image";
 import { Fragment, useEffect, useRef, useState } from "react";
 import secureLocalStorage from "react-secure-storage";
 import { Toast } from "primereact/toast";
-import Searchbar from "@/util/SearchBar";
 import { Dialog, Transition } from "@headlessui/react";
 
 
@@ -268,15 +267,13 @@ export default function CompanyPage() {
                         <>
                             <h1 className="text-3xl text-center mb-2">Section Wise Hires</h1>
                             <div className="relative mx-6 my-8 py-2 flex flex-wrap justify-center gap-4 items-center md:mx-16">
-                                {
-                                    deptSectionWiseHiredStudents.map((deptSectionWiseHire, index) => {
+                                    {deptSectionWiseHiredStudents.map((deptSectionWiseHire, index) => {
                                         return <div key={index} className="flex flex-col rounded-xl backdrop-blur-xl bg-green-100 text-[#21430e] shadow-lg">
                                             <span className="text-center p-2">{deptSectionWiseHire.studentDept} {deptSectionWiseHire.studentSection}</span>
                                             <hr className="border-[#21430e] w-full" />
                                             <span className="text-center p-2">{deptSectionWiseHire.totalHires}</span>
                                         </div>
-                                    })
-                                }
+                                    })}
                             </div>
 
                             <h1 className="text-3xl text-center mb-2">All Hires</h1>

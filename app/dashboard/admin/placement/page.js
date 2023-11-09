@@ -116,12 +116,23 @@ export default function AllPlacedStudentsScreen() {
                                 "extraData": obj["extraData"],
                             });
                         }
+
+                        // Sort Placements
+                        acc[key]["placements"].sort((a, b) => {
+                            return new Date(b["ctc"]) - new Date(a["ctc"]);
+                        });
+
                         return acc;
                     }, {});
 
+                    // Overall Sort by top placement
+                    const sortedData = Object.values(groupedData).sort((a, b) => {
+                        return new Date(b["placements"][0]["ctc"]) - new Date(a["placements"][0]["ctc"]);
+                    });
+
                     setSections(sections);
-                    setAllPlacedStudentData(Object.values(groupedData));
-                    setAllPlacedStudentDataFiltered(Object.values(groupedData));
+                    setAllPlacedStudentData(Object.values(sortedData));
+                    setAllPlacedStudentDataFiltered(Object.values(sortedData));
                 });
             } else if (res.status === 401) {
                 secureLocalStorage.clear();
@@ -320,12 +331,24 @@ export default function AllPlacedStudentsScreen() {
                                 "extraData": obj["extraData"],
                             });
                         }
+
+                        // Sort Placements
+                        acc[key]["placements"].sort((a, b) => {
+                            return new Date(b["ctc"]) - new Date(a["ctc"]);
+                        });
+
+
                         return acc;
                     }, {});
 
+                    // Overall Sort by top placement
+                    const sortedData = Object.values(groupedData).sort((a, b) => {
+                        return new Date(b["placements"][0]["ctc"]) - new Date(a["placements"][0]["ctc"]);
+                    });
+
                     setSections(sections);
-                    setAllPlacedStudentData(Object.values(groupedData));
-                    setAllPlacedStudentDataFiltered(Object.values(groupedData));
+                    setAllPlacedStudentData(Object.values(sortedData));
+                    setAllPlacedStudentDataFiltered(Object.values(sortedData));
                 });
             } else if (res.status === 401) {
                 secureLocalStorage.clear();

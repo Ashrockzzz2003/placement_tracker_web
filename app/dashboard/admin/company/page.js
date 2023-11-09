@@ -104,13 +104,20 @@ export default function AllCompaniesScreen() {
                                 });
                             }
 
+                            // Sort by CTC
+                            acc[key].recruitData.sort((a, b) => {
+                                return b.ctc - a.ctc;
+                            });
+
                             return acc;
                         }, {});
 
-                        console.log(groupedData);
-                        console.log(Object.values(groupedData));
+                        // sort groupedData by recruiData[0]["ctc"]
+                        const sortedGroupedData = Object.values(groupedData).sort((a, b) => {
+                            return b.recruitData[0]["ctc"] - a.recruitData[0]["ctc"];
+                        });
 
-                        finalData = Object.values(groupedData);
+                        finalData = Object.values(sortedGroupedData);
 
                         setSectionData(sortedSectionOptions);
                         setCompanyHireData(finalData);
@@ -269,13 +276,21 @@ export default function AllCompaniesScreen() {
                             });
                         }
 
+                        // Sort by CTC
+                        acc[key].recruitData.sort((a, b) => {
+                            return b.ctc - a.ctc;
+                        });
+
                         return acc;
                     }, {});
+                    
+                    // sort groupedData by recruiData[0]["ctc"]
 
-                    console.log(groupedData);
-                    console.log(Object.values(groupedData));
+                    const sortedGroupedData = Object.values(groupedData).sort((a, b) => {
+                        return b.recruitData[0]["ctc"] - a.recruitData[0]["ctc"];
+                    });
 
-                    finalData = Object.values(groupedData);
+                    finalData = Object.values(sortedGroupedData);
 
                     setSectionData(sortedSectionOptions);
                     setCompanyHireData(finalData);
@@ -297,7 +312,9 @@ export default function AllCompaniesScreen() {
         }).finally(() => {
             setIsLoading(false);
         });
-    }
+    };
+
+
 
     return (
         <>
@@ -385,7 +402,7 @@ export default function AllCompaniesScreen() {
                                     <th className="px-4 py-2 border-black" rowSpan={2}>Job Role</th>
                                     <th className="px-4 py-2 border-black" rowSpan={2}>CTC</th>
                                     <th className="px-4 py-2 border-b-black" rowSpan={1} colSpan={Object.keys(sectionData).length}>Section</th>
-                                    <th className="px-4 py-2 border-black rounded-tr-2xl" rowSpan={2}>Total Hires</th>
+                                    <th className="px-4 py-2 border-black rounded-tr-2xl" rowSpan={2}>Hires</th>
                                 </tr>
 
                                 <tr className="bg-black text-white bg-opacity-90">
@@ -403,8 +420,6 @@ export default function AllCompaniesScreen() {
                                     </tr>
                                 ) : (
                                     companyHireDataFiltered.map((data, index) => {
-                                        let totalHires = 0;
-
                                         return [
                                             (
                                                 <tr key={index}>
@@ -413,21 +428,22 @@ export default function AllCompaniesScreen() {
                                             ),
                                             (
                                                 data.recruitData.map((pdata, pindex) => {
+                                                    let hires = 0;
                                                     return (
                                                         <tr key={pindex}>
                                                             <td className="border border-gray-200 px-4 py-2">{pdata.jobRole}</td>
                                                             <td className="border border-gray-200 px-4 py-2">{pdata.ctc}</td>
                                                             {Object.keys(sectionData).map((section, sindex) => {
-                                                                totalHires += pdata.sectionData[section] === undefined ? 0 : pdata.sectionData[section];
+                                                                hires += pdata.sectionData[section] === undefined ? 0 : pdata.sectionData[section];
                                                                 return (
                                                                     <td className="border border-gray-200 px-4 py-2" key={sindex}>{pdata.sectionData[section] === undefined ? 0 : pdata.sectionData[section]}</td>
                                                                 );
                                                             })}
-                                                            <td className={"border border-gray-200 px-4 py-2" + (index === companyHireDataFiltered.length - 1 && pindex === data.recruitData.length - 1 ? " border-separate rounded-br-2xl" : "")}>{totalHires}</td>
+                                                            <td className={"border border-gray-200 px-4 py-2"}>{hires}</td>
                                                         </tr>
                                                     );
                                                 })
-                                            )
+                                            ),
                                         ];
                                     })
                                 )}

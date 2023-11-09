@@ -104,13 +104,20 @@ export default function AllCompaniesScreen() {
                                 });
                             }
 
+                            // Sort by CTC
+                            acc[key].recruitData.sort((a, b) => {
+                                return b.ctc - a.ctc;
+                            });
+
                             return acc;
                         }, {});
 
-                        console.log(groupedData);
-                        console.log(Object.values(groupedData));
+                        // sort groupedData by recruiData[0]["ctc"]
+                        const sortedGroupedData = Object.values(groupedData).sort((a, b) => {
+                            return b.recruitData[0]["ctc"] - a.recruitData[0]["ctc"];
+                        });
 
-                        finalData = Object.values(groupedData);
+                        finalData = Object.values(sortedGroupedData);
 
                         setSectionData(sortedSectionOptions);
                         setCompanyHireData(finalData);
@@ -269,13 +276,19 @@ export default function AllCompaniesScreen() {
                             });
                         }
 
+                        // Sort by CTC
+                        acc[key].recruitData.sort((a, b) => {
+                            return b.ctc - a.ctc;
+                        });
+
                         return acc;
                     }, {});
 
-                    console.log(groupedData);
-                    console.log(Object.values(groupedData));
-
-                    finalData = Object.values(groupedData);
+                    // sort groupedData by recruiData[0]["ctc"]
+                    const sortedGroupedData = Object.values(groupedData).sort((a, b) => {
+                        return b.recruitData[0]["ctc"] - a.recruitData[0]["ctc"];
+                    });
+                    finalData = Object.values(sortedGroupedData);
 
                     setSectionData(sortedSectionOptions);
                     setCompanyHireData(finalData);

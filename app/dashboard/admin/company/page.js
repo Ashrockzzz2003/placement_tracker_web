@@ -399,7 +399,7 @@ export default function AllCompaniesScreen() {
                             <tbody>
                                 {companyHireDataFiltered.length === 0 ? (
                                     <tr>
-                                        <td className="border border-gray-200 rounded-b-2xl px-4 py-8 text-center text-lg" colSpan={9}>No Data Found</td>
+                                        <td className="border border-gray-200 rounded-b-2xl px-4 py-8 text-center text-lg" colSpan={10}>No Data Found</td>
                                     </tr>
                                 ) : (
                                     companyHireDataFiltered.map((data, index) => {

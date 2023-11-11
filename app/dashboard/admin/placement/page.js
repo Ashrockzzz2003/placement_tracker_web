@@ -26,6 +26,8 @@ export default function AllPlacedStudentsScreen() {
     const [sections, setSections] = useState();
     const [companyList, setCompanyList] = useState([]);
 
+    const [tempTotalPlacements, setTempTotalPlacements] = useState(0);
+    const [totalPlacements, setTotalPlacements] = useState(0);
 
     const [maxCTC, setMaxCTC] = useState(0);
     const [minCTC, setMinCTC] = useState(0);
@@ -126,7 +128,6 @@ export default function AllPlacedStudentsScreen() {
                         acc[key]["placements"].sort((a, b) => {
                             return new Date(b["ctc"]) - new Date(a["ctc"]);
                         });
-
                         return acc;
                     }, {});
 
@@ -135,6 +136,14 @@ export default function AllPlacedStudentsScreen() {
                         return new Date(b["placements"][0]["ctc"]) - new Date(a["placements"][0]["ctc"]);
                     });
 
+                    // Total Placements
+                    let total = 0;
+
+                    Object.values(groupedData).forEach((student) => {
+                        total += student["placements"].length;
+                    });
+
+                    setTotalPlacements(total);
                     setSections(sections);
                     setAllPlacedStudentData(Object.values(sortedData));
                     setAllPlacedStudentDataFiltered(Object.values(sortedData));
@@ -247,6 +256,7 @@ export default function AllPlacedStudentsScreen() {
         let max = 0;
         let min = 0;
         let sum = 0;
+        let total = 0;
 
         allPlacedStudentDataFiltered.forEach((student) => {
             student["placements"].forEach((placement) => {
@@ -268,22 +278,27 @@ export default function AllPlacedStudentsScreen() {
                     return;
                 }
 
+                if (isHigherStudies !== null && isHigherStudies !== '' && student["isHigherStudies"] !== isHigherStudies) {
+                    return;
+                }
+
                 if (placement["ctc"] > max) {
                     max = placement["ctc"];
                 }
                 if (placement["ctc"] !== 0 && (placement["ctc"] < min || min === 0)) {
                     min = placement["ctc"];
                 }
+
+                total++;
                 sum += placement["ctc"];
             });
         });
 
-        console.log(max, min, sum);
-
+        setTempTotalPlacements(total);
         setMaxCTC(max);
         setMinCTC(min);
         setAvgCTC((sum / allPlacedStudentDataFiltered.length).toFixed(2));
-    }, [allPlacedStudentDataFiltered, isIntern, isPPO, isOnCampus, isGirlsDrive, selectedCompanies]);
+    }, [allPlacedStudentDataFiltered, isIntern, isPPO, isOnCampus, isGirlsDrive, selectedCompanies, totalPlacements, isHigherStudies]);
 
 
     const [studentBatch, setStudentBatch] = useState(new Date().getFullYear());
@@ -385,7 +400,6 @@ export default function AllPlacedStudentsScreen() {
                             return new Date(b["ctc"]) - new Date(a["ctc"]);
                         });
 
-
                         return acc;
                     }, {});
 
@@ -394,10 +408,19 @@ export default function AllPlacedStudentsScreen() {
                         return new Date(b["placements"][0]["ctc"]) - new Date(a["placements"][0]["ctc"]);
                     });
 
+                    // Total Placements
+                    let total = 0;
+
+                    Object.values(groupedData).forEach((student) => {
+                        total += student["placements"].length;
+                    });
+
+                    setTotalPlacements(total);
+
                     setSections(sections);
                     setAllPlacedStudentData(Object.values(sortedData));
                     setAllPlacedStudentDataFiltered(Object.values(sortedData));
-                    
+
                     setSearchText("");
                     setSelectedSections(null);
                     setSelectedCompanies(null);
@@ -573,7 +596,7 @@ export default function AllPlacedStudentsScreen() {
                                 <div className="text-center">
                                     <h1 className="text-xl font-semibold text-center p-4">Max CTC</h1>
                                     <hr className="w-full" />
-                                    <h1 className="text-lg font-normal text-center p-2">{maxCTC} {" LPA"}</h1>
+                                    <h1 className="text-lg font-light text-center p-3">{maxCTC} {" LPA"}</h1>
                                 </div>
                             </div>
 
@@ -581,7 +604,7 @@ export default function AllPlacedStudentsScreen() {
                                 <div className="text-center">
                                     <h1 className="text-xl font-semibold text-center p-4">Avg CTC</h1>
                                     <hr className="w-full" />
-                                    <h1 className="text-lg font-normal text-center p-2">{avgCTC} {" LPA"}</h1>
+                                    <h1 className="text-lg font-light text-center p-3">{avgCTC} {" LPA"}</h1>
                                 </div>
                             </div>
 
@@ -589,23 +612,29 @@ export default function AllPlacedStudentsScreen() {
                                 <div className="text-center">
                                     <h1 className="text-xl font-semibold text-center p-4">Min CTC</h1>
                                     <hr className="w-full" />
-                                    <h1 className="text-lg font-normal text-center p-2">{minCTC} {" LPA"}</h1>
+                                    <h1 className="text-lg font-light text-center p-3">{minCTC} {" LPA"}</h1>
                                 </div>
                             </div>
 
-                            <div className="border mx-4 rounded-xl">
+                            <div className="border mx-4 rounded-xl flex flex-wrap justify-center items-center">
                                 <div className="text-center">
-                                    <h1 className="text-xl font-semibold text-center p-4">Total</h1>
+                                    <h1 className="text-xl font-semibold text-center p-4">Students</h1>
                                     <hr className="w-full" />
-                                    <h1 className="text-lg font-normal text-center p-2">{allPlacedStudentDataFiltered.length}</h1>
+                                    <div className="p-1">
+                                        <h1 className="text-lg font-light text-center">{allPlacedStudentDataFiltered.length} {" / "} {allPlacedStudentData.length}</h1>
+                                        <p className="text-xs font-light text-center text-gray-500">{(allPlacedStudentDataFiltered.length / allPlacedStudentData.length * 100).toFixed(2)} {"%"}</p>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="border rounded-xl">
+                            <div className="border rounded-xl flex flex-wrap justify-center items-center">
                                 <div className="text-center">
-                                    <h1 className="text-xl font-semibold text-center p-4">Percentage</h1>
+                                    <h1 className="text-xl font-semibold text-center p-4">Offers</h1>
                                     <hr className="w-full" />
-                                    <h1 className="text-lg font-normal text-center p-2">{(allPlacedStudentDataFiltered.length / allPlacedStudentData.length * 100).toFixed(2)} {"%"}</h1>
+                                    <div className="p-1">
+                                        <h1 className="text-lg font-light text-center">{tempTotalPlacements} {" / "} {totalPlacements}</h1>
+                                        <p className="text-xs font-light text-center text-gray-500">{(tempTotalPlacements / totalPlacements * 100).toFixed(2)} {"%"}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

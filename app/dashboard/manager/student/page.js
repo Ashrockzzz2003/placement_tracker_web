@@ -27,6 +27,16 @@ export default function AllPlacedStudentsScreen() {
     const [sections, setSections] = useState();
     const [companyList, setCompanyList] = useState([]);
 
+    const [minCTC, setMinCTC] = useState(0);
+    const [maxCTC, setMaxCTC] = useState(0);
+    const [avgCTC, setAvgCTC] = useState(0);
+
+    const [totalStudents, setTotalStudents] = useState(0);
+    const [tempTotalStudents, setTempTotalStudents] = useState(0);
+
+    const [totalOffers, setTotalOffers] = useState(0);
+    const [tempTotalOffers, setTempTotalOffers] = useState(0);
+
     const toast = useRef(null);
     const router = useRouter();
 
@@ -139,8 +149,23 @@ export default function AllPlacedStudentsScreen() {
                                 });
                             }
                         }
+
+                        // sort by ctc
+                        acc[key]["placements"].sort((a, b) => {
+                            return b["ctc"] - a["ctc"];
+                        });
+
                         return acc;
                     }, {});
+
+                    // Total Placements
+                    let total = 0;
+
+                    Object.values(groupedData).forEach((student) => {
+                        total += student["placements"].length;
+                    });
+
+                    setTotalStudents(data["students"].length);
 
                     setSections(sections);
                     setAllPlacedStudentData(Object.values(groupedData));
@@ -268,6 +293,57 @@ export default function AllPlacedStudentsScreen() {
         setIsOpen(true);
     }
 
+    useEffect(() => {
+        let max = 0;
+        let min = 0;
+        let sum = 0;
+        let offers = 0;
+
+        allPlacedStudentDataFiltered.forEach((student) => {
+            student["placements"].forEach((placement) => {
+                // check for conditions
+                if (isIntern !== null && isIntern !== '' && placement["isIntern"] !== isIntern) {
+                    return;
+                }
+                if (isPPO !== null && isPPO !== '' && placement["isPPO"] !== isPPO) {
+                    return;
+                }
+                if (isOnCampus !== null && isOnCampus !== '' && placement["isOnCampus"] !== isOnCampus) {
+                    return;
+                }
+
+                if (isGirlsDrive !== null && isGirlsDrive !== '' && placement["isGirlsDrive"] !== isGirlsDrive) {
+                    return;
+                }
+
+                if (selectedCompanies !== null && selectedCompanies.length !== 0 && !selectedCompanies.includes(placement["companyId"])) {
+                    return;
+                }
+
+                if (isHigherStudies !== null && isHigherStudies !== '' && student["isHigherStudies"] !== isHigherStudies) {
+                    return;
+                }
+
+                if (placement["ctc"] > max) {
+                    max = placement["ctc"];
+                }
+
+                if (placement["ctc"] !== 0 && (placement["ctc"] < min || min === 0)) {
+                    min = placement["ctc"];
+                }
+
+                sum += placement["ctc"];
+                offers++;
+            });
+        });
+
+        setMinCTC(min);
+        setMaxCTC(max);
+        setAvgCTC((sum / offers).toFixed(2));
+        setTempTotalStudents(allPlacedStudentDataFiltered.length);
+        setTempTotalOffers(offers);
+    }, [allPlacedStudentDataFiltered, isHigherStudies, isIntern, isPPO, isOnCampus, selectedCompanies, isGirlsDrive]);
+
     const getBatchData = async (e) => {
         setIsLoading(true);
         e.preventDefault();
@@ -375,14 +451,42 @@ export default function AllPlacedStudentsScreen() {
                                 });
                             }
                         }
+                        // sort by ctc
+                        acc[key]["placements"].sort((a, b) => {
+                            return b["ctc"] - a["ctc"];
+                        });
                         return acc;
                     }, {});
+
+                    let total = 0;
+                    Object.values(groupedData).forEach((student) => {
+                        total += student["placements"].length;
+                    });
+
+                    setTotalStudents(data["students"].length);
+                    setTotalOffers(total);
 
                     setSections(sections);
                     setStudentBatch(studentBatch);
                     setCurrentBatch(studentBatch);
                     setAllPlacedStudentData(Object.values(groupedData));
                     setAllPlacedStudentDataFiltered(Object.values(groupedData));
+
+                    setSearchText("");
+                    setSelectedSections(null);
+                    setSelectedCompanies(null);
+                    setIsHigherStudiesValue('');
+                    setIsHigherStudies(null);
+                    setIsInternValue('');
+                    setIsIntern(null);
+                    setIsPPOValue('');
+                    setIsPPO(null);
+                    setIsOnCampusValue('');
+                    setIsOnCampus(null);
+                    setGenderValue('');
+                    setGender('');
+                    setIsGirlsDriveValue('');
+                    setIsGirlsDrive('');
                 });
             } else if (res.status === 401) {
                 secureLocalStorage.clear();
@@ -461,7 +565,7 @@ export default function AllPlacedStudentsScreen() {
                             </div>
                         </div>
 
-                        <div className="w-fit ml-auto mr-auto text-md bg-white rounded-xl border border-bGray my-16">
+                        <div className="w-fit ml-auto mr-auto text-md bg-white rounded-xl border border-bGray my-8">
                             <h1 className="text-xl font-bold text-center p-2">Power Search</h1>
 
                             <hr className="w-full border-bGray" />
@@ -546,20 +650,66 @@ export default function AllPlacedStudentsScreen() {
                             </div>
                         </div>
 
+                        <div className="flex flex-wrap justify-center items-center mb-8">
+                            <div className="border-t border-l border-b rounded-l-2xl">
+                                <div className="text-center">
+                                    <h1 className="text-xl font-semibold text-center p-4">Max CTC</h1>
+                                    <hr className="w-full" />
+                                    <h1 className="text-lg font-light text-center p-3">{maxCTC} {" LPA"}</h1>
+                                </div>
+                            </div>
+
+                            <div className="border">
+                                <div className="text-center">
+                                    <h1 className="text-xl font-semibold text-center p-4">Avg CTC</h1>
+                                    <hr className="w-full" />
+                                    <h1 className="text-lg font-light text-center p-3">{avgCTC} {" LPA"}</h1>
+                                </div>
+                            </div>
+
+                            <div className="border-t border-r border-b rounded-r-2xl">
+                                <div className="text-center">
+                                    <h1 className="text-xl font-semibold text-center p-4">Min CTC</h1>
+                                    <hr className="w-full" />
+                                    <h1 className="text-lg font-light text-center p-3">{minCTC} {" LPA"}</h1>
+                                </div>
+                            </div>
+
+                            <div className="border mx-4 rounded-xl flex flex-wrap justify-center items-center">
+                                <div className="text-center">
+                                    <h1 className="text-xl font-semibold text-center p-4">Students</h1>
+                                    <hr className="w-full" />
+                                    <div className="p-1">
+                                        <h1 className="text-lg font-light text-center">{allPlacedStudentDataFiltered.length} {" / "} {allPlacedStudentData.length}</h1>
+                                        <p className="text-xs font-light text-center text-gray-500">{(allPlacedStudentDataFiltered.length / allPlacedStudentData.length * 100).toFixed(2)} {"%"}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="border rounded-xl flex flex-wrap justify-center items-center">
+                                <div className="text-center">
+                                    <h1 className="text-xl font-semibold text-center p-4">Offers</h1>
+                                    <hr className="w-full" />
+                                    <div className="p-1">
+                                        <h1 className="text-lg font-light text-center">{tempTotalOffers} {" / "} {totalOffers}</h1>
+                                        <p className="text-xs font-light text-center text-gray-500">{(tempTotalOffers / totalOffers * 100).toFixed(2)} {"%"}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <table className="max-w-11/12 ml-auto mr-auto my-4 rounded-2xl backdrop-blur-2xl bg-red-50 bg-opacity-30 text-center text-sm border-black border-separate border-spacing-0 border-solid">
                             <thead className="border-0 text-lg font-medium">
                                 <tr className="bg-black text-white bg-opacity-90 backdrop-blur-xl">
                                     <th className="px-2 py-1 rounded-tl-2xl border-black" rowSpan={2}>Roll Number</th>
                                     <th className="px-2 py-1 border-black" rowSpan={2}>Student Name</th>
                                     <th className="px-2 py-1 border-black" rowSpan={2}>Gender</th>
-                                    <th className="px-2 py-1 border-black" rowSpan={2}>Department</th>
-                                    <th className="px-2 py-1 border-black" rowSpan={2}>Section</th>
+                                    <th className="px-2 py-1 border-black" rowSpan={2}>Class</th>
                                     <th className="px-2 py-1 border-black" rowSpan={2}>CGPA</th>
-                                    <th className="px-2 py-1 border-b-black rounded-tr-2xl" rowSpan={1} colSpan={5}>Placements</th>
+                                    <th className="px-2 py-1 border-b-black rounded-tr-2xl" rowSpan={1} colSpan={4}>Placements</th>
                                 </tr>
                                 <tr className="bg-black text-white bg-opacity-90">
-                                    <th className="px-2 py-1 border-black">Company</th>
-                                    <th className="px-2 py-1 border-black">Role</th>
+                                    <th className="px-1 py-1 border-black">Company</th>
                                     <th className="px-2 py-1 border-black">CTC</th>
                                     <th className="px-2 py-1 border-black">Location</th>
                                     <th className="px-2 py-1 border-black">Quick Facts</th>
@@ -568,7 +718,7 @@ export default function AllPlacedStudentsScreen() {
                             <tbody>
                                 {allPlacedStudentDataFiltered.length === 0 ? (
                                     <tr>
-                                        <td className="border border-gray-200 rounded-b-2xl px-2 py-8 text-center text-lg" colSpan={11}>No Data Found</td>
+                                        <td className="border border-gray-200 rounded-b-2xl px-2 py-8 text-center text-lg" colSpan={9}>No Data Found</td>
                                     </tr>
                                 ) : (
                                     allPlacedStudentDataFiltered.map((student, index) => {
@@ -579,8 +729,7 @@ export default function AllPlacedStudentsScreen() {
                                                     <td className={"border border-gray-200 px-2 py-1" + (index === allPlacedStudentDataFiltered.length - 1 ? "border-separate rounded-bl-2xl" : "")}>{student["studentRollNo"]}</td>
                                                     <td className="border border-gray-200 px-2 py-1">{student["studentName"]}</td>
                                                     <td className="border border-gray-200 px-2 py-1">{student["studentGender"]}</td>
-                                                    <td className="border border-gray-200 px-2 py-1">{student["studentDept"]}</td>
-                                                    <td className="border border-gray-200 px-2 py-1">{student["studentSection"]}</td>
+                                                    <td className="border border-gray-200 px-2 py-1">{student["studentDept"]} {" "} {student["studentSection"]}</td>
                                                     <td className="border border-gray-200 px-2 py-1">{student["cgpa"] ?? "-"}</td>
                                                     <td className="border border-gray-200 py-4" colSpan={5}>
                                                         {student["isHigherStudies"] === '1' ? (
@@ -595,8 +744,7 @@ export default function AllPlacedStudentsScreen() {
                                                 <td className={"border border-gray-200 px-2 py-1" + (index === allPlacedStudentDataFiltered.length - 1 ? "border-separate rounded-bl-2xl" : "")} rowSpan={student["placements"].length + 1}>{student["studentRollNo"]}</td>
                                                 <td className="border border-gray-200 px-2 py-1" rowSpan={student["placements"].length + 1}>{student["studentName"]}</td>
                                                 <td className="border border-gray-200 px-2 py-1" rowSpan={student["placements"].length + 1}>{student["studentGender"]}</td>
-                                                <td className="border border-gray-200 px-2 py-1" rowSpan={student["placements"].length + 1}>{student["studentDept"]}</td>
-                                                <td className="border border-gray-200 px-2 py-1" rowSpan={student["placements"].length + 1}>{student["studentSection"]}</td>
+                                                <td className="border border-gray-200 px-1 py-1" rowSpan={student["placements"].length + 1}>{student["studentDept"]} {" "} {student["studentSection"]}</td>
                                                 <td className="border border-gray-200 px-2 py-1" rowSpan={student["placements"].length + 1}>{student["cgpa"] ?? "-"}</td>
                                             </tr>)
                                             ),
@@ -604,11 +752,15 @@ export default function AllPlacedStudentsScreen() {
                                                 student["placements"].map((placement, pindex) => {
                                                     return (
                                                         <tr key={pindex}>
-                                                            <td className="border border-gray-200 px-2 py-1">{placement["companyName"]}</td>
-                                                            <td className="border border-gray-200 px-2 py-1">{placement["jobRole"]}</td>
-                                                            <td className="border border-gray-200 px-2 py-1">{placement["ctc"] + " LPA"}</td>
-                                                            <td className="border border-gray-200 px-2 py-1">{placement["jobLocation"] ?? "-"}</td>
-                                                            <td className={"border border-gray-200 px-2 py-1" + (index === allPlacedStudentDataFiltered.length - 1 ? " border-separate rounded-br-2xl" : "")}>
+                                                            <td className="border border-gray-200 px-0.5 py-1 text-center">
+                                                                <Link href={`/dashboard/manager/company/${placement['companyId']}`}>{placement["companyName"]}</Link>
+                                                                {placement["jobRole"] !== "-" ? (
+                                                                    <p className="text-xs text-gray-500">{placement["jobRole"]}</p>
+                                                                ) : null}
+                                                            </td>
+                                                            <td className="border border-gray-200 px-1 py-1">{placement["ctc"] + " LPA"}</td>
+                                                            <td className="border border-gray-200 px-1 py-1">{placement["jobLocation"] ?? "-"}</td>
+                                                            <td className={"border border-gray-200 px-1 py-1" + (index === allPlacedStudentDataFiltered.length - 1 ? " border-separate rounded-br-2xl" : "")}>
                                                                 <div className="flex flex-wrap">
                                                                     {placement["isIntern"] === "1" ? (
                                                                         <div className="bg-yellow-100 rounded-xl p-2 m-1 text-[#544a15]">Intern</div>

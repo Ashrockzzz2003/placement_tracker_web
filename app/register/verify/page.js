@@ -35,7 +35,7 @@ export default function RegisterVerify() {
         e.preventDefault();
 
         const otpString = otp[0] + otp[1] + otp[2] + otp[3] + otp[4] + otp[5];
-        
+
         if (registerEmail === null || registerToken === null || registerToken.length == 0 || registerEmail.length == 0) {
             alertError("Error", "Session expired. Please try again.");
             secureLocalStorage.clear();
@@ -64,10 +64,25 @@ export default function RegisterVerify() {
 
             if (response.status === 200) {
                 alertSuccess("Registration Successful", "OTP verified successfully.");
-                console.log(data);
                 secureLocalStorage.clear();
+                secureLocalStorage.setItem("userAccess", data["SECRET_TOKEN"]);
+                secureLocalStorage.setItem("currentUser", JSON.stringify({
+                    studentId: data["studentId"],
+                    studentName: data["studentName"],
+                    studentEmail: data["studentEmail"],
+                    studentRollNo: data["studentRollNo"],
+                    studentSection: data["studentSection"],
+                    studentGender: data["studentGender"],
+                    studentBatch: data["studentBatch"],
+                    studentDept: data["studentDept"],
+                    isHigherStudies: data["isHigherStudies"],
+                    isPlaced: data["isPlaced"],
+                    CGPA: data["CGPA"],
+                    accountStatus: data["accountStatus"],
+                }));
                 setTimeout(() => {
                     // redirect to student dashboard
+                    router.replace("/dashboard/student");
                 }, 2000);
             } else if (response.status === 500) {
                 alertError('Oops!', 'Something went wrong! Please try again later!');

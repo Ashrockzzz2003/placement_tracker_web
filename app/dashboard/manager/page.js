@@ -8,7 +8,7 @@ import Link from "next/link";
 import { Fragment, useEffect, useRef, useState } from "react";
 import secureLocalStorage from "react-secure-storage";
 import 'material-icons/iconfont/material-icons.css';
-import { ADD_NEW_COMPANY_URL, GET_TOP_5_PLACEMENTS_URL, REGISTER_OFFICAL_URL } from "@/util/constants";
+import { ADD_NEW_COMPANY_URL, GET_TOP_5_PLACEMENTS_URL } from "@/util/constants";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
 import Top5PlacementCard from "@/util/Top5PlacementCard";

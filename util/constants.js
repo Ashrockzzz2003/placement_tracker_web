@@ -21,3 +21,7 @@ export const GET_REGISTERED_OFFICIALS_URL = BASE_URL + "/getRegisteredOfficials"
 export const TOGGLE_ACCOUNT_STATUS_URL = BASE_URL + "/toggleOfficialStatus";
 export const GET_COMPANY_HIRE_DATA_URL = BASE_URL + "/getCompanyHireDataById";
 export const GET_COMPANY_DATA_BY_BATCH_URL = BASE_URL + "/getCompanyHireDataByBatch";
+export const ADD_NEW_STUDENT_URL = BASE_URL + "/addStudent";
+
+
+export const GET_STUDENT_PLACEMENTS_URL = BASE_URL + "/getStudentPlacements";

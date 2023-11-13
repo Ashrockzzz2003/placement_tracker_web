@@ -352,11 +352,11 @@ export default function AdminDashboard() {
                                             {"All Students"}
                                         </button>
                                     </Link>
-                                    <button>
+                                    <Link className="hover:cursor-pointer" href="/dashboard/admin/student/new">
                                         <div className="bg-yellow-100 text-[#544a15] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons">add</span>
                                         </div>
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
 

@@ -102,6 +102,10 @@ export default function Login() {
                         CGPA: data["CGPA"],
                         accountStatus: data["accountStatus"],
                     }));
+
+                    setTimeout(() => {
+                        router.replace("/dashboard/student");
+                    });
                 } else if (data["managerEmail"] !== undefined) {
                     secureLocalStorage.setItem("userAccess", data["SECRET_TOKEN"]);
                     secureLocalStorage.setItem("currentUser", JSON.stringify({

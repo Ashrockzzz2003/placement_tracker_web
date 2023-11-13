@@ -49,9 +49,12 @@ export default function Welcome() {
 
           <div className="mx-auto max-w-2xl py-48 lg:py-56">
             <div className="sm:mb-8 flex justify-center text-center">
-              <Link href={"https://www.amrita.edu"} target='_blank'><div className="relative rounded-full px-3 py-1 my-8 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                Amrita Vishwa Vidyapeetham, Coimbatore
-              </div></Link>
+              <Link href={"https://www.amrita.edu"} target='_blank'>
+              <div className='relative rounded-full px-3 py-2 my-8 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 items-center align-middle flex flex-row'>
+                {"Amrita Vishwa Vidyapeetham, Coimbatore"}
+                <span className="material-icons ml-2">open_in_new</span>
+                </div>
+              </Link>
             </div>
             <div className="text-center">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">

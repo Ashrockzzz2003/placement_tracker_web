@@ -92,7 +92,7 @@ export default function StudentDashboard() {
         });
 
         fetch(GET_STUDENT_PLACEMENTS_URL, {
-            method: "GET",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${secureLocalStorage.getItem("userAccess")}`

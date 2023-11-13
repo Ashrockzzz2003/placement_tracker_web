@@ -727,8 +727,12 @@ export default function AllPlacedStudentsScreen() {
                                         return [
                                             (student["placements"].length === 0 ? (
                                                 <tr key={index}>
-
-                                                    <td className={"border border-gray-200 px-2 py-1" + (index === allPlacedStudentDataFiltered.length - 1 ? "border-separate rounded-bl-2xl" : "")}>{student["studentRollNo"]}</td>
+                                                    <td className={"border border-gray-200 px-2 py-1" + (index === allPlacedStudentDataFiltered.length - 1 ? "border-separate rounded-bl-2xl" : "")}>
+                                                    {student["studentRollNo"]}
+                                                        {/* <Link className="underline" href={`/dashboard/admin/student/${student['studentId']}`}>
+                                                            {student["studentRollNo"]}
+                                                        </Link> */}
+                                                    </td>
                                                     <td className="border border-gray-200 px-2 py-1">{student["studentName"]}</td>
                                                     <td className="border border-gray-200 px-2 py-1">{student["studentGender"]}</td>
                                                     <td className="border border-gray-200 px-2 py-1">{student["studentDept"]} {" "} {student["studentSection"]}</td>
@@ -743,7 +747,12 @@ export default function AllPlacedStudentsScreen() {
                                                 </tr>
                                             ) : (<tr key={index}>
 
-                                                <td className={"border border-gray-200 px-2 py-1" + (index === allPlacedStudentDataFiltered.length - 1 ? "border-separate rounded-bl-2xl" : "")} rowSpan={student["placements"].length + 1}>{student["studentRollNo"]}</td>
+                                                <td className={"border border-gray-200 px-2 py-1" + (index === allPlacedStudentDataFiltered.length - 1 ? "border-separate rounded-bl-2xl" : "")} rowSpan={student["placements"].length + 1}>
+                                                    {student["studentRollNo"]}
+                                                    {/* <Link target="_blank" className="underline italic" href={`/dashboard/admin/student/${student['studentId']}`}>
+                                                        {student["studentRollNo"]}
+                                                    </Link> */}
+                                                </td>
                                                 <td className="border border-gray-200 px-2 py-1" rowSpan={student["placements"].length + 1}>{student["studentName"]}</td>
                                                 <td className="border border-gray-200 px-2 py-1" rowSpan={student["placements"].length + 1}>{student["studentGender"]}</td>
                                                 <td className="border border-gray-200 px-1 py-1" rowSpan={student["placements"].length + 1}>{student["studentDept"]} {" "} {student["studentSection"]}</td>

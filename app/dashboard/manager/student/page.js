@@ -753,7 +753,7 @@ export default function AllPlacedStudentsScreen() {
                                                     return (
                                                         <tr key={pindex}>
                                                             <td className="border border-gray-200 px-0.5 py-1 text-center">
-                                                                <Link href={`/dashboard/manager/company/${placement['companyId']}`}>{placement["companyName"]}</Link>
+                                                                {placement["companyName"]}
                                                                 {placement["jobRole"] !== "-" ? (
                                                                     <p className="text-xs text-gray-500">{placement["jobRole"]}</p>
                                                                 ) : null}

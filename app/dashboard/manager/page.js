@@ -182,7 +182,7 @@ export default function AdminDashboard() {
                                 </Link>
                             </div>
                             <div className="flex lg:flex lg:flex-1 lg:justify-end">
-                                <Link href={"/dashboard/manager/profile"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer">
+                                <Link href={"/dashboard/manager"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer">
                                     <span className="material-icons">person</span>
                                 </Link>
                                 <button onClick={

@@ -21,6 +21,7 @@ import { Dialog, Transition } from "@headlessui/react";
 export default function AllPlacedStudentsScreen() {
     const [allPlacedStudentData, setAllPlacedStudentData] = useState([]);
     const [allPlacedStudentDataFiltered, setAllPlacedStudentDataFiltered] = useState([]);
+    
     const [isLoading, setIsLoading] = useState(true);
     const [userAccess, setUserAccess] = useState("");
     const [sections, setSections] = useState();

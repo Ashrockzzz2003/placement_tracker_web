@@ -6,28 +6,21 @@ This is a web application for tracking the placement activities of the students 
 
 ## Technologies Used
 
-`NextJS` `ReactJS` `NodeJS` `ExpressJS` `MySQL` `TailwindCSS`
+| Type | Technologies | Link |
+| --- | --- | --- |
+| Frontend | `NextJS`, `ReactJS`, `NodeJS`, `TailwindCSS` | https://github.com/Ashrockzzz2003/placement_tracker_web |
+| Backend | `NodeJS`, `ExpressJS`, `MySQL` | https://github.com/Ashrockzzz2003/placement_tracker_server |
 
 ## Getting Started
 
-### Prerequisites
-
-- NodeJS
-- MySQL
-
 ### Installation
 
-1. Clone the repo
-   ```sh
-   git clone
-    ```
-
-2. Install NPM packages
+1. Install NPM packages
     ```sh
     npm install
     ```
 
-3. Run the App
+2. Run the App in Development Mode
     ```sh
     npm run dev
     ```

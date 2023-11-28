@@ -15,7 +15,7 @@ export default function Welcome() {
       easing: 'ease-in-out',
       delay: 100,
     });
-  })
+  }, []);
 
   return (
     <main>

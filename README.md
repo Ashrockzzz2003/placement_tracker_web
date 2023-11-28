@@ -8,8 +8,8 @@ This is a web application for tracking the placement activities of the students 
 
 | Type | Technologies | Link |
 | --- | --- | --- |
-| Frontend | `NextJS`, `ReactJS`, `NodeJS`, `TailwindCSS` | https://github.com/Ashrockzzz2003/placement_tracker_web |
-| Backend | `NodeJS`, `ExpressJS`, `MySQL` | https://github.com/Ashrockzzz2003/placement_tracker_server |
+| Frontend | `NextJS`, `ReactJS`, `NodeJS`, `TailwindCSS` | (https://github.com/Ashrockzzz2003/placement_tracker_web)[GitHub] |
+| Backend | `NodeJS`, `ExpressJS`, `MySQL` | (https://github.com/Ashrockzzz2003/placement_tracker_server)[GitHub] |
 
 ## Getting Started
 

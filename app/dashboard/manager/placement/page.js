@@ -1,6 +1,6 @@
 "use client";
 
-import { GET_ALL_PLACEMENTS_URL, GET_COMPANY_LIST_URL } from "@/util/constants";
+import { GET_ALL_PLACEMENTS_URL, GET_COMPANY_LIST_URL, GET_COMPANY_DATA_BY_BATCH_URL} from "@/util/constants";
 import Aos from "aos";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState } from "react";
@@ -17,14 +17,19 @@ import { SelectButton } from "primereact/selectbutton";
 import { MultiSelect } from 'primereact/multiselect';
 import Searchbar from "@/util/SearchBar";
 import { Dialog, Transition } from "@headlessui/react";
+import { Chart } from 'primereact/chart';
 
 export default function AllPlacedStudentsScreen() {
     const [allPlacedStudentData, setAllPlacedStudentData] = useState([]);
     const [allPlacedStudentDataFiltered, setAllPlacedStudentDataFiltered] = useState([]);
+    
     const [isLoading, setIsLoading] = useState(true);
     const [userAccess, setUserAccess] = useState("");
     const [sections, setSections] = useState();
     const [companyList, setCompanyList] = useState([]);
+
+    const [companyNames,setCompanyNames] = useState([]);
+    const [totalHires,setTotalHires] = useState([]);
 
     const [tempTotalPlacements, setTempTotalPlacements] = useState(0);
     const [totalPlacements, setTotalPlacements] = useState(0);
@@ -32,6 +37,38 @@ export default function AllPlacedStudentsScreen() {
     const [maxCTC, setMaxCTC] = useState(0);
     const [minCTC, setMinCTC] = useState(0);
     const [avgCTC, setAvgCTC] = useState(0);
+    
+    const basicOptions = {
+        maintainAspectRatio: false,
+        aspectRatio: 0.5,
+        responsive: true,
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#495057'
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: '#495057'
+                },
+                grid: {
+                    color: '#ebedef'
+                }
+            },
+            y: {
+                ticks: {
+                    color: '#495057'
+                },
+                grid: {
+                    color: '#ebedef'
+                }
+            }
+        }
+    };
+
 
     const toast = useRef(null);
     const router = useRouter();
@@ -54,6 +91,57 @@ export default function AllPlacedStudentsScreen() {
 
     useEffect(() => {
         setUserAccess(secureLocalStorage.getItem("userAccess"));
+
+        fetch(GET_COMPANY_DATA_BY_BATCH_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
+            },
+            body: JSON.stringify({
+                "studentBatch": new Date().getFullYear(),
+                // "studentBatch": "2022",
+            })
+        }).then((res) => {
+            if (res.status === 200) {
+                res.json().then((data) => {
+                    
+                    const companyNamesTemp = [];
+                    const totalHiresTemp = [];
+
+                    data.companyHireData.forEach((data) => {
+                        const { companyName:name, totalHires: hires } = data;
+
+                        // Check if the company name is not already in the array
+                        if (!companyNamesTemp.includes(name)) {
+                            companyNamesTemp.push(name);
+                            totalHiresTemp.push(hires);
+                        } 
+                        //if company name is already in the array, add the hires to the existing value
+                        else {
+                            const index = companyNamesTemp.indexOf(name);
+                            totalHiresTemp[index] += hires;
+                        }
+                    });
+
+                    setCompanyNames(companyNamesTemp);
+                    setTotalHires(totalHiresTemp);
+
+                })               
+            } else if (res.status === 401) {
+                secureLocalStorage.clear();
+                alertError("Session Expired", "Please login again to continue.");
+                setTimeout(() => {
+                    router.replace("/login");
+                }, 3000);
+            } else {
+                alertError("Error", "Something went wrong. Please try again later.");
+            }
+        }).catch((err) => {
+            console.log(err);
+            alertError("Error", "Something went wrong. Please try again later.");
+        })
+
 
         fetch(GET_ALL_PLACEMENTS_URL, {
             method: "POST",
@@ -128,7 +216,6 @@ export default function AllPlacedStudentsScreen() {
                         acc[key]["placements"].sort((a, b) => {
                             return new Date(b["ctc"]) - new Date(a["ctc"]);
                         });
-                        
                         return acc;
                     }, {});
 
@@ -229,6 +316,31 @@ export default function AllPlacedStudentsScreen() {
     const [gender, setGender] = useState('');
 
     useEffect(() => {
+        const companyNamesTemp = [];
+        const totalHiresTemp = [];
+
+        allPlacedStudentDataFiltered.forEach((data) => {
+            data["placements"].forEach((placement) => {
+                const {companyName:name} = placement;
+
+                // Check if the company name is not already in the array
+                if (!companyNamesTemp.includes(name)) {
+                    companyNamesTemp.push(name);
+                    totalHiresTemp.push(1);
+                } 
+                //if company name is already in the array, add the hires to the existing value
+                else {
+                    const index = companyNamesTemp.indexOf(name);
+                    totalHiresTemp[index] += 1;
+                }
+            });
+        });
+
+        setCompanyNames(companyNamesTemp);
+        setTotalHires(totalHiresTemp);
+    }, [allPlacedStudentDataFiltered]);
+
+    useEffect(() => {
         if (allPlacedStudentData.length && companyList.length) {
             setAllPlacedStudentDataFiltered(allPlacedStudentData.filter((student) => {
                 return (
@@ -251,22 +363,6 @@ export default function AllPlacedStudentsScreen() {
             }));
         }
     }, [searchText, selectedSections, selectedCompanies, isHigherStudies, isIntern, isPPO, isOnCampus, allPlacedStudentData, companyList, gender, isGirlsDrive]);
-
-
-    const [studentBatch, setStudentBatch] = useState(new Date().getFullYear());
-    const [currentBatch, setCurrentBatch] = useState(studentBatch);
-    const batchRegex = new RegExp("^[0-9]{4}$");
-    const isValidBatch = batchRegex.test(studentBatch) && parseInt(studentBatch) >= 2018 && parseInt(studentBatch) <= new Date().getFullYear() + 2 && studentBatch !== currentBatch;
-
-    const [isOpen, setIsOpen] = useState(false);
-
-    function closeModal() {
-        setIsOpen(false)
-    }
-
-    function openModal() {
-        setIsOpen(true);
-    }
 
     useEffect(() => {
         // max, min, avg ctc
@@ -317,15 +413,82 @@ export default function AllPlacedStudentsScreen() {
         setAvgCTC((sum / allPlacedStudentDataFiltered.length).toFixed(2));
     }, [allPlacedStudentDataFiltered, isIntern, isPPO, isOnCampus, isGirlsDrive, selectedCompanies, totalPlacements, isHigherStudies]);
 
+
+    const [studentBatch, setStudentBatch] = useState(new Date().getFullYear());
+    const [currentBatch, setCurrentBatch] = useState(studentBatch);
+    const batchRegex = new RegExp("^[0-9]{4}$");
+    const isValidBatch = batchRegex.test(studentBatch) && parseInt(studentBatch) >= 2018 && parseInt(studentBatch) <= new Date().getFullYear() + 2 && studentBatch !== currentBatch;
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    function closeModal() {
+        setIsOpen(false)
+    }
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
     const getBatchData = async (e) => {
         setIsLoading(true);
         e.preventDefault();
 
+        
         if (!isValidBatch) {
             alertError("Invalid Batch", "Please enter a valid batch.");
             setIsLoading(false);
             return;
         }
+
+        fetch(GET_COMPANY_DATA_BY_BATCH_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
+            },
+            body: JSON.stringify({
+                "studentBatch": studentBatch,
+                // "studentBatch": "2022",
+            })
+        }).then((res) => {
+            if (res.status === 200) {
+                res.json().then((data) => {
+                    
+                    const companyNamesTemp = [];
+                    const totalHiresTemp = [];
+
+                    data.companyHireData.forEach((data) => {
+                        const { companyName:name, totalHires: hires } = data;
+
+                        // Check if the company name is not already in the array
+                        if (!companyNamesTemp.includes(name)) {
+                            companyNamesTemp.push(name);
+                            totalHiresTemp.push(hires);
+                        } 
+                        //if company name is already in the array, add the hires to the existing value
+                        else {
+                            const index = companyNamesTemp.indexOf(name);
+                            totalHiresTemp[index] += hires;
+                        }
+                    });
+
+                    setCompanyNames(companyNamesTemp);
+                    setTotalHires(totalHiresTemp);
+
+                })               
+            } else if (res.status === 401) {
+                secureLocalStorage.clear();
+                alertError("Session Expired", "Please login again to continue.");
+                setTimeout(() => {
+                    router.replace("/login");
+                }, 3000);
+            } else {
+                alertError("Error", "Something went wrong. Please try again later.");
+            }
+        }).catch((err) => {
+            console.log(err);
+            alertError("Error", "Something went wrong. Please try again later.");
+        })
 
         fetch(GET_ALL_PLACEMENTS_URL, {
             method: "POST",
@@ -404,6 +567,9 @@ export default function AllPlacedStudentsScreen() {
                         return acc;
                     }, {});
 
+
+                    
+
                     // Overall Sort by top placement
                     const sortedData = Object.values(groupedData).sort((a, b) => {
                         return new Date(b["placements"][0]["ctc"]) - new Date(a["placements"][0]["ctc"]);
@@ -457,6 +623,8 @@ export default function AllPlacedStudentsScreen() {
             setStudentBatch(studentBatch);
             setIsLoading(false);
         })
+
+
     }
 
     return (
@@ -468,12 +636,12 @@ export default function AllPlacedStudentsScreen() {
                     <header className="absolute inset-x-0 top-0 z-50">
                         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
                             <div className="lg:flex lg:gap-x-12">
-                                <Link href={"/dashboard/manager"}>
+                                <Link href={"/dashboard/admin"}>
                                     <Image src="/logo.png" alt="Amrita logo" width={128} height={128} className='ml-auto mr-auto my-4' />
                                 </Link>
                             </div>
                             <div className="flex lg:flex lg:flex-1 lg:justify-end">
-                                <Link href={"/dashboard/manager"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
+                                <Link href={"/dashboard/admin"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
                                     <span className="material-icons">home</span>
                                 </Link>
                                 <button onClick={
@@ -591,6 +759,7 @@ export default function AllPlacedStudentsScreen() {
                             </div>
                         </div>
 
+
                         <div className="flex flex-wrap justify-center items-center mb-8">
                             <div className="border-t border-l border-b rounded-l-2xl">
                                 <div className="text-center">
@@ -639,6 +808,24 @@ export default function AllPlacedStudentsScreen() {
                             </div>
                         </div>
 
+                        <div className="flex flex-wrap justify-center items-center mx-auto mb-8"> 
+                            <Chart type="bar" 
+                            data={{
+                                labels: companyNames,
+                                datasets: [
+                                    {
+                                        label: 'No. of Hires',
+                                        backgroundColor: '#42A5F5',
+                                        data: totalHires
+                                    }
+                                ]
+                            }} 
+                            options={basicOptions} 
+                            style={{width: '80%' }}/>
+                        </div>
+                        
+
+
                         <table className="max-w-11/12 ml-auto mr-auto my-4 rounded-2xl backdrop-blur-2xl bg-red-50 bg-opacity-30 text-center text-sm border-black border-separate border-spacing-0 border-solid">
                             <thead className="border-0 text-lg font-medium">
                                 <tr className="bg-black text-white bg-opacity-90 backdrop-blur-xl">
@@ -676,7 +863,7 @@ export default function AllPlacedStudentsScreen() {
                                                 return (
                                                     <tr key={pindex}>
                                                         <td className="border border-gray-200 px-0.5 py-1 text-center">
-                                                            <Link href={`/dashboard/manager/company/${placement['companyId']}`}>{placement["companyName"]}</Link>
+                                                            {placement["companyName"]}
                                                             {placement["jobRole"] !== "-" ? (
                                                                 <p className="text-xs text-gray-500">{placement["jobRole"]}</p>
                                                             ) : null}

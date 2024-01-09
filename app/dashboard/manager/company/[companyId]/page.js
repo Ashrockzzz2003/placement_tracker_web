@@ -11,8 +11,8 @@ import Image from "next/image";
 import { Fragment, useEffect, useRef, useState } from "react";
 import secureLocalStorage from "react-secure-storage";
 import { Toast } from "primereact/toast";
-import Searchbar from "@/util/SearchBar";
 import { Dialog, Transition } from "@headlessui/react";
+import { Chart } from 'primereact/chart';
 
 
 export default function CompanyPage() {
@@ -43,6 +43,40 @@ export default function CompanyPage() {
     };
 
     const { companyId } = useParams();
+
+    const basicOptions = {
+        maintainAspectRatio: false,
+        aspectRatio: 1,
+        responsive: true,
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#495057'
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: '#495057'
+                },
+                grid: {
+                    color: '#ebedef'
+                }
+            },
+            y: {
+                ticks: {
+                    color: '#495057'
+                },
+                grid: {
+                    color: '#ebedef'
+                }
+            }
+        }
+    };
+
+
+    
 
     useEffect(() => {
         setUserAccess(secureLocalStorage.getItem("userAccess"));
@@ -161,15 +195,15 @@ export default function CompanyPage() {
                 <header className="absolute inset-x-0 top-0 z-50">
                     <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
                         <div className="lg:flex lg:gap-x-12">
-                            <Link href={"/dashboard/manager"}>
+                            <Link href={"/dashboard/admin"}>
                                 <Image src="/logo.png" alt="Amrita logo" width={128} height={128} className='ml-auto mr-auto my-4' />
                             </Link>
                         </div>
                         <div className="flex lg:flex lg:flex-1 lg:justify-end">
-                            <Link href={"/dashboard/manager/company"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
+                            <Link href={"/dashboard/admin/company"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]">
                                 <span className="material-icons">apartment</span>
                             </Link>
-                            <Link href={"/dashboard/manager"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ml-2">
+                            <Link href={"/dashboard/admin"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ml-2">
                                 <span className="material-icons">home</span>
                             </Link>
                             <button onClick={
@@ -268,15 +302,29 @@ export default function CompanyPage() {
                         <>
                             <h1 className="text-3xl text-center mb-2">Section Wise Hires</h1>
                             <div className="relative mx-6 my-8 py-2 flex flex-wrap justify-center gap-4 items-center md:mx-16">
-                                {
-                                    deptSectionWiseHiredStudents.map((deptSectionWiseHire, index) => {
+                                    {deptSectionWiseHiredStudents.map((deptSectionWiseHire, index) => {
                                         return <div key={index} className="flex flex-col rounded-xl backdrop-blur-xl bg-green-100 text-[#21430e] shadow-lg">
                                             <span className="text-center p-2">{deptSectionWiseHire.studentDept} {deptSectionWiseHire.studentSection}</span>
                                             <hr className="border-[#21430e] w-full" />
                                             <span className="text-center p-2">{deptSectionWiseHire.totalHires}</span>
                                         </div>
-                                    })
-                                }
+                                    })}
+                            </div>
+
+                            <div className="flex flex-wrap justify-center items-center mx-auto mb-8"> 
+                                <Chart type="bar" 
+                                data={{
+                                    labels: deptSectionWiseHiredStudents.map(student => student.studentDept + " " + student.studentSection),
+                                    datasets: [
+                                        {
+                                            label: 'No. of Hires',
+                                            backgroundColor: '#42A5F5',
+                                            data: deptSectionWiseHiredStudents.map(student => student.totalHires)
+                                        }
+                                    ]
+                                }} 
+                                options={basicOptions} 
+                                style={{width: '50%' }}/>
                             </div>
 
                             <h1 className="text-3xl text-center mb-2">All Hires</h1>

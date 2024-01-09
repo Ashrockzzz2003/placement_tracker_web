@@ -12,6 +12,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import secureLocalStorage from "react-secure-storage";
 import { Toast } from "primereact/toast";
 import { Dialog, Transition } from "@headlessui/react";
+import { Chart } from 'primereact/chart';
 
 
 export default function CompanyPage() {
@@ -42,6 +43,40 @@ export default function CompanyPage() {
     };
 
     const { companyId } = useParams();
+
+    const basicOptions = {
+        maintainAspectRatio: false,
+        aspectRatio: 1,
+        responsive: true,
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#495057'
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: '#495057'
+                },
+                grid: {
+                    color: '#ebedef'
+                }
+            },
+            y: {
+                ticks: {
+                    color: '#495057'
+                },
+                grid: {
+                    color: '#ebedef'
+                }
+            }
+        }
+    };
+
+
+    
 
     useEffect(() => {
         setUserAccess(secureLocalStorage.getItem("userAccess"));
@@ -274,6 +309,22 @@ export default function CompanyPage() {
                                             <span className="text-center p-2">{deptSectionWiseHire.totalHires}</span>
                                         </div>
                                     })}
+                            </div>
+
+                            <div className="flex flex-wrap justify-center items-center mx-auto mb-8"> 
+                                <Chart type="bar" 
+                                data={{
+                                    labels: deptSectionWiseHiredStudents.map(student => student.studentDept + " " + student.studentSection),
+                                    datasets: [
+                                        {
+                                            label: 'No. of Hires',
+                                            backgroundColor: '#42A5F5',
+                                            data: deptSectionWiseHiredStudents.map(student => student.totalHires)
+                                        }
+                                    ]
+                                }} 
+                                options={basicOptions} 
+                                style={{width: '50%' }}/>
                             </div>
 
                             <h1 className="text-3xl text-center mb-2">All Hires</h1>

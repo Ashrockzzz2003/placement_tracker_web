@@ -28,8 +28,7 @@ export default function AllPlacedStudentsScreen() {
     const [sections, setSections] = useState();
     const [companyList, setCompanyList] = useState([]);
 
-    const [companyNames,setCompanyNames] = useState([]);
-    const [totalHires,setTotalHires] = useState([]);
+    const [companyHires,setCompanyHires] = useState({});
 
     const [tempTotalPlacements, setTempTotalPlacements] = useState(0);
     const [totalPlacements, setTotalPlacements] = useState(0);
@@ -106,26 +105,22 @@ export default function AllPlacedStudentsScreen() {
             if (res.status === 200) {
                 res.json().then((data) => {
                     
-                    const companyNamesTemp = [];
-                    const totalHiresTemp = [];
+                    const companyHiresTemp = [];
 
                     data.companyHireData.forEach((data) => {
                         const { companyName:name, totalHires: hires } = data;
 
                         // Check if the company name is not already in the array
-                        if (!companyNamesTemp.includes(name)) {
-                            companyNamesTemp.push(name);
-                            totalHiresTemp.push(hires);
+                        if (!companyHiresTemp.includes(name)) {
+                            companyHiresTemp[name] = hires;
                         } 
                         //if company name is already in the array, add the hires to the existing value
                         else {
-                            const index = companyNamesTemp.indexOf(name);
-                            totalHiresTemp[index] += hires;
+                            companyHiresTemp[name]+= hires;
                         }
                     });
 
-                    setCompanyNames(companyNamesTemp);
-                    setTotalHires(totalHiresTemp);
+                    setCompanyHires(companyHiresTemp);
 
                 })               
             } else if (res.status === 401) {
@@ -316,28 +311,25 @@ export default function AllPlacedStudentsScreen() {
     const [gender, setGender] = useState('');
 
     useEffect(() => {
-        const companyNamesTemp = [];
-        const totalHiresTemp = [];
+
+        const companyHiresTemp = [];
 
         allPlacedStudentDataFiltered.forEach((data) => {
             data["placements"].forEach((placement) => {
-                const {companyName:name} = placement;
+                const { companyName:name, totalHires: hires } = data;
 
                 // Check if the company name is not already in the array
-                if (!companyNamesTemp.includes(name)) {
-                    companyNamesTemp.push(name);
-                    totalHiresTemp.push(1);
+                if (!companyHiresTemp.includes(name)) {
+                    companyHiresTemp[name] = hires;
                 } 
                 //if company name is already in the array, add the hires to the existing value
                 else {
-                    const index = companyNamesTemp.indexOf(name);
-                    totalHiresTemp[index] += 1;
+                    companyHiresTemp[name]+= hires;
                 }
             });
         });
 
-        setCompanyNames(companyNamesTemp);
-        setTotalHires(totalHiresTemp);
+        setCompanyHires(companyHiresTemp);
     }, [allPlacedStudentDataFiltered]);
 
     useEffect(() => {
@@ -454,26 +446,22 @@ export default function AllPlacedStudentsScreen() {
             if (res.status === 200) {
                 res.json().then((data) => {
                     
-                    const companyNamesTemp = [];
-                    const totalHiresTemp = [];
+                    const companyHiresTemp = [];
 
                     data.companyHireData.forEach((data) => {
                         const { companyName:name, totalHires: hires } = data;
 
                         // Check if the company name is not already in the array
-                        if (!companyNamesTemp.includes(name)) {
-                            companyNamesTemp.push(name);
-                            totalHiresTemp.push(hires);
+                        if (!companyHiresTemp.includes(name)) {
+                            companyHiresTemp[name] = hires;
                         } 
                         //if company name is already in the array, add the hires to the existing value
                         else {
-                            const index = companyNamesTemp.indexOf(name);
-                            totalHiresTemp[index] += hires;
+                            companyHiresTemp[name]+= hires;
                         }
                     });
 
-                    setCompanyNames(companyNamesTemp);
-                    setTotalHires(totalHiresTemp);
+                    setCompanyHires(companyHiresTemp);
 
                 })               
             } else if (res.status === 401) {
@@ -811,12 +799,12 @@ export default function AllPlacedStudentsScreen() {
                         <div className="flex flex-wrap justify-center items-center mx-auto mb-8"> 
                             <Chart type="bar" 
                             data={{
-                                labels: companyNames,
+                                labels: companyHires.keys(),
                                 datasets: [
                                     {
                                         label: 'No. of Hires',
                                         backgroundColor: '#42A5F5',
-                                        data: totalHires
+                                        data: companyHires.values()
                                     }
                                 ]
                             }} 

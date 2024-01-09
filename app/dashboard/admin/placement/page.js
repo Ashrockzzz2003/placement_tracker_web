@@ -316,6 +316,31 @@ export default function AllPlacedStudentsScreen() {
     const [gender, setGender] = useState('');
 
     useEffect(() => {
+        const companyNamesTemp = [];
+        const totalHiresTemp = [];
+
+        allPlacedStudentDataFiltered.forEach((data) => {
+            data["placements"].forEach((placement) => {
+                const {companyName:name} = placement;
+
+                // Check if the company name is not already in the array
+                if (!companyNamesTemp.includes(name)) {
+                    companyNamesTemp.push(name);
+                    totalHiresTemp.push(1);
+                } 
+                //if company name is already in the array, add the hires to the existing value
+                else {
+                    const index = companyNamesTemp.indexOf(name);
+                    totalHiresTemp[index] += 1;
+                }
+            });
+        });
+
+        setCompanyNames(companyNamesTemp);
+        setTotalHires(totalHiresTemp);
+    }, [allPlacedStudentDataFiltered]);
+
+    useEffect(() => {
         if (allPlacedStudentData.length && companyList.length) {
             setAllPlacedStudentDataFiltered(allPlacedStudentData.filter((student) => {
                 return (

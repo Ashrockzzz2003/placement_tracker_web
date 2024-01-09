@@ -18,6 +18,7 @@ import { Chart } from 'primereact/chart';
 export default function CompanyPage() {
     const [allHiredStudents, setAllHiredStudents] = useState([]);
     const [deptSectionWiseHiredStudents, setDeptSectionWiseHiredStudents] = useState([]);
+    const [sortedDeptSectionWiseHiredStudents, setSortedDeptSectionWiseHiredStudents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [userAccess, setUserAccess] = useState({});
 
@@ -138,6 +139,12 @@ export default function CompanyPage() {
     function openModal() {
         setIsOpen(true);
     }
+
+    useEffect(() => {
+        const tempArray = [...deptSectionWiseHiredStudents];
+        tempArray.sort((a, b) => a.studentSection.localeCompare(b.studentSection));
+        setSortedDeptSectionWiseHiredStudents(tempArray);
+      }, [deptSectionWiseHiredStudents]);
 
     const getBatchData = (e, mode) => {
         setIsLoading(true);
@@ -302,7 +309,7 @@ export default function CompanyPage() {
                         <>
                             <h1 className="text-3xl text-center mb-2">Section Wise Hires</h1>
                             <div className="relative mx-6 my-8 py-2 flex flex-wrap justify-center gap-4 items-center md:mx-16">
-                                    {deptSectionWiseHiredStudents.map((deptSectionWiseHire, index) => {
+                                    {sortedDeptSectionWiseHiredStudents.map((deptSectionWiseHire, index) => {
                                         return <div key={index} className="flex flex-col rounded-xl backdrop-blur-xl bg-green-100 text-[#21430e] shadow-lg">
                                             <span className="text-center p-2">{deptSectionWiseHire.studentDept} {deptSectionWiseHire.studentSection}</span>
                                             <hr className="border-[#21430e] w-full" />
@@ -314,12 +321,12 @@ export default function CompanyPage() {
                             <div className="flex flex-wrap justify-center items-center mx-auto mb-8"> 
                                 <Chart type="bar" 
                                 data={{
-                                    labels: deptSectionWiseHiredStudents.map(student => student.studentDept + " " + student.studentSection),
+                                    labels: sortedDeptSectionWiseHiredStudents.map(student => student.studentDept + " " + student.studentSection),
                                     datasets: [
                                         {
                                             label: 'No. of Hires',
                                             backgroundColor: '#42A5F5',
-                                            data: deptSectionWiseHiredStudents.map(student => student.totalHires)
+                                            data: sortedDeptSectionWiseHiredStudents.map(student => student.totalHires)
                                         }
                                     ]
                                 }} 

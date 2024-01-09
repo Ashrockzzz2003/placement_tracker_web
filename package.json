@@ -6,11 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "pm2 start npm -- start"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "aos": "^2.3.4",
+    "chart.js": "^4.4.1",
     "material-icons": "^1.13.12",
     "next": "^13.5.4",
     "primereact": "^9.6.2",

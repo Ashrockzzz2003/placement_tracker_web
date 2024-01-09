@@ -1,6 +1,6 @@
 "use client";
 
-import { GET_ALL_PLACEMENTS_URL, GET_COMPANY_LIST_URL } from "@/util/constants";
+import { GET_ALL_PLACEMENTS_URL, GET_COMPANY_LIST_URL, GET_COMPANY_DATA_BY_BATCH_URL} from "@/util/constants";
 import Aos from "aos";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState } from "react";
@@ -17,6 +17,7 @@ import { SelectButton } from "primereact/selectbutton";
 import { MultiSelect } from 'primereact/multiselect';
 import Searchbar from "@/util/SearchBar";
 import { Dialog, Transition } from "@headlessui/react";
+import { Chart } from 'primereact/chart';
 
 export default function AllPlacedStudentsScreen() {
     const [allPlacedStudentData, setAllPlacedStudentData] = useState([]);
@@ -27,12 +28,47 @@ export default function AllPlacedStudentsScreen() {
     const [sections, setSections] = useState();
     const [companyList, setCompanyList] = useState([]);
 
+    const [companyNames,setCompanyNames] = useState([]);
+    const [totalHires,setTotalHires] = useState([]);
+
     const [tempTotalPlacements, setTempTotalPlacements] = useState(0);
     const [totalPlacements, setTotalPlacements] = useState(0);
 
     const [maxCTC, setMaxCTC] = useState(0);
     const [minCTC, setMinCTC] = useState(0);
     const [avgCTC, setAvgCTC] = useState(0);
+    
+    const basicOptions = {
+        maintainAspectRatio: false,
+        aspectRatio: 0.5,
+        responsive: true,
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#495057'
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: '#495057'
+                },
+                grid: {
+                    color: '#ebedef'
+                }
+            },
+            y: {
+                ticks: {
+                    color: '#495057'
+                },
+                grid: {
+                    color: '#ebedef'
+                }
+            }
+        }
+    };
+
 
     const toast = useRef(null);
     const router = useRouter();
@@ -55,6 +91,57 @@ export default function AllPlacedStudentsScreen() {
 
     useEffect(() => {
         setUserAccess(secureLocalStorage.getItem("userAccess"));
+
+        fetch(GET_COMPANY_DATA_BY_BATCH_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
+            },
+            body: JSON.stringify({
+                "studentBatch": new Date().getFullYear(),
+                // "studentBatch": "2022",
+            })
+        }).then((res) => {
+            if (res.status === 200) {
+                res.json().then((data) => {
+                    
+                    const companyNamesTemp = [];
+                    const totalHiresTemp = [];
+
+                    data.companyHireData.forEach((data) => {
+                        const { companyName:name, totalHires: hires } = data;
+
+                        // Check if the company name is not already in the array
+                        if (!companyNamesTemp.includes(name)) {
+                            companyNamesTemp.push(name);
+                            totalHiresTemp.push(hires);
+                        } 
+                        //if company name is already in the array, add the hires to the existing value
+                        else {
+                            const index = companyNamesTemp.indexOf(name);
+                            totalHiresTemp[index] += hires;
+                        }
+                    });
+
+                    setCompanyNames(companyNamesTemp);
+                    setTotalHires(totalHiresTemp);
+
+                })               
+            } else if (res.status === 401) {
+                secureLocalStorage.clear();
+                alertError("Session Expired", "Please login again to continue.");
+                setTimeout(() => {
+                    router.replace("/login");
+                }, 3000);
+            } else {
+                alertError("Error", "Something went wrong. Please try again later.");
+            }
+        }).catch((err) => {
+            console.log(err);
+            alertError("Error", "Something went wrong. Please try again later.");
+        })
+
 
         fetch(GET_ALL_PLACEMENTS_URL, {
             method: "POST",
@@ -321,11 +408,62 @@ export default function AllPlacedStudentsScreen() {
         setIsLoading(true);
         e.preventDefault();
 
+        
         if (!isValidBatch) {
             alertError("Invalid Batch", "Please enter a valid batch.");
             setIsLoading(false);
             return;
         }
+
+        fetch(GET_COMPANY_DATA_BY_BATCH_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
+            },
+            body: JSON.stringify({
+                "studentBatch": studentBatch,
+                // "studentBatch": "2022",
+            })
+        }).then((res) => {
+            if (res.status === 200) {
+                res.json().then((data) => {
+                    
+                    const companyNamesTemp = [];
+                    const totalHiresTemp = [];
+
+                    data.companyHireData.forEach((data) => {
+                        const { companyName:name, totalHires: hires } = data;
+
+                        // Check if the company name is not already in the array
+                        if (!companyNamesTemp.includes(name)) {
+                            companyNamesTemp.push(name);
+                            totalHiresTemp.push(hires);
+                        } 
+                        //if company name is already in the array, add the hires to the existing value
+                        else {
+                            const index = companyNamesTemp.indexOf(name);
+                            totalHiresTemp[index] += hires;
+                        }
+                    });
+
+                    setCompanyNames(companyNamesTemp);
+                    setTotalHires(totalHiresTemp);
+
+                })               
+            } else if (res.status === 401) {
+                secureLocalStorage.clear();
+                alertError("Session Expired", "Please login again to continue.");
+                setTimeout(() => {
+                    router.replace("/login");
+                }, 3000);
+            } else {
+                alertError("Error", "Something went wrong. Please try again later.");
+            }
+        }).catch((err) => {
+            console.log(err);
+            alertError("Error", "Something went wrong. Please try again later.");
+        })
 
         fetch(GET_ALL_PLACEMENTS_URL, {
             method: "POST",
@@ -404,6 +542,9 @@ export default function AllPlacedStudentsScreen() {
                         return acc;
                     }, {});
 
+
+                    
+
                     // Overall Sort by top placement
                     const sortedData = Object.values(groupedData).sort((a, b) => {
                         return new Date(b["placements"][0]["ctc"]) - new Date(a["placements"][0]["ctc"]);
@@ -457,6 +598,8 @@ export default function AllPlacedStudentsScreen() {
             setStudentBatch(studentBatch);
             setIsLoading(false);
         })
+
+
     }
 
     return (
@@ -639,6 +782,24 @@ export default function AllPlacedStudentsScreen() {
                                 </div>
                             </div>
                         </div>
+
+                        <div className="flex flex-wrap justify-center items-center mx-auto mb-8"> 
+                            <Chart type="bar" 
+                            data={{
+                                labels: companyNames,
+                                datasets: [
+                                    {
+                                        label: 'No. of Hires',
+                                        backgroundColor: '#42A5F5',
+                                        data: totalHires
+                                    }
+                                ]
+                            }} 
+                            options={basicOptions} 
+                            style={{width: '80%' }}/>
+                        </div>
+                        
+
 
                         <table className="max-w-11/12 ml-auto mr-auto my-4 rounded-2xl backdrop-blur-2xl bg-red-50 bg-opacity-30 text-center text-sm border-black border-separate border-spacing-0 border-solid">
                             <thead className="border-0 text-lg font-medium">

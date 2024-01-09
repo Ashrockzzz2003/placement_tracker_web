@@ -25,7 +25,7 @@ export default function Login() {
 
     const emailRegex = new RegExp(/^[a-zA-Z0-9._-]+@(cb.students.amrita.edu|cb.amrita.edu)$/);
 
-    const isValidEmail = emailRegex.test(userEmail) || userEmail === "ashrockzzz2003@gmail.com" || userEmail === "hsheadone@gmail.com";
+    const isValidEmail = emailRegex.test(userEmail) || userEmail === "ashrockzzz2003@gmail.com" || userEmail === "hsheadone@gmail.com" || userEmail === "abhinavramki2@gmail.com";
     const isValidPassword = userPassword.length >= 8;
 
     const router = useRouter();

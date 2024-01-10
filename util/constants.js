@@ -27,3 +27,4 @@ export const ADD_NEW_STUDENT_URL = BASE_URL + "/addStudent";
 
 
 export const GET_STUDENT_PLACEMENTS_URL = BASE_URL + "/getStudentPlacements";
+export const STUDENT_EDIT_PLACEMENT_URL = BASE_URL + "/editPlacementDataById";

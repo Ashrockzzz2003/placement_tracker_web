@@ -100,7 +100,10 @@ export default function StudentDashboard() {
         }).then((res) => {
             if (res.status === 200) {
                 res.json().then((data) => {
+                    secureLocalStorage.setItem("studentPlacements", JSON.stringify(data["placementData"]));
                     setStudentPlacements(data["placementData"]);
+                    //console.log("test",data["placementData"]);
+                    //console.log("test",JSON.stringify(localStorage));
                 });
             } else if (res.status === 401) {
                 secureLocalStorage.clear();

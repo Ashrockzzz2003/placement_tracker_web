@@ -1,10 +1,10 @@
 "use client";
 
 import { LoadingScreen } from "@/util/LoadingScreen/LoadingScreen";
-import { ADD_NEW_COMPANY_URL, ADD_NEW_PLACEMENT_URL, GET_COMPANY_LIST_URL } from "@/util/constants";
+import { ADD_NEW_COMPANY_URL, STUDENT_EDIT_PLACEMENT_URL, GET_COMPANY_LIST_URL } from "@/util/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Toast } from "primereact/toast";
 import { Fragment, useEffect, useRef, useState } from "react";
 import secureLocalStorage from "react-secure-storage";
@@ -17,6 +17,31 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { SelectButton } from "primereact/selectbutton";
 
 export default function NewPlacementScreen() {
+
+    const router = useRouter();
+
+    const { placementID } = useParams();
+    const p = secureLocalStorage.getItem("studentPlacements");
+    const placements = JSON.parse(p);
+    var placement = {};
+    if(placements === null || placements === undefined) {
+        // placement.placementID = null;
+        // placement.companyId = null;
+        // placement.ctc = null;
+        // placement.jobRole = null;
+        // placement.jobLocation = null;
+        // placement.placementDate = null;
+        // placement.isIntern = null;
+        // placement.isPPO = null;
+        // placement.isOnCampus = null;
+        // placement.isGirlsDrive = null;
+        // placement.extraData = null;
+        router.replace("/dashboard/student");
+    }
+    else{
+        placement = placements.filter((p) => p.placementID === parseInt(placementID))[0];
+    }
+
     const [companyList, setCompanyList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [userAccess, setUserAccess] = useState("");
@@ -35,25 +60,38 @@ export default function NewPlacementScreen() {
             "extraData":"<extraData>" //Optional
     */
 
-    const [companyId, setCompanyId] = useState("");
-    const [ctc, setCtc] = useState("");
-    const [jobRole, setJobRole] = useState("");
-    const [jobLocation, setJobLocation] = useState("");
-    const [placementDate, setPlacementDate] = useState(new Date().toISOString().slice(0, 10));
+    const [companyId, setCompanyId] = useState(placement.companyID);
+    const [ctc, setCtc] = useState(placement.ctc);
+    const [jobRole, setJobRole] = useState(placement.jobRole);
+    const [jobLocation, setJobLocation] = useState(placement.jobLocation);
+    const [placementDate, setPlacementDate] = useState(placement.placementDate.substring(0, 10));
 
     const internOptions = ["Yes", "No"];
-    const [isIntern, setIsIntern] = useState("");
+    const [isIntern, setIsIntern] = useState(placement.isIntern === "1" ? "Yes" : "No");
 
     const ppoOptions = ["Yes", "No"];
-    const [isPPO, setIsPPO] = useState("");
+    const [isPPO, setIsPPO] = useState(placement.isPPO === "1" ? "Yes" : "No");
 
     const onCampusOptions = ["Yes", "No"];
-    const [isOnCampus, setIsOnCampus] = useState("");
+    const [isOnCampus, setIsOnCampus] = useState(placement.isOnCampus === "1" ? "Yes" : "No");
 
     const girlsDriveOptions = ["Yes", "No"];
-    const [isGirlsDrive, setIsGirlsDrive] = useState("");
+    const [isGirlsDrive, setIsGirlsDrive] = useState(placement.isGirlsDrive === "1" ? "Yes" : "No");
 
-    const [extraData, setExtraData] = useState("");
+    const [extraData, setExtraData] = useState(placement.extraData);
+
+    //console.log(placement);
+
+    // setCtc(placement.ctc);
+    // setJobRole(placement.jobRole);
+    // setJobLocation(placement.jobLocation);
+    // setPlacementDate(placement.placementDate);
+    // setIsIntern(placement.isIntern === 1 ? "Yes" : "No");
+    // setIsPPO(placement.isPPO === 1 ? "Yes" : "No");
+    // setIsOnCampus(placement.isOnCampus === 1 ? "Yes" : "No");
+    // setIsGirlsDrive(placement.isGirlsDrive === 1 ? "Yes" : "No");
+    // setExtraData(placement.extraData);
+
 
     // const rollNoRegex = new RegExp("^CB.EN.U4CSE[0-9]{5}$");
     // const isValidRollNo = rollNoRegex.test(studentRollNo);
@@ -73,7 +111,6 @@ export default function NewPlacementScreen() {
     const isValidInput = isValidCtc && isValidJobRole && isValidCompanyId && isValidJobLocation && isValidPlacementDate && isValidIntern && isValidPPO && isValidOnCampus && isValidGirlsDrive;
 
     const toast = useRef(null);
-    const router = useRouter();
 
     const alertError = (summary, detail) => {
         toast.current.show({
@@ -136,7 +173,7 @@ export default function NewPlacementScreen() {
     }, [router]);
 
 
-    const handleNewPlacement = async (e) => {
+    const handleEditPlacement = async (e) => {
         setIsLoading(true);
         e.preventDefault();
 
@@ -156,31 +193,48 @@ export default function NewPlacementScreen() {
 
         try {
 
-            const response = await fetch(ADD_NEW_PLACEMENT_URL, {
+            const req_data = {
+                placementID: placementID.toString(),
+                companyId: companyId.toString(),
+                ctc: ctc,
+                jobRole: jobRole,
+                jobLocation: jobLocation,
+                placementDate: placementDate,
+                isIntern: isIntern === "Yes" ? "1" : "0",
+                isPPO: isPPO === "Yes" ? "1" : "0",
+                isOnCampus: isOnCampus === "Yes" ? '1' : '0',
+                isGirlsDrive: isGirlsDrive === "Yes" ? '1' : '0',
+                extraData: extraData,
+            };
+            const response = await fetch(STUDENT_EDIT_PLACEMENT_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
                 },
-                body: JSON.stringify({
-                    companyId: companyId.toString(),
-                    ctc: ctc,
-                    jobRole: jobRole,
-                    jobLocation: jobLocation,
-                    placementDate: placementDate,
-                    isIntern: isIntern === "Yes" ? "1" : "0",
-                    isPPO: isPPO === "Yes" ? "1" : "0",
-                    isOnCampus: isOnCampus === "Yes" ? '1' : '0',
-                    isGirlsDrive: isGirlsDrive === "Yes" ? '1' : '0',
-                    extraData: extraData,
-                }),
+                body: JSON.stringify(req_data),
             });
 
             const data = await response.json();
 
             if (response.status === 200) {
                 setIsLoading(true);
-                alertSuccess("Success", "Placement added successfully.");
+                alertSuccess("Success", "Placement Details Edited successfully.");
+
+                //secureLocalStorage.removeItem("studentPlacements");
+                // secureLocalStorage.setItem("studentPlacements", JSON.stringify({
+                //     placementID: placementID.toString(),
+                //     companyId: companyId.toString(),
+                //     ctc: ctc,
+                //     jobRole: jobRole,
+                //     jobLocation: jobLocation,
+                //     placementDate: placementDate,
+                //     isIntern: req_data.isIntern,
+                //     isPPO: req_data.isPPO,
+                //     isOnCampus: req_data.isOnCampus,
+                //     isGirlsDrive: req_data.isGirlsDrive,
+                //     extraData: extraData,
+                // }));
 
                 setTimeout(() => {
                     router.replace("/dashboard/student");
@@ -291,7 +345,7 @@ export default function NewPlacementScreen() {
                             <Link href={"/dashboard/student"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
                                 <span className="material-icons">home</span>
                             </Link>
-                            <button onClick={
+                            {/* <button onClick={
                                 () => {
                                     secureLocalStorage.removeItem("currentUser");
                                     secureLocalStorage.removeItem("userAccess");
@@ -300,7 +354,7 @@ export default function NewPlacementScreen() {
                             } className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ml-2">
                                 {"Logout"}
                                 <span className="material-icons ml-2">logout</span>
-                            </button>
+                            </button> */}
                         </div>
                     </nav>
                 </header>
@@ -322,13 +376,13 @@ export default function NewPlacementScreen() {
                 <div className="mt-32 border border-gray-300 rounded-2xl mx-auto w-11/12 sm:max-w-11/12 md:max-w-md lg:max-w-md backdrop-blur-xl bg-gray-50 mb-8">
                     <div className="mx-auto w-full sm:max-w-11/12 md:max-w-md lg:max-w-md">
                         <div className='flex flex-row justify-center'>
-                            <h1 className='px-4 py-4 w-full text-2xl font-semibold text-center'>New Placement</h1>
+                            <h1 className='px-4 py-4 w-full text-2xl font-semibold text-center'>Edit Placement</h1>
                         </div>
                         <hr className='border-gray-300 w-full' />
                     </div>
 
                     <div className="mt-10 mx-auto w-full sm:max-w-11/12 md:max-w-md lg:max-w-md px-6 pb-8 lg:px-8">
-                        <form className="space-y-6" onSubmit={handleNewPlacement}>
+                        <form className="space-y-6" onSubmit={handleEditPlacement}>
                             <div>
                                 <label className="block text-md font-medium leading-6 text-black">Company</label>
                                 <div className="mt-2">
@@ -373,6 +427,7 @@ export default function NewPlacementScreen() {
                                         type="name"
                                         autoComplete="rollno"
                                         placeholder='Enter the role (eg. SDE)'
+                                        value={jobRole}
                                         onChange={(e) => {
                                             setJobRole(e.target.value);
                                         }}
@@ -392,6 +447,7 @@ export default function NewPlacementScreen() {
                                         type="name"
                                         autoComplete="rollno"
                                         placeholder='Enter the location (eg. Bengaluru)'
+                                        value={jobLocation}
                                         onChange={(e) => {
                                             setJobLocation(e.target.value);
                                         }}
@@ -411,6 +467,7 @@ export default function NewPlacementScreen() {
                                         type="number"
                                         step={0.01}
                                         placeholder='45.00'
+                                        value={ctc}
                                         onChange={(e) => {
                                             setCtc(e.target.value);
                                         }}
@@ -489,6 +546,7 @@ export default function NewPlacementScreen() {
                                 <div className="mt-2">
                                     <textarea
                                         placeholder='eg. 2 months internship, experience, etc.'
+                                        value={extraData}
                                         onChange={(e) => {
                                             setExtraData(e.target.value);
                                         }}
@@ -499,7 +557,7 @@ export default function NewPlacementScreen() {
 
                             <div>
                                 <input
-                                    value="Add Placement"
+                                    value="Edit Placement"
                                     type="submit"
                                     disabled={!isValidInput || isLoading}
                                     className={"w-full text-lg rounded-lg bg-black text-white p-2 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"} />

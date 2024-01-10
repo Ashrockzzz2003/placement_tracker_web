@@ -8,7 +8,6 @@ import { SelectButton } from "primereact/selectbutton";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-blue/theme.css";
 
-import { hashPassword } from "@/util/hash";
 import { useEffect, useRef, useState } from "react";
 import { STUDENT_EDIT_PROFILE_URL } from "@/util/constants";
 import secureLocalStorage from "react-secure-storage";

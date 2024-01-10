@@ -3,6 +3,11 @@ import "material-icons/iconfont/material-icons.css";
 import Link from "next/link";
 
 export default function StudentPlacementCard({ placementData, cardType }) {
+
+    const openEditPlacement = (placementID) => {
+        window.open(`/dashboard/student/editPlacement/${placementID}`, "_parent");
+    }
+
     return cardType === "1" ? (
         <div className="border rounded-xl backdrop-blur-xl bg-red-50 bg-opacity-30">
             <div>
@@ -84,8 +89,10 @@ export default function StudentPlacementCard({ placementData, cardType }) {
     ) : (
         <div className="border rounded-xl backdrop-blur-xl bg-red-50 bg-opacity-30">
             <div>
-                <div className="px-4 py-1 my-2">
+                <div className="px-4 py-1 my-2 flex m-auto align-middle">
                     <p className="font-semibold text-lg text-center bg-green-100 text-[#501515] rounded-xl w-fit px-2 m-auto">{placementData.ctc + " LPA"}</p>
+                    {/* <Link href={"/dashboard/student/editPlacement/"+placementID}><span className="material-icons">edit_square</span></Link> */}
+                    <button onClick={()=>openEditPlacement(placementData.placementID)}><span className="material-icons pt-2">edit_square</span></button>
                 </div>
                 <hr className="border-gray-900 w-full" />
                 <div className="px-4 py-1 text-center">

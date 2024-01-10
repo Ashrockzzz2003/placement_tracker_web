@@ -83,8 +83,9 @@ export default function Login() {
                 "isPlaced": "0",
                 "CGPA": null
                 */
-                // console.log(data);
+                console.log(data);
                 secureLocalStorage.clear();
+
 
                 if (data["studentEmail"] !== undefined) {
                     secureLocalStorage.setItem("userAccess", data["SECRET_TOKEN"]);

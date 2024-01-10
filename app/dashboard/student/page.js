@@ -174,12 +174,19 @@ export default function StudentDashboard() {
                                     {studentName}
                                 </h1>
                                 <p className="mt-4 text-lg leading-7 text-gray-500">
-                                    {studentRollNo} | {studentDept} {studentSection} | {studentBatch} Batch
+                                    {studentRollNo} | {studentDept} {studentSection} | {studentBatch} Batch 
                                 </p>
+                                <div className="hover:cursor-pointer w-fit ml-auto mr-auto">
+                                    <Link href={"/dashboard/student/editData"}>
+                                        <div className="rounded-xl px-2 py-0.5 mt-2 items-center align-middle flex flex-row text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+                                            <span className="material-icons mr-0.5">edit</span> {"Edit Profile"}
+                                        </div>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="hover:cursor-pointer w-fit ml-auto mr-auto py-16">
+                        <div className="hover:cursor-pointer w-fit ml-auto mr-auto pt-10 pb-14">
                             <Link href={"/dashboard/student/newPlacement"}>
                                 <div className="bg-black text-white rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                     <span className="material-icons mr-2">add</span> {"Add Placement"}

@@ -555,12 +555,15 @@ export default function NewPlacementScreen() {
                                 </div>
                             </div>
 
-                            <div>
+                            <div className="flex">
+                                <Link href={"/dashboard/student"} className="bg-[#ffffff] border-gray-300 border text-gray-600 rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer w-1/2">
+                                    <p className="mx-auto">Cancel</p>
+                                </Link>
                                 <input
                                     value="Edit Placement"
                                     type="submit"
                                     disabled={!isValidInput || isLoading}
-                                    className={"w-full text-lg rounded-lg bg-black text-white p-2 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"} />
+                                    className={" ml-2 w-1/2 text-lg rounded-xl bg-black text-white p-2 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"} />
                             </div>
 
                         </form>

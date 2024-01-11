@@ -368,14 +368,14 @@ export default function HandleEditData() {
                             </div>
 
                             <div className="flex">
+                                <Link href={"/dashboard/student"} className="bg-[#ffffff] border-gray-300 border text-gray-600 rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer w-1/2">
+                                    <p className="mx-auto">Cancel</p>
+                                </Link>
                                 <input
                                     value="Update Profile"
                                     type="submit"
                                     disabled={!isValid || loading}
-                                    className={"w-1/2 text-lg rounded-xl bg-black text-white p-2 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"} />
-                                <Link href={"/dashboard/student"} className="ml-2 bg-[#ffffff] border-gray-300 border text-gray-600 rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer w-1/2">
-                                    <p className="mx-auto">Cancel</p>
-                                </Link>
+                                    className={" ml-2 w-1/2 text-lg rounded-xl bg-black text-white p-2 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"} />
                             </div>
                         </form>
                     </div>

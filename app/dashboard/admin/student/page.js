@@ -728,10 +728,10 @@ export default function AllPlacedStudentsScreen() {
                                             (student["placements"].length === 0 ? (
                                                 <tr key={index}>
                                                     <td className={"border border-gray-200 px-2 py-1" + (index === allPlacedStudentDataFiltered.length - 1 ? "border-separate rounded-bl-2xl" : "")}>
-                                                    {student["studentRollNo"]}
-                                                        {/* <Link className="underline" href={`/dashboard/admin/student/${student['studentId']}`}>
+                                                    {/* {student["studentRollNo"]} */}
+                                                        <Link target="_parent" className="underline italic" href={`/dashboard/admin/student/${student['studentId']}`}>
                                                             {student["studentRollNo"]}
-                                                        </Link> */}
+                                                        </Link>
                                                     </td>
                                                     <td className="border border-gray-200 px-2 py-1">{student["studentName"]}</td>
                                                     <td className="border border-gray-200 px-2 py-1">{student["studentGender"]}</td>

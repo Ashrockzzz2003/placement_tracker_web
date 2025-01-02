@@ -157,7 +157,6 @@ export default function AdminDashboard() {
                     alertError("Error", "Something went wrong in adding company. Please try again later.");
                 }
 
-
             } catch (err) {
                 console.log(err);
                 alertError("Error", "Something went wrong. Please try again later.");

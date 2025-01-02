@@ -31,13 +31,14 @@ export default function StudentPage() {
         });
     };
 
-    const alertSuccess = (summary, detail) => {
-        toast.current.show({
-            severity: 'success',
-            summary: summary,
-            detail: detail,
-        });
-    };
+    // Not used
+    // const alertSuccess = (summary, detail) => {
+    //     toast.current.show({
+    //         severity: 'success',
+    //         summary: summary,
+    //         detail: detail,
+    //     });
+    // };
 
     const { studentId } = useParams();
 

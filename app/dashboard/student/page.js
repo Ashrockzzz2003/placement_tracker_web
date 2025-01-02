@@ -29,16 +29,16 @@ export default function StudentDashboard() {
                     "CGPA": student[0].CGPA
     */
 
-    const [studentEmail, setStudentEmail] = useState('');
+    const [studentEmail, setStudentEmail] = useState(''); // studentEmail not used
     const [studentName, setStudentName] = useState('');
     const [studentRollNo, setStudentRollNo] = useState('');
-    const [studentId, setStudentId] = useState('');
+    const [studentId, setStudentId] = useState(''); //studentId not used
     const [studentSection, setStudentSection] = useState('');
-    const [studentGender, setStudentGender] = useState('');
+    const [studentGender, setStudentGender] = useState(''); //studentGender not used
     const [studentBatch, setStudentBatch] = useState('');
     const [studentDept, setStudentDept] = useState('');
-    const [isHigherStudies, setIsHigherStudies] = useState('');
-    const [CGPA, setCGPA] = useState('');
+    const [isHigherStudies, setIsHigherStudies] = useState(''); //isHigherStudies not used
+    const [CGPA, setCGPA] = useState(''); //CGPA not used
 
     const [userAccess, setUserAccess] = useState('');
     const [isLoading, setIsLoading] = useState(true);
@@ -57,13 +57,13 @@ export default function StudentDashboard() {
         });
     };
 
-    const alertSuccess = (summary, detail) => {
-        toast.current.show({
-            severity: 'success',
-            summary: summary,
-            detail: detail,
-        });
-    };
+    // const alertSuccess = (summary, detail) => {
+    //     toast.current.show({
+    //         severity: 'success',
+    //         summary: summary,
+    //         detail: detail,
+    //     });
+    // };
 
     useEffect(() => {
         setUserAccess(secureLocalStorage.getItem("userAccess"));

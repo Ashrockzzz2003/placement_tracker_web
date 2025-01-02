@@ -101,7 +101,6 @@ export default function NewPlacementScreen() {
         setIsOpen(true)
     }
 
-
     useEffect(() => {
         setUserAccess(secureLocalStorage.getItem("userAccess"));
 

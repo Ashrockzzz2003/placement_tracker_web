@@ -1,5 +1,5 @@
 "use client";
-import Aos from "aos";
+import Aos from "aos"; // This import is not being used
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import 'material-icons/iconfont/material-icons.css';
@@ -160,9 +160,6 @@ export default function AllOfficialsScreen() {
             }));
         }
     }, [officials, searchText, role, status])
-
-
-
 
     return <>
         {isLoading ? <LoadingScreen /> : (

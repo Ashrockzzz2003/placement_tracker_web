@@ -34,12 +34,12 @@ export default function RegisterStudent() {
     const [studentGender, setStudentGender] = useState("");
     const [studentBatch, setStudentBatch] = useState("");
 
-    const [studentDept, setStudentDept] = useState("CSE");
+    const [studentDept, setStudentDept] = useState("CSE"); //setStudentDept not used
 
     const higherStudiesOptions = ["Yes", "No"];
     const [isHigherStudies, setIsHigherStudies] = useState("");
 
-    const [isPlaced, setIsPlaced] = useState("0");
+    const [isPlaced, setIsPlaced] = useState("0"); //setIsplaced not used
     const [CGPA, setCGPA] = useState("");
 
     const [loading, setLoading] = useState(false);

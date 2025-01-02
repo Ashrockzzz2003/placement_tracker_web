@@ -20,7 +20,7 @@ export default function AllCompaniesScreen() {
     const [companyHireData, setCompanyHireData] = useState([]);
     const [companyHireDataFiltered, setCompanyHireDataFiltered] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [userAccess, setUserAccess] = useState("");
+    const [userAccess, setUserAccess] = useState(""); // userAccess not used
 
     const [sectionData, setSectionData] = useState({});
 
@@ -157,13 +157,14 @@ export default function AllCompaniesScreen() {
         });
     };
 
-    const alertSuccess = (summary, detail) => {
-        toast.current.show({
-            severity: 'success',
-            summary: summary,
-            detail: detail,
-        });
-    };
+    // Not used
+    // const alertSuccess = (summary, detail) => {
+    //     toast.current.show({
+    //         severity: 'success',
+    //         summary: summary,
+    //         detail: detail,
+    //     });
+    // };
 
     const [searchText, setSearchText] = useState("");
 

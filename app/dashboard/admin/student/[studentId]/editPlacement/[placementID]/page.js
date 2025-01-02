@@ -24,8 +24,8 @@ export default function NewPlacementScreen() {
     const placements = JSON.parse(p);
     const student = JSON.parse(secureLocalStorage.getItem("currentStudent"));
 
-    const [studentId, setStudentId] = useState(student ? student.studentId : "");
-    const [studentRollNo, setStudentRollNo] = useState(student ? student.studentRollNo : "");
+    const [studentId, setStudentId] = useState(student ? student.studentId : ""); //setStudentId not used
+    const [studentRollNo, setStudentRollNo] = useState(student ? student.studentRollNo : ""); //setStudentRollNo not used
     const [companyList, setCompanyList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [userAccess, setUserAccess] = useState("");
@@ -43,9 +43,7 @@ export default function NewPlacementScreen() {
     const [extraData, setExtraData] = useState("");
     const toast = useRef(null);
     
-
     //console.log(student);
-    
 
     useEffect(() => {
         if (!student) {
@@ -147,8 +145,6 @@ export default function NewPlacementScreen() {
 
     const isValidInput = isValidCtc && isValidJobRole && isValidCompanyId && isValidJobLocation && isValidPlacementDate && isValidIntern && isValidPPO && isValidOnCampus && isValidGirlsDrive;
 
-    
-
     const alertError = (summary, detail) => {
         toast.current.show({
             severity: 'error',
@@ -172,10 +168,6 @@ export default function NewPlacementScreen() {
     function openModal() {
         setIsOpen(true)
     }
-
-
-    
-
 
     const handleEditPlacement = async (e) => {
         setIsLoading(true);
@@ -265,7 +257,6 @@ export default function NewPlacementScreen() {
         }
     }
 
-    
     const isValidCompanyName = companyName.length > 0;
 
     const addNewCompany = async (e) => {
@@ -326,7 +317,6 @@ export default function NewPlacementScreen() {
                     alertError("Error", "Something went wrong. Please try again later.");
                 }
 
-                
             } catch (err) {
                 console.log(err);
                 alertError("Error", "Something went wrong. Please try again later.");

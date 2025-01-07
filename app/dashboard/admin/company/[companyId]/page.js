@@ -20,7 +20,7 @@ export default function CompanyPage() {
     const [deptSectionWiseHiredStudents, setDeptSectionWiseHiredStudents] = useState([]);
     const [sortedDeptSectionWiseHiredStudents, setSortedDeptSectionWiseHiredStudents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [userAccess, setUserAccess] = useState({});
+    const [_, setUserAccess] = useState({});
 
     const [companyName, setCompanyName] = useState("");
     const router = useRouter();
@@ -30,14 +30,6 @@ export default function CompanyPage() {
     const alertError = (summary, detail) => {
         toast.current.show({
             severity: 'error',
-            summary: summary,
-            detail: detail,
-        });
-    };
-
-    const alertSuccess = (summary, detail) => {
-        toast.current.show({
-            severity: 'success',
             summary: summary,
             detail: detail,
         });
@@ -75,9 +67,6 @@ export default function CompanyPage() {
             }
         }
     };
-
-
-    
 
     useEffect(() => {
         setUserAccess(secureLocalStorage.getItem("userAccess"));

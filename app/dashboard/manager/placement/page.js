@@ -24,7 +24,7 @@ export default function AllPlacedStudentsScreen() {
     const [allPlacedStudentDataFiltered, setAllPlacedStudentDataFiltered] = useState([]);
     
     const [isLoading, setIsLoading] = useState(true);
-    const [userAccess, setUserAccess] = useState("");
+    const [_, setUserAccess] = useState("");
     const [sections, setSections] = useState();
     const [companyList, setCompanyList] = useState([]);
 
@@ -76,14 +76,6 @@ export default function AllPlacedStudentsScreen() {
     const alertError = (summary, detail) => {
         toast.current.show({
             severity: 'error',
-            summary: summary,
-            detail: detail,
-        });
-    };
-
-    const alertSuccess = (summary, detail) => {
-        toast.current.show({
-            severity: 'success',
             summary: summary,
             detail: detail,
         });
@@ -568,8 +560,6 @@ export default function AllPlacedStudentsScreen() {
                     }, {});
 
 
-                    
-
                     // Overall Sort by top placement
                     const sortedData = Object.values(groupedData).sort((a, b) => {
                         return new Date(b["placements"][0]["ctc"]) - new Date(a["placements"][0]["ctc"]);
@@ -623,7 +613,6 @@ export default function AllPlacedStudentsScreen() {
             setStudentBatch(studentBatch);
             setIsLoading(false);
         })
-
 
     }
 

@@ -23,7 +23,7 @@ export default function AllPlacedStudentsScreen() {
     const [allPlacedStudentData, setAllPlacedStudentData] = useState([]);
     const [allPlacedStudentDataFiltered, setAllPlacedStudentDataFiltered] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [userAccess, setUserAccess] = useState("");
+    const [_userAccess, setUserAccess] = useState("");
     const [sections, setSections] = useState();
     const [companyList, setCompanyList] = useState([]);
 
@@ -31,8 +31,8 @@ export default function AllPlacedStudentsScreen() {
     const [maxCTC, setMaxCTC] = useState(0);
     const [avgCTC, setAvgCTC] = useState(0);
 
-    const [totalStudents, setTotalStudents] = useState(0);
-    const [tempTotalStudents, setTempTotalStudents] = useState(0);
+    const [_totalStudents, setTotalStudents] = useState(0);
+    const [_tempTotalStudents, setTempTotalStudents] = useState(0);
 
     const [totalOffers, setTotalOffers] = useState(0);
     const [tempTotalOffers, setTempTotalOffers] = useState(0);
@@ -43,14 +43,6 @@ export default function AllPlacedStudentsScreen() {
     const alertError = (summary, detail) => {
         toast.current.show({
             severity: 'error',
-            summary: summary,
-            detail: detail,
-        });
-    };
-
-    const alertSuccess = (summary, detail) => {
-        toast.current.show({
-            severity: 'success',
             summary: summary,
             detail: detail,
         });

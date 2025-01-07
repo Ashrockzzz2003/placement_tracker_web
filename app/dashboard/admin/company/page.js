@@ -20,7 +20,7 @@ export default function AllCompaniesScreen() {
     const [companyHireData, setCompanyHireData] = useState([]);
     const [companyHireDataFiltered, setCompanyHireDataFiltered] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [userAccess, setUserAccess] = useState("");
+    const [_, setUserAccess] = useState("");
 
     const [sectionData, setSectionData] = useState({});
 
@@ -152,14 +152,6 @@ export default function AllCompaniesScreen() {
     const alertError = (summary, detail) => {
         toast.current.show({
             severity: 'error',
-            summary: summary,
-            detail: detail,
-        });
-    };
-
-    const alertSuccess = (summary, detail) => {
-        toast.current.show({
-            severity: 'success',
             summary: summary,
             detail: detail,
         });

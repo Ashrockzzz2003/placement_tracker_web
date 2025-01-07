@@ -184,7 +184,7 @@ export default function RegisterStudent() {
                             </Link>
                         </div>
                         <div className="flex flex-1 justify-end space-x-1">
-                            <Link replace={true} href={"dashboard/admin/student"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
+                            <Link replace={true} href={"/dashboard/admin/student"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ">
                                 {"All Students"}
                                 <span className="material-icons ml-2">badge</span>
                             </Link>

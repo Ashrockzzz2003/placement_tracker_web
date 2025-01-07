@@ -36,9 +36,16 @@ export default function NewPlacementScreen() {
     const [jobLocation, setJobLocation] = useState("");
     const [placementDate, setPlacementDate] = useState("");
     const [companyName, setCompanyName] = useState("");
+    const internOptions = ["Yes", "No"];
     const [isIntern, setIsIntern] = useState("No");
+
+    const ppoOptions = ["Yes", "No"];
     const [isPPO, setIsPPO] = useState("No");
+
+    const onCampusOptions = ["Yes", "No"];
     const [isOnCampus, setIsOnCampus] = useState("No");
+
+    const girlsDriveOptions = ["Yes", "No"];
     const [isGirlsDrive, setIsGirlsDrive] = useState("No");
     const [extraData, setExtraData] = useState("");
     const toast = useRef(null);
@@ -97,7 +104,7 @@ export default function NewPlacementScreen() {
         });
 
         setIsLoading(false);
-    }, [router, student, placements, placementID]);
+    }, [router,]);
 
     /*
             "companyId":<companyId> INTEGER,

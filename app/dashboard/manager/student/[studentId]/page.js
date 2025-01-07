@@ -31,15 +31,6 @@ export default function StudentPage() {
         });
     };
 
-    // Not used
-    // const alertSuccess = (summary, detail) => {
-    //     toast.current.show({
-    //         severity: 'success',
-    //         summary: summary,
-    //         detail: detail,
-    //     });
-    // };
-
     const { studentId } = useParams();
 
     useEffect(() => {

@@ -39,7 +39,7 @@ export default function RegisterStudent() {
     const higherStudiesOptions = ["Yes", "No"];
     const [isHigherStudies, setIsHigherStudies] = useState("");
 
-    const [isPlaced, setIsPlaced] = useState("0"); //setIsPlaced not used
+    const [isPlaced, _setIsPlaced] = useState("0");
     const [CGPA, setCGPA] = useState("");
 
     const [loading, setLoading] = useState(false);

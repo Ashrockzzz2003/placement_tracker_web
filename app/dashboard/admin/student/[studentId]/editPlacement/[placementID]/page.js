@@ -24,8 +24,8 @@ export default function NewPlacementScreen() {
     const placements = JSON.parse(p);
     const student = JSON.parse(secureLocalStorage.getItem("currentStudent"));
 
-    const [studentId, setStudentId] = useState(student ? student.studentId : ""); //setStudentId not used
-    const [studentRollNo, setStudentRollNo] = useState(student ? student.studentRollNo : ""); //setStudentRollNo not used
+    const [studentId, _setStudentId] = useState(student ? student.studentId : "");
+    const [studentRollNo, _setStudentRollNo] = useState(student ? student.studentRollNo : "");
     const [companyList, setCompanyList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [userAccess, setUserAccess] = useState("");

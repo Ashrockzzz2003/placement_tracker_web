@@ -23,7 +23,7 @@ export default function AllPlacedStudentsScreen() {
     const [allPlacedStudentData, setAllPlacedStudentData] = useState([]);
     const [allPlacedStudentDataFiltered, setAllPlacedStudentDataFiltered] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [userAccess, setUserAccess] = useState(""); //userAccess not used
+    const [_userAccess, setUserAccess] = useState("");
     const [sections, setSections] = useState();
     const [companyList, setCompanyList] = useState([]);
 
@@ -31,8 +31,8 @@ export default function AllPlacedStudentsScreen() {
     const [maxCTC, setMaxCTC] = useState(0);
     const [avgCTC, setAvgCTC] = useState(0);
 
-    const [totalStudents, setTotalStudents] = useState(0); //totalStudent not used
-    const [tempTotalStudents, setTempTotalStudents] = useState(0); //tempTotalStudents not used
+    const [_totalStudents, setTotalStudents] = useState(0);
+    const [_tempTotalStudents, setTempTotalStudents] = useState(0);
 
     const [totalOffers, setTotalOffers] = useState(0);
     const [tempTotalOffers, setTempTotalOffers] = useState(0);
@@ -47,15 +47,6 @@ export default function AllPlacedStudentsScreen() {
             detail: detail,
         });
     };
-
-    // Not used
-    // const alertSuccess = (summary, detail) => {
-    //     toast.current.show({
-    //         severity: 'success',
-    //         summary: summary,
-    //         detail: detail,
-    //     });
-    // };
 
     useEffect(() => {
         setUserAccess(secureLocalStorage.getItem("userAccess"));
@@ -259,7 +250,6 @@ export default function AllPlacedStudentsScreen() {
         if (allPlacedStudentData.length && companyList.length) {
             setAllPlacedStudentDataFiltered(allPlacedStudentData.filter((student) => {
                 return (
-                    // Redundant checks ?
                     ((student["studentRollNo"].toUpperCase().includes(searchText.toUpperCase())) || (student["studentName"].toLowerCase().includes(searchText.toLowerCase()))) && (student["studentGender"] === gender || gender === '') &&
                     (selectedSections === null || selectedSections.length === 0 || selectedSections.includes(student["studentSection"])) &&
                     (selectedCompanies === null || selectedCompanies.length === 0 || student["placements"].some((placement) => {
@@ -303,8 +293,7 @@ export default function AllPlacedStudentsScreen() {
 
         allPlacedStudentDataFiltered.forEach((student) => {
             student["placements"].forEach((placement) => {
-                // check for conditions 
-                // 
+                // check for conditions
                 if (isIntern !== null && isIntern !== '' && placement["isIntern"] !== isIntern) {
                     return;
                 }

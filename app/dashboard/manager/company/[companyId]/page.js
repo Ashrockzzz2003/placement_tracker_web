@@ -20,7 +20,7 @@ export default function CompanyPage() {
     const [deptSectionWiseHiredStudents, setDeptSectionWiseHiredStudents] = useState([]);
     const [sortedDeptSectionWiseHiredStudents, setSortedDeptSectionWiseHiredStudents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [userAccess, setUserAccess] = useState({}); //userAccess not used
+    const [_, setUserAccess] = useState({});
 
     const [companyName, setCompanyName] = useState("");
     const router = useRouter();
@@ -34,15 +34,6 @@ export default function CompanyPage() {
             detail: detail,
         });
     };
-
-    // Not used
-    // const alertSuccess = (summary, detail) => {
-    //     toast.current.show({
-    //         severity: 'success',
-    //         summary: summary,
-    //         detail: detail,
-    //     });
-    // };
 
     const { companyId } = useParams();
 

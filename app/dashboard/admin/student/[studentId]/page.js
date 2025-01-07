@@ -31,16 +31,16 @@ export default function StudentDashboard() {
 
     const { studentId } = useParams();
 
-    const [studentEmail, setStudentEmail] = useState(''); //studentEmail not used
+    const [_studentEmail, setStudentEmail] = useState('');
     const [studentName, setStudentName] = useState('');
     const [studentRollNo, setStudentRollNo] = useState('');
     //const [studentId, setStudentId] = useState('');
     const [studentSection, setStudentSection] = useState('');
-    const [studentGender, setStudentGender] = useState(''); //studentGender not used
+    const [_studentGender, setStudentGender] = useState('');
     const [studentBatch, setStudentBatch] = useState('');
     const [studentDept, setStudentDept] = useState('');
-    const [isHigherStudies, setIsHigherStudies] = useState(''); //isHigherStudies not used
-    const [CGPA, setCGPA] = useState('');
+    const [_isHigherStudies, setIsHigherStudies] = useState('');
+    const [_CGPA, setCGPA] = useState('');
 
     const [userAccess, setUserAccess] = useState('');
     const [isLoading, setIsLoading] = useState(true);
@@ -58,15 +58,6 @@ export default function StudentDashboard() {
             detail: detail,
         });
     };
-
-    // Not used
-    // const alertSuccess = (summary, detail) => {
-    //     toast.current.show({
-    //         severity: 'success',
-    //         summary: summary,
-    //         detail: detail,
-    //     });
-    // };
 
 
     useEffect(() => {

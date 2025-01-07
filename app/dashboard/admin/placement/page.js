@@ -24,7 +24,7 @@ export default function AllPlacedStudentsScreen() {
     const [allPlacedStudentDataFiltered, setAllPlacedStudentDataFiltered] = useState([]);
     
     const [isLoading, setIsLoading] = useState(true);
-    const [userAccess, setUserAccess] = useState(""); //userAccess not used
+    const [_, setUserAccess] = useState("");
     const [sections, setSections] = useState();
     const [companyList, setCompanyList] = useState([]);
 
@@ -79,15 +79,6 @@ export default function AllPlacedStudentsScreen() {
             detail: detail,
         });
     };
-
-    // Not used
-    // const alertSuccess = (summary, detail) => {
-    //     toast.current.show({
-    //         severity: 'success',
-    //         summary: summary,
-    //         detail: detail,
-    //     });
-    // };
 
     useEffect(() => {
         setUserAccess(secureLocalStorage.getItem("userAccess"));
@@ -373,7 +364,6 @@ export default function AllPlacedStudentsScreen() {
 
         allPlacedStudentDataFiltered.forEach((student) => {
             student["placements"].forEach((placement) => {
-                // Are both null check and empty string check required ?
                 if (isIntern !== null && isIntern !== '' && placement["isIntern"] !== isIntern) {
                     return;
                 }

@@ -29,7 +29,7 @@ export default function ForgotPassword() {
     const isValidOtp = otp.length === 6 && otpRegex.test(otp[0] + otp[1] + otp[2] + otp[3] + otp[4] + otp[5]);
 
     const [otpVerifyToken, setOtpVerifyToken] = useState('');
-    const [resetPasswordToken, setResetPasswordToken] = useState(''); //resetPassswordToken not used
+    const [_resetPasswordToken, setResetPasswordToken] = useState('');
 
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState("");

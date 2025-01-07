@@ -20,7 +20,7 @@ export default function AllCompaniesScreen() {
     const [companyHireData, setCompanyHireData] = useState([]);
     const [companyHireDataFiltered, setCompanyHireDataFiltered] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [userAccess, setUserAccess] = useState(""); //userAccess not used
+    const [_, setUserAccess] = useState("");
 
     const [sectionData, setSectionData] = useState({});
 

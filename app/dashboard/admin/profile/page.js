@@ -37,8 +37,8 @@ export default function ProfilePageRender() {
     }, []);
 
     const roleInfo = {
-        dashboardPath: "/dashboard/manager",
-        roleName: "Professor",
+        dashboardPath: "/dashboard/admin",
+        roleName: "Administrator",
     };
 
     return (

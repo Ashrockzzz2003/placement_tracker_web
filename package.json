@@ -7,7 +7,8 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "deploy": "pm2 start npm -- start"
+        "deploy": "pm2 start npm -- start",
+        "format": "npx prettier . --write"
     },
     "dependencies": {
         "@headlessui/react": "^1.7.17",

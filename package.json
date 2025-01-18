@@ -1,30 +1,31 @@
 {
-  "name": "placement_tracker_v2",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "deploy": "pm2 start npm -- start"
-  },
-  "dependencies": {
-    "@headlessui/react": "^1.7.17",
-    "aos": "^2.3.4",
-    "chart.js": "^4.4.1",
-    "material-icons": "^1.13.12",
-    "next": "^15.1.3",
-    "primereact": "^9.6.2",
-    "react": "latest",
-    "react-dom": "latest",
-    "react-secure-storage": "^1.3.0"
-  },
-  "devDependencies": {
-    "autoprefixer": "latest",
-    "eslint": "latest",
-    "eslint-config-next": "latest",
-    "postcss": "latest",
-    "tailwindcss": "latest"
-  }
+    "name": "placement_tracker_v2",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "deploy": "pm2 start npm -- start"
+    },
+    "dependencies": {
+        "@headlessui/react": "^1.7.17",
+        "aos": "^2.3.4",
+        "chart.js": "^4.4.1",
+        "material-icons": "^1.13.12",
+        "next": "^15.1.3",
+        "primereact": "^9.6.2",
+        "react": "latest",
+        "react-dom": "latest",
+        "react-secure-storage": "^1.3.0"
+    },
+    "devDependencies": {
+        "autoprefixer": "latest",
+        "eslint": "latest",
+        "eslint-config-next": "latest",
+        "postcss": "latest",
+        "prettier": "3.4.2",
+        "tailwindcss": "latest"
+    }
 }

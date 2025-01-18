@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
+    html {
+        scroll-behavior: smooth;
+    }
 }
 
 * {
-  transition: all 0.2s ease-in-out;
-  font-family: var(--font-raleway);
+    transition: all 0.2s ease-in-out;
+    font-family: var(--font-raleway);
 }
 
 body {
-  background-color: white;
-  font-family: 'Trebuchet MS', sans-serif;
+    background-color: white;
+    font-family: "Trebuchet MS", sans-serif;
 }

@@ -160,7 +160,7 @@ export default function StudentDashboard() {
                                 </div>
                                 <div className="flex lg:flex lg:flex-1 lg:justify-end">
                                     <Link
-                                        href={"/dashboard/student"}
+                                        href={"/dashboard/student/profile"}
                                         className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer"
                                     >
                                         <span className="material-icons">

@@ -8,12 +8,12 @@ import { useEffect, useRef, useState } from "react";
 import secureLocalStorage from "react-secure-storage";
 import "material-icons/iconfont/material-icons.css";
 import { useRouter } from "next/navigation";
+import { hashPassword } from "@/util/hash";
 
 export default function StudentProfile() {
     const [studentData, setStudentData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [userAccess, setUserAccess] = useState("");
-    const toast = useRef(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export default function StudentProfile() {
                 if (currentUser) {
                     setStudentData(JSON.parse(currentUser));
                 } else {
-                    alertError("Error", "User not found. Redirecting to login.");
+                    alert("Error: User not found. Redirecting to login.");
                     router.replace("/login");
                 }
 
@@ -36,7 +36,7 @@ export default function StudentProfile() {
                     delay: 100,
                 });
             } catch (error) {
-                alertError("Error", "Failed to load profile data.");
+                alert("Error: Failed to load profile data.");
                 router.replace("/login");
             } finally {
                 setIsLoading(false);
@@ -77,7 +77,7 @@ export default function StudentProfile() {
                             </nav>
                         </header>
 
-                        <div className="relative isolate px-6 lg:px-8 justify-center items-center m-auto pt-8">
+                        <div className="relative isolate px-6 lg:px-8 flex justify-center items-center m-auto pt-8">
                             <div
                                 className="absolute inset-x-0 px-20 -top-40 -z-10 transform-gpu overflow-hidden blur-2xl"
                                 aria-hidden="true"
@@ -87,8 +87,21 @@ export default function StudentProfile() {
 
                             <div className="mx-auto max-w-2xl py-16 lg:py-24">
                                 <div className="max-w-2xl mx-auto bg-white p-6 rounded-3xl shadow-xl border-2 border-gray-100 hover:shadow-lg transition-shadow ease-in-out duration-300">
+                                    {/* Profile Image (Gravatar) */}
+                                    <div className="flex justify-center items-center mb-6">
+                                        <div className="w-24 h-24 rounded-full overflow-hidden shadow-md">
+                                            <Image
+                                                src={`https://www.gravatar.com/avatar/${hashPassword(studentData.studentEmail ?? "placements@cb.amrita.edu")}.jpg?s=200&d=robohash`}
+                                                alt="Profile Image"
+                                                width={96}
+                                                height={96}
+                                                className="object-cover"
+                                            />
+                                        </div>
+                                    </div>
+
                                     <div className="flex justify-between items-center mb-4">
-                                        <h2 className={`${ studentData.studentName.length > 18 ? 'text-2xl' : 'text-3xl' } font-semibold text-gray-800 truncate`}>
+                                        <h2 className={`${studentData.studentName.length > 18 ? 'text-2xl' : 'text-3xl'} font-semibold text-gray-800 truncate`}>
                                             {studentData.studentName}
                                         </h2>
                                         <Link href="/dashboard/student/editData">
@@ -97,7 +110,9 @@ export default function StudentProfile() {
                                             </button>
                                         </Link>
                                     </div>
-                                    <div className="flex items-center gap-2 mb-6">
+
+                                    {/* Status Badges */}
+                                    <div className="flex flex-wrap gap-2 mb-6">
                                         <div className={`inline-block px-4 py-2 text-sm font-semibold rounded-full ${
                                                 studentData.isPlaced === "1"
                                                     ? "bg-green-100 text-green-700"
@@ -111,15 +126,16 @@ export default function StudentProfile() {
                                             </div>
                                         )}
                                     </div>
+
+                                    {/* Student Details */}
                                     <div className="grid grid-cols-1 gap-6">
                                         <div className="text-lg text-gray-800">
                                             <p><strong>Roll No:</strong> {studentData.studentRollNo}</p>
                                             <p><strong>Email:</strong> {studentData.studentEmail}</p>
                                         </div>
+                                        {/* Grouped Department, Section, and Batch */}
                                         <div className="text-lg text-gray-800">
-                                            <p><strong>Department:</strong> {studentData.studentDept}</p>
-                                            <p><strong>Batch:</strong> {studentData.studentBatch}</p>
-                                            <p><strong>Section:</strong> {studentData.studentSection}</p>
+                                            <p><strong>Program:</strong> {studentData.studentDept} {studentData.studentSection}, {studentData.studentBatch} Batch</p>
                                         </div>
                                         <p className="text-lg text-gray-800"><strong>CGPA:</strong> {studentData.CGPA}</p>
                                     </div>

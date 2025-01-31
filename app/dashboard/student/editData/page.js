@@ -206,7 +206,7 @@ export default function HandleEditData() {
                 );
 
                 setTimeout(() => {
-                    router.push("/dashboard/student");
+                    router.push("/dashboard/student/profile");
                 }, 1000);
             } else if (response.status === 500) {
                 alertError(
@@ -475,7 +475,7 @@ export default function HandleEditData() {
 
                         <div className="flex">
                             <Link
-                                href={"/dashboard/student"}
+                                href={"/dashboard/student/profile"}
                                 className="bg-[#ffffff] border-gray-300 border text-gray-600 rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer w-1/2"
                             >
                                 <p className="mx-auto">Cancel</p>

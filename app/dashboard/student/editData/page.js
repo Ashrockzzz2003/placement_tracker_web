@@ -277,7 +277,7 @@ export default function HandleEditData() {
                         href={"/dashboard/student"}
                         className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer"
                     >
-                        <span className="material-icons">person</span>
+                        <span className="material-icons">home</span>
                     </Link>
                 </nav>
             </header>

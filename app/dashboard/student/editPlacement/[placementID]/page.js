@@ -239,8 +239,8 @@ export default function NewPlacementScreen() {
     }, [router]);
 
     const handleEditPlacement = async (e) => {
-        setIsLoading(true);
         e.preventDefault();
+        setIsLoading(true);
 
         if (userAccess === null || userAccess === undefined) {
             alertError("Session Expired", "Please login again to continue.");
@@ -253,6 +253,7 @@ export default function NewPlacementScreen() {
 
         if (!isValidInput) {
             alertError("Error", "Please enter valid data.");
+            setIsLoading(false);
             return;
         }
 
@@ -283,7 +284,6 @@ export default function NewPlacementScreen() {
             const data = await response.json();
 
             if (response.status === 200) {
-                setIsLoading(true);
                 alertSuccess(
                     "Success",
                     "Placement Details Edited successfully.",
@@ -306,7 +306,7 @@ export default function NewPlacementScreen() {
 
                 setTimeout(() => {
                     router.replace("/dashboard/student");
-                }, 2000);
+                }, 1000);
             } else if (response.status === 401) {
                 secureLocalStorage.clear();
                 alertError(
@@ -318,11 +318,13 @@ export default function NewPlacementScreen() {
                 }, 3000);
             } else if (data["message"] !== undefined) {
                 alertError("Error", data["message"]);
+                setIsLoading(false);
             } else {
                 alertError(
                     "Error",
                     "Something went wrong. Please try again later.",
                 );
+                setIsLoading(false);
             }
         } catch (err) {
             console.log(err);
@@ -330,7 +332,6 @@ export default function NewPlacementScreen() {
                 "Error",
                 "Something went wrong. Please try again later.",
             );
-        } finally {
             setIsLoading(false);
         }
     };

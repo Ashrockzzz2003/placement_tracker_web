@@ -224,7 +224,7 @@ export default function RegisterStudent() {
                     <div className="flex flex-1 justify-end space-x-1">
                         <Link
                             replace={true}
-                            href={"dashboard/manager/student"}
+                            href={"/dashboard/manager/student"}
                             className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] "
                         >
                             {"All Students"}

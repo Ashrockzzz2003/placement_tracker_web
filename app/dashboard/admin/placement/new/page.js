@@ -385,7 +385,7 @@ export default function NewPlacementScreen() {
                         aria-hidden="true"
                     >
                         <div
-                            className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[64%] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#cea8a8] to-[#dea9a9] opacity-10"
+                            className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[64%] -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-[#cea8a8] to-[#dea9a9] opacity-10"
                             style={{
                                 clipPath:
                                     "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%, 45.2% 34.5%)",
@@ -455,7 +455,7 @@ export default function NewPlacementScreen() {
                                                 );
                                             }}
                                             className={
-                                                "block text-lg w-full rounded-md py-2 px-2 text-black shadow-sm ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 !outline-none uppercase" +
+                                                "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! uppercase" +
                                                 (!isValidRollNo && studentRollNo
                                                     ? " ring-red-500"
                                                     : isValidRollNo &&
@@ -481,7 +481,7 @@ export default function NewPlacementScreen() {
                                                 setJobRole(e.target.value);
                                             }}
                                             className={
-                                                "block text-lg w-full rounded-md py-2 px-2 text-black shadow-sm ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 !outline-none" +
+                                                "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                                 (!isValidJobRole && jobRole
                                                     ? " ring-red-500"
                                                     : isValidJobRole && jobRole
@@ -506,7 +506,7 @@ export default function NewPlacementScreen() {
                                                 setJobLocation(e.target.value);
                                             }}
                                             className={
-                                                "block text-lg w-full rounded-md py-2 px-2 text-black shadow-sm ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 !outline-none" +
+                                                "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                                 (!isValidJobLocation &&
                                                 jobLocation
                                                     ? " ring-red-500"
@@ -533,7 +533,7 @@ export default function NewPlacementScreen() {
                                                 setCtc(e.target.value);
                                             }}
                                             className={
-                                                "block text-lg w-full rounded-md py-2 px-2 text-black shadow-sm ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 !outline-none normal-nums" +
+                                                "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
                                                 (!isValidCtc && ctc
                                                     ? " ring-red-500"
                                                     : isValidCtc && ctc
@@ -559,7 +559,7 @@ export default function NewPlacementScreen() {
                                                 );
                                             }}
                                             className={
-                                                "block text-lg w-full rounded-md py-1 pt-2 px-2 text-black shadow-sm ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 !outline-none normal-nums" +
+                                                "block text-lg w-full rounded-md py-1 pt-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
                                                 (!isValidPlacementDate &&
                                                 placementDate
                                                     ? " ring-red-500"
@@ -657,7 +657,7 @@ export default function NewPlacementScreen() {
                                                 setExtraData(e.target.value);
                                             }}
                                             className={
-                                                "block text-lg w-full rounded-md py-2 px-2 text-black shadow-sm ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 !outline-none"
+                                                "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!"
                                             }
                                         />
                                     </div>
@@ -735,7 +735,7 @@ export default function NewPlacementScreen() {
                                                                         );
                                                                     }}
                                                                     className={
-                                                                        "block text-lg w-full rounded-md py-2 px-2 text-black shadow-sm ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 !outline-none" +
+                                                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                                                         (!isValidCompanyName &&
                                                                         companyName
                                                                             ? " ring-red-500"

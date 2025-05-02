@@ -183,7 +183,7 @@ export default function RegisterVerify() {
                     aria-hidden="true"
                 >
                     <div
-                        className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[64%] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#cea8a8] to-[#dea9a9] opacity-10"
+                        className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[64%] -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-[#cea8a8] to-[#dea9a9] opacity-10"
                         style={{
                             clipPath:
                                 "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%, 45.2% 34.5%)",
@@ -264,7 +264,7 @@ export default function RegisterVerify() {
                                     autoComplete="current-password"
                                     placeholder="Enter your Password"
                                     className={
-                                        "block text-lg w-full rounded-md border-0 py-2 px-2 text-black shadow-sm ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 !outline-none" +
+                                        "block text-lg w-full rounded-md border-0 py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                         (!isValidPassword && newPassword
                                             ? " ring-red-500"
                                             : isValidPassword && newPassword
@@ -289,7 +289,7 @@ export default function RegisterVerify() {
                                     autoComplete="confirm-password"
                                     placeholder="Re-Enter your Password"
                                     className={
-                                        "block text-lg w-full rounded-md border-0 py-2 px-2 text-black shadow-sm ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 !outline-none" +
+                                        "block text-lg w-full rounded-md border-0 py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                         (!isValidPassword && confirmPassword
                                             ? " ring-red-500"
                                             : isValidPassword && confirmPassword

@@ -45,7 +45,7 @@ export function ProfilePage({ profileData, roleInfo }) {
                         className="absolute inset-x-0 px-16 -top-40 -z-10 transform-gpu overflow-hidden blur-2xl"
                         aria-hidden="true"
                     >
-                        <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[64%] -translate-x-1/2 rotate-[40deg] bg-gradient-to-tr from-[#cea8a8] to-[#dea9a9] opacity-20" />
+                        <div className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[64%] -translate-x-1/2 rotate-[40deg] bg-linear-to-tr from-[#cea8a8] to-[#dea9a9] opacity-20" />
                     </div>
                     <div className="bg-white p-4 rounded-3xl shadow-xl max-w-md mx-auto border-2 border-gray-100 hover:shadow-lg transition-shadow ease-in-out duration-300">
                         <div className="flex justify-center items-center">

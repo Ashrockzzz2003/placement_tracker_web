@@ -12,7 +12,7 @@ export default function Top5PlacementCard({ placementData }) {
                 </div>
                 <hr className="border-gray-900 w-full" />
                 <div className="px-4 py-1">
-                    <p className="font-extralight text-md text-center text-gray-300">
+                    <p className="font-extralight text-md text-center text-gray-700">
                         <span>{placementData.companyName}</span> {" | "}{" "}
                         <span>{placementData.jobRole}</span>
                     </p>

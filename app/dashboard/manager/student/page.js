@@ -730,7 +730,7 @@ export default function AllPlacedStudentsScreen() {
                             className="absolute inset-x-0 px-20 -top-40 -z-10 transform-gpu overflow-hidden blur-2xl"
                             aria-hidden="true"
                         >
-                            <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[64%] -translate-x-1/2 rotate-[40deg] bg-gradient-to-tr from-[#cea8a8] to-[#dea9a9] opacity-20" />
+                            <div className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[64%] -translate-x-1/2 rotate-[40deg] bg-linear-to-tr from-[#cea8a8] to-[#dea9a9] opacity-20" />
                         </div>
 
                         <div className="mx-auto max-w-2xl pt-16 lg:pt-24 ">
@@ -1394,7 +1394,7 @@ export default function AllPlacedStudentsScreen() {
                                                                         );
                                                                     }}
                                                                     className={
-                                                                        "block text-lg w-full rounded-md py-2 px-2 text-black shadow-sm ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 !outline-none normal-nums" +
+                                                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
                                                                         (!isValidBatch &&
                                                                         studentBatch
                                                                             ? " ring-red-500"

@@ -23,6 +23,10 @@ const campuses = [
     "BL"  // Bangalore
 ];
 
+const campusNames = {
+    CB: "Coimbatore",
+    BL: "Bangalore"
+};
 
 // Sub Regex's
 const departementsRegexMatch = departements.join("|");
@@ -40,7 +44,8 @@ const rollNoRegex = new RegExp(`^(?:${campusRegexMatch}).(?:${schoolRegexMatch})
 export { 
     departements, 
     schools, 
-    campuses, 
+    campuses,
+    campusNames,
     departementsRegexMatch, 
     schoolRegexMatch, 
     campusRegexMatch, 

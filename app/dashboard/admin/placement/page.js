@@ -22,6 +22,7 @@ import { MultiSelect } from "primereact/multiselect";
 import Searchbar from "@/util/SearchBar";
 import { Dialog, Transition } from "@headlessui/react";
 import { Chart } from "primereact/chart";
+import { campusNames, campuses } from "@/util/campuses_branches_departements";
 
 export default function AllPlacedStudentsScreen() {
     const [allPlacedStudentData, setAllPlacedStudentData] = useState([]);
@@ -32,6 +33,10 @@ export default function AllPlacedStudentsScreen() {
     const [_, setUserAccess] = useState("");
     const [sections, setSections] = useState();
     const [companyList, setCompanyList] = useState([]);
+    const campusList = campuses.map((campus, index) => ({
+    id: campus,
+    campus: campusNames[campus]
+    }));
 
     const [companyNames, setCompanyNames] = useState([]);
     const [totalHires, setTotalHires] = useState([]);
@@ -338,6 +343,7 @@ export default function AllPlacedStudentsScreen() {
     const [searchText, setSearchText] = useState("");
     const [selectedSections, setSelectedSections] = useState(null);
     const [selectedCompanies, setSelectedCompanies] = useState(null);
+    const [selectedCampuses, setSelectedCampuses] = useState(null);
 
     const isHigherStudiesOptions = ["Higher Studies", "Not Higher Studies"];
     const [isHigherStudiesValue, setIsHigherStudiesValue] = useState("");
@@ -362,6 +368,7 @@ export default function AllPlacedStudentsScreen() {
     const genderOptions = ["Male", "Female", "Other"];
     const [genderValue, setGenderValue] = useState("");
     const [gender, setGender] = useState("");
+
 
     useEffect(() => {
         const companyNamesTemp = [];
@@ -413,6 +420,12 @@ export default function AllPlacedStudentsScreen() {
                                     placement["companyId"],
                                 );
                             })) &&
+                        (selectedCampuses === null ||
+                            selectedCampuses.length === 0 ||
+                            selectedCampuses.some(campus => {
+                                return student["studentRollNo"].toUpperCase().startsWith(campus);
+                            })
+                        ) &&
                         (isHigherStudies === null ||
                             isHigherStudies === "" ||
                             student["isHigherStudies"] === isHigherStudies) &&
@@ -446,6 +459,7 @@ export default function AllPlacedStudentsScreen() {
         searchText,
         selectedSections,
         selectedCompanies,
+        selectedCampuses,
         isHigherStudies,
         isIntern,
         isPPO,
@@ -753,6 +767,7 @@ export default function AllPlacedStudentsScreen() {
                         setIsHigherStudiesValue("");
                         setIsHigherStudies(null);
                         setIsInternValue("");
+                        setSelectedCampuses(null)
                         setIsIntern(null);
                         setIsPPOValue("");
                         setIsPPO(null);
@@ -928,6 +943,25 @@ export default function AllPlacedStudentsScreen() {
                                         display="chip"
                                         showClear={true}
                                         placeholder="Select Companies"
+                                        maxSelectedLabels={2}
+                                        className="w-full md:w-20rem"
+                                    />
+                                </div>
+                                
+                                <div className="border-bGray p-4 xl:border-b-0 xl:border-r">
+                                    <MultiSelect
+                                        value={selectedCampuses}
+                                        onChange={(e) => {
+                                            setSelectedCampuses(e.value);
+                                        }}
+                                        options={campusList}
+                                        filter
+                                        filterPlaceholder="Enter Campus Name"
+                                        optionLabel="campus"
+                                        optionValue="id"
+                                        display="chip"
+                                        showClear={true}
+                                        placeholder="Select Campuses"
                                         maxSelectedLabels={2}
                                         className="w-full md:w-20rem"
                                     />

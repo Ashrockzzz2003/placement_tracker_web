@@ -201,11 +201,11 @@ export default function AdminDashboard() {
     const nameRegex = new RegExp(/^[a-zA-Z ]+$/);
     const isValidOfficialName = nameRegex.test(officialName);
 
+    // Seems like a PoC, remove hardcoded valid emails and generalize the regex
     const emailRegex = new RegExp(/^[a-zA-Z0-9._-]+@(cb.amrita.edu)$/);
     const isValidOfficialEmail =
         emailRegex.test(officialEmail) ||
-        officialEmail === "umasivamani@gmail.com" ||
-        "cb.en.u4cse21056@cb.students.amrita.edu";
+        officialEmail === "umasivamani@gmail.com" || officialEmail === "cb.en.u4cse21056@cb.students.amrita.edu";
 
     const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
 

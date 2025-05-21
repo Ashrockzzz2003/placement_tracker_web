@@ -5,6 +5,7 @@ import Image from "next/image";
 import secureLocalStorage from "react-secure-storage";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
+import { emailRegex} from "@/util/campuses_branches_departements";
 
 import { Toast } from "primereact/toast";
 import { LOGIN_URL } from "@/util/constants";
@@ -23,10 +24,7 @@ export default function Login() {
 
     const toast = useRef(null);
 
-    const emailRegex = new RegExp(
-        /^[a-zA-Z0-9._-]+@(cb.students.amrita.edu|cb.amrita.edu)$/,
-    );
-
+    //again, hardcoded email IDs, beware
     const isValidEmail =
         emailRegex.test(userEmail) ||
         userEmail === "ashrockzzz2003@gmail.com" ||

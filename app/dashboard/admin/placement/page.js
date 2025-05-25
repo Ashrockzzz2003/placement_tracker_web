@@ -22,7 +22,7 @@ import { MultiSelect } from "primereact/multiselect";
 import Searchbar from "@/util/SearchBar";
 import { Dialog, Transition } from "@headlessui/react";
 import { Chart } from "primereact/chart";
-import { campusNames, campuses } from "@/util/campuses_branches_departements";
+import { campusNames, campuses } from "@/util/config";
 
 export default function AllPlacedStudentsScreen() {
     const [allPlacedStudentData, setAllPlacedStudentData] = useState([]);

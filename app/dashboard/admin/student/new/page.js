@@ -11,7 +11,7 @@ import { useRef, useState } from "react";
 import { ADD_NEW_STUDENT_URL } from "@/util/constants";
 import secureLocalStorage from "react-secure-storage";
 import { useRouter } from "next/navigation";
-import { emailRegex, rollNoRegex, campuses} from "@/util/campuses_branches_departements";
+import { emailRegex, rollNoRegex, campuses} from "@/util/config";
 
 export default function RegisterStudent() {
     const [studentRollNo, setStudentRollNo] = useState("");

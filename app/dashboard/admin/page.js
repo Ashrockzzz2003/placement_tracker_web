@@ -201,7 +201,6 @@ export default function AdminDashboard() {
     const nameRegex = new RegExp(/^[a-zA-Z ]+$/);
     const isValidOfficialName = nameRegex.test(officialName);
 
-    // Seems like a PoC, remove hardcoded valid emails and generalize the regex
     const emailRegex = new RegExp(/^[a-zA-Z0-9._-]+@(cb.amrita.edu)$/);
     const isValidOfficialEmail =
         emailRegex.test(officialEmail) ||

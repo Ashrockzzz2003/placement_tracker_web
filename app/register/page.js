@@ -7,7 +7,7 @@ import { Dropdown } from "primereact/dropdown";
 import { SelectButton } from "primereact/selectbutton";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-blue/theme.css";
-import { emailRegex, rollNoRegex, campuses} from "@/util/campuses_branches_departements";
+import { emailRegex, rollNoRegex, campuses} from "@/util/config";
 
 import { hashPassword } from "@/util/hash";
 import { useEffect, useRef, useState } from "react";
@@ -295,11 +295,11 @@ export default function Register() {
                                             e.target.value.toUpperCase(),
                                         );
                                         if (e.target.value.length > 1) {
-                                            const rollnoprefix = e.target.value.toLowerCase().substring(0, 2);
-                                            if (campuses.map(campus => campus.toLowerCase()).includes(rollnoprefix)) {
+                                            const rollNoPrefix = e.target.value.toLowerCase().substring(0, 2);
+                                            if (campuses.map(campus => campus.toLowerCase()).includes(rollNoPrefix)) {
                                                 setStudentEmail(
                                                     e.target.value.toLowerCase() +
-                                                        `@${rollnoprefix}.students.amrita.edu`,
+                                                        `@${rollNoPrefix}.students.amrita.edu`,
                                                 );
                                             }
                                         } else {

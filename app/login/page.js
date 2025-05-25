@@ -5,7 +5,7 @@ import Image from "next/image";
 import secureLocalStorage from "react-secure-storage";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
-import { emailRegex} from "@/util/campuses_branches_departements";
+import { emailRegex} from "@/util/config";
 
 import { Toast } from "primereact/toast";
 import { LOGIN_URL } from "@/util/constants";

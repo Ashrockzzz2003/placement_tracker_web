@@ -204,8 +204,7 @@ export default function AdminDashboard() {
     const emailRegex = new RegExp(/^[a-zA-Z0-9._-]+@(cb.amrita.edu)$/);
     const isValidOfficialEmail =
         emailRegex.test(officialEmail) ||
-        officialEmail === "umasivamani@gmail.com" ||
-        "cb.en.u4cse21056@cb.students.amrita.edu";
+        officialEmail === "umasivamani@gmail.com" || officialEmail === "cb.en.u4cse21056@cb.students.amrita.edu";
 
     const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
 
@@ -392,27 +391,25 @@ export default function AdminDashboard() {
                                     <hr className="w-full border-[#1d0e3a] my-2" />
                                     <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
                                         <Link
-                                            className="hover:cursor-pointer"
                                             href="/dashboard/admin/placement"
                                         >
-                                            <div className="bg-purple-100 text-[#1d0e3a] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
+                                            <button className="hover:cursor-pointer bg-purple-100 text-[#1d0e3a] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                                 <span className="material-icons mr-2">
                                                     work
                                                 </span>
                                                 {"All Placements"}
-                                            </div>
+                                            </button>
                                         </Link>
                                         <Link
-                                            className="hover:cursor-pointer"
                                             href={
                                                 "/dashboard/admin/placement/new"
                                             }
                                         >
-                                            <div className="bg-purple-100 text-[#1d0e3a] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
+                                            <button className="hover:cursor-pointer bg-purple-100 text-[#1d0e3a] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                                 <span className="material-icons">
                                                     add
                                                 </span>
-                                            </div>
+                                            </button>
                                         </Link>
                                     </div>
                                 </div>
@@ -423,10 +420,9 @@ export default function AdminDashboard() {
                                     <hr className="w-full border-[#21430e] my-2" />
                                     <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
                                         <Link
-                                            className="hover:cursor-pointer"
                                             href="/dashboard/admin/official"
                                         >
-                                            <button className="bg-green-100 text-[#21430e] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
+                                            <button className="hover:cursor-pointer bg-green-100 text-[#21430e] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                                 <span className="material-icons mr-2">
                                                     manage_accounts
                                                 </span>
@@ -434,6 +430,7 @@ export default function AdminDashboard() {
                                             </button>
                                         </Link>
                                         <button
+                                            className="hover:cursor-pointer"
                                             onClick={openRegisterOfficialModal}
                                         >
                                             <div className="bg-green-100 text-[#21430e] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
@@ -452,10 +449,9 @@ export default function AdminDashboard() {
                                     <hr className="w-full border-[#544a15] my-2" />
                                     <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
                                         <Link
-                                            className="hover:cursor-pointer"
                                             href="/dashboard/admin/student"
                                         >
-                                            <button className="bg-yellow-100 text-[#544a15] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
+                                            <button className="hover:cursor-pointer bg-yellow-100 text-[#544a15] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                                 <span className="material-icons mr-2">
                                                     badge
                                                 </span>
@@ -463,10 +459,9 @@ export default function AdminDashboard() {
                                             </button>
                                         </Link>
                                         <Link
-                                            className="hover:cursor-pointer"
                                             href="/dashboard/admin/student/new"
                                         >
-                                            <div className="bg-yellow-100 text-[#544a15] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
+                                            <div className="hover:cursor-pointer bg-yellow-100 text-[#544a15] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                                 <span className="material-icons">
                                                     add
                                                 </span>
@@ -482,17 +477,16 @@ export default function AdminDashboard() {
                                     <hr className="w-full border-[#461348] my-2" />
                                     <div className="px-4 py-4 flex flex-wrap space-x-2 justify-center items-center">
                                         <Link
-                                            className="hover:cursor-pointer"
                                             href="/dashboard/admin/company"
                                         >
-                                            <button className="bg-pink-100 text-[#461348] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
+                                            <button className="hover:cursor-pointer bg-pink-100 text-[#461348] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                                 <span className="material-icons mr-2">
                                                     badge
                                                 </span>
                                                 {"All Companies"}
                                             </button>
                                         </Link>
-                                        <button onClick={openModal}>
+                                        <button className="hover:cursor-pointer" onClick={openModal}>
                                             <div className="bg-pink-100 text-[#461348] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                                 <span className="material-icons">
                                                     add

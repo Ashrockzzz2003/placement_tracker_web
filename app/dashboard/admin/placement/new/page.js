@@ -19,6 +19,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { SelectButton } from "primereact/selectbutton";
+import { rollNoRegex} from "@/util/config";
 
 export default function NewPlacementScreen() {
     const [companyList, setCompanyList] = useState([]);
@@ -63,7 +64,6 @@ export default function NewPlacementScreen() {
 
     const [extraData, setExtraData] = useState("");
 
-    const rollNoRegex = new RegExp("^CB.EN.U4CSE[0-9]{5}$");
     const isValidRollNo = rollNoRegex.test(studentRollNo);
 
     const ctcRegex = new RegExp("^[0-9]{1,2}(\\.[0-9]{1,2})?$");

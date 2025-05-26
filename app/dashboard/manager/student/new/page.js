@@ -11,6 +11,7 @@ import { useRef, useState } from "react";
 import { ADD_NEW_STUDENT_URL } from "@/util/constants";
 import secureLocalStorage from "react-secure-storage";
 import { useRouter } from "next/navigation";
+import { emailRegex, rollNoRegex } from "@/util/config";
 
 export default function RegisterStudent() {
     const [studentRollNo, setStudentRollNo] = useState("");
@@ -46,8 +47,6 @@ export default function RegisterStudent() {
 
     const toast = useRef(null);
 
-    const emailRegex = new RegExp("^[a-zA-Z0-9+_.-]+@cb.students.amrita.edu$");
-    const rollNoRegex = new RegExp("^CB.EN.U4CSE[0-9]{5}$");
     const batchRegex = new RegExp("^[0-9]{4}$");
     const nameRegex = new RegExp("^[a-zA-Z ]+$");
     const cgpaRegex = new RegExp("^[0-9]{1}.[0-9]{2}$");

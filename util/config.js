@@ -8,24 +8,24 @@ const departements = [
     "EEE", // Electrical and Electronics Engineering
     "RAI", // Robotics and Artificial Intelligence
     "EAC", // Electronics and Computer Engineering
-    "ELC"  // Electrical and Computer Engineering
+    "ELC", // Electrical and Computer Engineering
 ];
 
 // List of schools
 const schools = [
     "EN", // School of Engineering
-    "SC"  // School of Computing
+    "SC", // School of Computing
 ];
 
 // List of campuses
 const campuses = [
     "CB", // Coimbatore
-    "BL"  // Bangalore
+    "BL", // Bangalore
 ];
 
 const campusNames = {
     CB: "Coimbatore",
-    BL: "Bangalore"
+    BL: "Bangalore",
 };
 
 // Sub Regex's
@@ -33,22 +33,27 @@ const departementsRegexMatch = departements.join("|");
 const schoolRegexMatch = schools.join("|");
 const campusRegexMatch = campuses.join("|");
 //Main Regex's
-const emailRegex = new RegExp(`^[a-zA-Z0-9+_.-]+@(?:${campusRegexMatch}).students.amrita.edu$`, "i");
+const emailRegex = new RegExp(
+    `^[a-zA-Z0-9+_.-]+@(?:${campusRegexMatch}).students.amrita.edu$`,
+    "i",
+);
 //Valid: test.test@cb.students.amrita.edu, test@bl.students.amrita.edu | Invalid: test@students.amrita.edu, test.test@gmail.com
 
-const rollNoRegex = new RegExp(`^(?:${campusRegexMatch}).(?:${schoolRegexMatch}).U4(?:${departementsRegexMatch})[0-9]{5}$`);
+const rollNoRegex = new RegExp(
+    `^(?:${campusRegexMatch}).(?:${schoolRegexMatch}).U4(?:${departementsRegexMatch})[0-9]{5}$`,
+);
 //Valid: CB.EN.U4CSE20001, BL.SC.U4AIE20002 | Invalid: cb.en.U4cse20001, CB.En.U4CSE20001
 
 //beware of case sensitivity while implementing regex
 
-export { 
-    departements, 
-    schools, 
+export {
+    departements,
+    schools,
     campuses,
     campusNames,
-    departementsRegexMatch, 
-    schoolRegexMatch, 
-    campusRegexMatch, 
-    emailRegex, 
-    rollNoRegex 
+    departementsRegexMatch,
+    schoolRegexMatch,
+    campusRegexMatch,
+    emailRegex,
+    rollNoRegex,
 };

@@ -34,8 +34,8 @@ export default function AllPlacedStudentsScreen() {
     const [sections, setSections] = useState();
     const [companyList, setCompanyList] = useState([]);
     const campusList = campuses.map((campus, index) => ({
-    id: campus,
-    campus: campusNames[campus]
+        id: campus,
+        campus: campusNames[campus],
     }));
 
     const [companyNames, setCompanyNames] = useState([]);
@@ -369,7 +369,6 @@ export default function AllPlacedStudentsScreen() {
     const [genderValue, setGenderValue] = useState("");
     const [gender, setGender] = useState("");
 
-
     useEffect(() => {
         const companyNamesTemp = [];
         const totalHiresTemp = [];
@@ -422,10 +421,11 @@ export default function AllPlacedStudentsScreen() {
                             })) &&
                         (selectedCampuses === null ||
                             selectedCampuses.length === 0 ||
-                            selectedCampuses.some(campus => {
-                                return student["studentRollNo"].toUpperCase().startsWith(campus);
-                            })
-                        ) &&
+                            selectedCampuses.some((campus) => {
+                                return student["studentRollNo"]
+                                    .toUpperCase()
+                                    .startsWith(campus);
+                            })) &&
                         (isHigherStudies === null ||
                             isHigherStudies === "" ||
                             student["isHigherStudies"] === isHigherStudies) &&
@@ -767,7 +767,7 @@ export default function AllPlacedStudentsScreen() {
                         setIsHigherStudiesValue("");
                         setIsHigherStudies(null);
                         setIsInternValue("");
-                        setSelectedCampuses(null)
+                        setSelectedCampuses(null);
                         setIsIntern(null);
                         setIsPPOValue("");
                         setIsPPO(null);
@@ -947,7 +947,7 @@ export default function AllPlacedStudentsScreen() {
                                         className="w-full md:w-20rem"
                                     />
                                 </div>
-                                
+
                                 <div className="border-bGray p-4 xl:border-b-0 xl:border-r">
                                     <MultiSelect
                                         value={selectedCampuses}

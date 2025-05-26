@@ -11,7 +11,7 @@ import { useRef, useState } from "react";
 import { ADD_NEW_STUDENT_URL } from "@/util/constants";
 import secureLocalStorage from "react-secure-storage";
 import { useRouter } from "next/navigation";
-import { emailRegex, rollNoRegex, campuses} from "@/util/config";
+import { emailRegex, rollNoRegex, campuses } from "@/util/config";
 
 export default function RegisterStudent() {
     const [studentRollNo, setStudentRollNo] = useState("");
@@ -279,8 +279,16 @@ export default function RegisterStudent() {
                                             e.target.value.toUpperCase(),
                                         );
                                         if (e.target.value.length > 1) {
-                                            const rollnoprefix = e.target.value.toLowerCase().substring(0, 2);
-                                            if (campuses.map(campus => campus.toLowerCase()).includes(rollnoprefix)) {
+                                            const rollnoprefix = e.target.value
+                                                .toLowerCase()
+                                                .substring(0, 2);
+                                            if (
+                                                campuses
+                                                    .map((campus) =>
+                                                        campus.toLowerCase(),
+                                                    )
+                                                    .includes(rollnoprefix)
+                                            ) {
                                                 setStudentEmail(
                                                     e.target.value.toLowerCase() +
                                                         `@${rollnoprefix}.students.amrita.edu`,

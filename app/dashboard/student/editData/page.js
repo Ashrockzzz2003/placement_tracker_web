@@ -263,7 +263,7 @@ export default function HandleEditData() {
                     aria-label="Global"
                 >
                     <div className="lg:flex lg:gap-x-12">
-                        <Link href={"/"}>
+                        <Link href={"/dashboard/student"}>
                             <Image
                                 src="/logo.png"
                                 alt="Amrita logo"

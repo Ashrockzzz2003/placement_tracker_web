@@ -21,6 +21,7 @@ const schools = [
 const campuses = [
     "CB", // Coimbatore
     "BL", // Bangalore
+    "NC", //Nagercoil
 ];
 
 const campusNames = {

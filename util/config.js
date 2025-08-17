@@ -15,17 +15,23 @@ const departements = [
 const schools = [
     "EN", // School of Engineering
     "SC", // School of Computing
+    "AI", // School of Artifical Intelligence
+    // Add more schools if needed
 ];
 
 // List of campuses
 const campuses = [
     "CB", // Coimbatore
     "BL", // Bangalore
+    "NC", //Nagercoil
+    // Add more campuses as needed
 ];
 
 const campusNames = {
     CB: "Coimbatore",
     BL: "Bangalore",
+    NC: "Nagercoil",
+    //Add more campuses as needed 
 };
 
 // Sub Regex's

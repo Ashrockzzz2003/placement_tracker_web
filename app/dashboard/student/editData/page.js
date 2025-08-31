@@ -455,7 +455,7 @@ export default function HandleEditData() {
                                 <input
                                     type="number"
                                     step={0.01}
-                                    value={parseFloat(CGPA)}
+                                    value={isNaN(parseFloat(CGPA)) ? "" : parseFloat(CGPA)}
                                     placeholder="9.00"
                                     onChange={(e) => {
                                         e.target.value != NaN ? setCGPA(e.target.value) : "";

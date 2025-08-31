@@ -458,7 +458,11 @@ export default function HandleEditData() {
                                     value={parseFloat(CGPA)}
                                     placeholder="9.00"
                                     onChange={(e) => {
+<<<<<<< Updated upstream
                                         setCGPA(e.target.value);
+=======
+                                        e.target.value != NaN ? setCGPA(e.target.value) : "";
+>>>>>>> Stashed changes
                                     }}
                                     className={
                                         "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +

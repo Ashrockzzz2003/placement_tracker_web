@@ -6,6 +6,7 @@ import "material-icons/iconfont/material-icons.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
+import { DarkModeToggle } from "@/util/DarkModeToggle";
 
 export default function Welcome() {
     useEffect(() => {
@@ -43,6 +44,7 @@ export default function Welcome() {
                             >
                                 <span className="material-icons">login</span>
                             </Link>
+                            <DarkModeToggle />
                         </div>
                     </nav>
                 </header>

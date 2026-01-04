@@ -1,4 +1,5 @@
 import "./globals.css";
+import { DarkModeProvider } from "@/util/DarkModeContext";
 
 export const metadata = {
     title: "Amrita Placement Tracker",
@@ -9,7 +10,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body>{children}</body>
+            <body>
+                <DarkModeProvider>{children}</DarkModeProvider>
+            </body>
         </html>
     );
 }

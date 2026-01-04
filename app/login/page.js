@@ -13,6 +13,7 @@ import { hashPassword } from "@/util/hash";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import "material-icons/iconfont/material-icons.css";
+import { DarkModeToggle } from "@/util/DarkModeToggle";
 
 export default function Login() {
     useEffect(() => {
@@ -227,6 +228,7 @@ export default function Login() {
                                 app_registration
                             </span>
                         </Link>
+                        <DarkModeToggle />
                         <Link
                             href={"/"}
                             className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] "

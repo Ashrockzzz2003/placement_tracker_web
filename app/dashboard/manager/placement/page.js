@@ -23,6 +23,7 @@ import Searchbar from "@/util/SearchBar";
 import { Dialog, Transition } from "@headlessui/react";
 import { Chart } from "primereact/chart";
 import { ComparisonCharts } from "@/util/ComparisonCharts";
+import { DarkModeToggle } from "@/util/DarkModeToggle";
 
 export default function AllPlacedStudentsScreen() {
     const [allPlacedStudentData, setAllPlacedStudentData] = useState([]);
@@ -908,6 +909,7 @@ export default function AllPlacedStudentsScreen() {
                                         logout
                                     </span>
                                 </button>
+                                <DarkModeToggle />
                             </div>
                         </nav>
                     </header>

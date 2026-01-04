@@ -16,6 +16,18 @@
     ::file-selector-button {
         border-color: var(--color-gray-200);
     }
+
+    html.dark {
+        color-scheme: dark;
+    }
+
+    html.dark *,
+    html.dark ::after,
+    html.dark ::before,
+    html.dark ::backdrop,
+    html.dark ::file-selector-button {
+        border-color: var(--color-gray-700);
+    }
 }
 
 * {
@@ -27,3 +39,121 @@ body {
     background-color: white;
     font-family: "Trebuchet MS", sans-serif;
 }
+
+html.dark body {
+    background-color: #1f2937;
+    color: #f3f4f6;
+}
+
+/* Ensure smooth transitions for dark mode */
+html.dark {
+    background-color: #1f2937;
+    color: #f3f4f6;
+}
+
+/* Dark mode text colors */
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
+    color: #f3f4f6;
+}
+
+html.dark p,
+html.dark span,
+html.dark a {
+    color: #f3f4f6;
+}
+
+html.dark button,
+html.dark input,
+html.dark textarea,
+html.dark select {
+    background-color: #374151;
+    color: #f3f4f6;
+    border-color: #4b5563;
+}
+
+html.dark button:hover {
+    background-color: #4b5563;
+}
+
+/* Dark mode for tables */
+html.dark table {
+    background-color: #1f2937;
+    color: #f3f4f6;
+}
+
+html.dark thead {
+    background-color: #111827;
+}
+
+html.dark tbody tr:hover {
+    background-color: #374151;
+}
+
+html.dark td,
+html.dark th {
+    border-color: #4b5563;
+    color: #f3f4f6;
+}
+
+/* Dark mode for cards and containers */
+html.dark .bg-white {
+    background-color: #374151;
+    color: #f3f4f6;
+}
+
+html.dark .text-gray-900 {
+    color: #f3f4f6;
+}
+
+html.dark .bg-gray-50 {
+    background-color: #1f2937;
+    color: #f3f4f6;
+}
+
+html.dark .border-gray-200 {
+    border-color: #4b5563;
+}
+
+/* PrimeReact dark mode compatibility */
+html.dark .p-component {
+    background-color: #374151;
+    color: #f3f4f6;
+}
+
+html.dark .p-inputtext {
+    background-color: #1f2937;
+    color: #f3f4f6;
+    border-color: #4b5563;
+}
+
+html.dark .p-dropdown {
+    background-color: #1f2937;
+    color: #f3f4f6;
+}
+
+html.dark .p-multiselect {
+    background-color: #1f2937;
+    color: #f3f4f6;
+}
+
+/* Dialog/Modal dark mode */
+html.dark .p-dialog {
+    background-color: #374151;
+    color: #f3f4f6;
+}
+
+html.dark .p-dialog-header {
+    background-color: #1f2937;
+    border-color: #4b5563;
+}
+
+html.dark .p-dialog-content {
+    background-color: #374151;
+    color: #f3f4f6;
+}
+

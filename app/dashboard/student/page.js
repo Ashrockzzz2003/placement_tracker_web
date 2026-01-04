@@ -14,6 +14,7 @@ import Link from "next/link";
 import Image from "next/image";
 import StudentPlacementCard from "@/util/StudentPlacementCard";
 import { Toast } from "primereact/toast";
+import { DarkModeToggle } from "@/util/DarkModeToggle";
 
 export default function StudentDashboard() {
     /*
@@ -184,6 +185,7 @@ export default function StudentDashboard() {
                                             logout
                                         </span>
                                     </button>
+                                    <DarkModeToggle />
                                 </div>
                             </nav>
                         </header>

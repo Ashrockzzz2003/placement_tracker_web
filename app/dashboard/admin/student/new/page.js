@@ -206,7 +206,7 @@ export default function RegisterStudent() {
         <main className="flex h-full flex-1 flex-col justify-center">
             <header className="absolute inset-x-0 top-0 z-50">
                 <nav
-                    className="flex items-center justify-between p-6 lg:px-8"
+                    className="flex items-center justify-between p-4 sm:p-6 lg:px-8"
                     aria-label="Global"
                 >
                     <div className="lg:flex lg:gap-x-12">
@@ -216,25 +216,25 @@ export default function RegisterStudent() {
                                 alt="Amrita logo"
                                 width={128}
                                 height={128}
-                                className="ml-auto mr-auto my-4"
+                                className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 ml-auto mr-auto my-2 sm:my-4"
                             />
                         </Link>
                     </div>
-                    <div className="flex flex-1 justify-end space-x-1">
+                    <div className="flex flex-wrap gap-2 flex-1 justify-end">
                         <Link
                             replace={true}
                             href={"/dashboard/admin/student"}
-                            className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] "
+                            className="bg-[#000000] text-[#ffffff] rounded-xl p-2 sm:p-3 min-h-[44px] items-center align-middle flex flex-row hover:bg-[#3b3b3b] text-sm sm:text-base"
                         >
-                            {"All Students"}
-                            <span className="material-icons ml-2">badge</span>
+                            <span className="hidden sm:inline">All Students</span>
+                            <span className="material-icons sm:ml-2">badge</span>
                         </Link>
                         <Link
                             replace={true}
                             href={"/dashboard/admin"}
-                            className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] "
+                            className="bg-[#000000] text-[#ffffff] rounded-xl p-2 sm:p-3 min-w-[44px] min-h-[44px] items-center align-middle flex flex-row justify-center hover:bg-[#3b3b3b] "
                         >
-                            <span className="material-icons">home</span>
+                            <span className="material-icons text-lg sm:text-xl">home</span>
                         </Link>
                     </div>
                 </nav>
@@ -253,20 +253,20 @@ export default function RegisterStudent() {
                 />
             </div>
 
-            <div className="mt-32 border border-gray-300 rounded-2xl mx-auto w-11/12 sm:max-w-11/12 md:max-w-md lg:max-w-md backdrop-blur-xl bg-gray-50 mb-8">
+            <div className="mt-20 sm:mt-24 md:mt-32 border border-gray-300 rounded-2xl mx-auto w-11/12 sm:max-w-11/12 md:max-w-md lg:max-w-md backdrop-blur-xl bg-gray-50 mb-8">
                 <div className="mx-auto w-full sm:max-w-11/12 md:max-w-md lg:max-w-md">
                     <div className="flex flex-row justify-center">
-                        <h1 className="px-4 py-4 w-full text-2xl font-semibold text-center">
+                        <h1 className="px-4 py-3 sm:py-4 w-full text-xl sm:text-2xl font-semibold text-center">
                             Register Student
                         </h1>
                     </div>
                     <hr className="border-gray-300 w-full" />
                 </div>
 
-                <div className="mt-10 mx-auto w-full sm:max-w-11/12 md:max-w-md lg:max-w-md px-6 pb-8 lg:px-8">
-                    <form className="space-y-6" onSubmit={handleRegister}>
+                <div className="mt-6 sm:mt-10 mx-auto w-full sm:max-w-11/12 md:max-w-md lg:max-w-md px-4 sm:px-6 pb-6 sm:pb-8 lg:px-8">
+                    <form className="space-y-4 sm:space-y-6" onSubmit={handleRegister}>
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 Roll No
                             </label>
                             <div className="mt-2">
@@ -299,7 +299,7 @@ export default function RegisterStudent() {
                                         }
                                     }}
                                     className={
-                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! uppercase" +
+                                        "block text-base sm:text-lg w-full rounded-md py-3 px-3 sm:py-2 sm:px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! uppercase" +
                                         (!isValidRollNo && studentRollNo
                                             ? " ring-red-500"
                                             : isValidRollNo && studentRollNo
@@ -312,7 +312,7 @@ export default function RegisterStudent() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 Email ID
                             </label>
                             <div className="mt-2">
@@ -322,7 +322,7 @@ export default function RegisterStudent() {
                                     value={studentEmail}
                                     disabled={true}
                                     className={
-                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
+                                        "block text-base sm:text-lg w-full rounded-md py-3 px-3 sm:py-2 sm:px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                         (!isValidEmail && studentEmail
                                             ? " ring-red-500"
                                             : isValidEmail && studentEmail
@@ -335,7 +335,7 @@ export default function RegisterStudent() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 Full Name
                             </label>
                             <div className="mt-2">
@@ -347,7 +347,7 @@ export default function RegisterStudent() {
                                         setStudentName(e.target.value);
                                     }}
                                     className={
-                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
+                                        "block text-base sm:text-lg w-full rounded-md py-3 px-3 sm:py-2 sm:px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                         (!isValidName && studentName
                                             ? " ring-red-500"
                                             : isValidName && studentName
@@ -360,7 +360,7 @@ export default function RegisterStudent() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 Batch
                             </label>
                             <div className="mt-2">
@@ -371,7 +371,7 @@ export default function RegisterStudent() {
                                         setStudentBatch(e.target.value);
                                     }}
                                     className={
-                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
+                                        "block text-base sm:text-lg w-full rounded-md py-3 px-3 sm:py-2 sm:px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
                                         (!isValidBatch && studentBatch
                                             ? " ring-red-500"
                                             : isValidBatch && studentBatch
@@ -384,7 +384,7 @@ export default function RegisterStudent() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 Gender
                             </label>
                             <div className="mt-2">
@@ -395,12 +395,13 @@ export default function RegisterStudent() {
                                     }}
                                     options={genderOptions}
                                     required
+                                    className="w-full"
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 Section
                             </label>
                             <div className="mt-2">
@@ -413,14 +414,14 @@ export default function RegisterStudent() {
                                     optionLabel="name"
                                     optionValue="name"
                                     placeholder="Select a section"
-                                    className="w-full md:w-14rem"
+                                    className="w-full"
                                     required
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 Higher Studies ?
                             </label>
                             <div className="mt-2">
@@ -431,12 +432,13 @@ export default function RegisterStudent() {
                                     }}
                                     options={higherStudiesOptions}
                                     required
+                                    className="w-full"
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 CGPA
                             </label>
                             <div className="mt-2">
@@ -448,7 +450,7 @@ export default function RegisterStudent() {
                                         setCGPA(e.target.value);
                                     }}
                                     className={
-                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
+                                        "block text-base sm:text-lg w-full rounded-md py-3 px-3 sm:py-2 sm:px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
                                         (!isValidCGPA && CGPA
                                             ? " ring-red-500"
                                             : isValidCGPA && CGPA
@@ -471,7 +473,7 @@ export default function RegisterStudent() {
                                 type="submit"
                                 disabled={!isValid || loading}
                                 className={
-                                    "w-full text-lg rounded-lg bg-black text-white p-2 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                    "w-full text-base sm:text-lg rounded-lg bg-black text-white py-3 px-4 sm:py-2 sm:p-2 min-h-[44px] cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
                                 }
                             />
                         </div>

@@ -104,7 +104,7 @@ export default function StudentPage() {
                     <div data-aos="fade-in">
                         <header className="absolute inset-x-0 top-0 z-50">
                             <nav
-                                className="flex items-center justify-between p-6 lg:px-8"
+                                className="flex items-center justify-between p-4 sm:p-6 lg:px-8"
                                 aria-label="Global"
                             >
                                 <div className="lg:flex lg:gap-x-12">
@@ -114,25 +114,25 @@ export default function StudentPage() {
                                             alt="Amrita logo"
                                             width={128}
                                             height={128}
-                                            className="ml-auto mr-auto my-4"
+                                            className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 ml-auto mr-auto my-2 sm:my-4"
                                         />
                                     </Link>
                                 </div>
-                                <div className="flex lg:flex lg:flex-1 lg:justify-end">
+                                <div className="flex flex-wrap gap-2 lg:flex lg:flex-1 lg:justify-end">
                                     <Link
                                         href={"/dashboard/manager/student"}
-                                        className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b]"
+                                        className="bg-[#000000] text-[#ffffff] rounded-xl p-2 sm:p-3 min-h-[44px] items-center align-middle flex flex-row hover:bg-[#3b3b3b] text-sm sm:text-base"
                                     >
-                                        <span className="material-icons mr-2">
+                                        <span className="material-icons mr-2 text-lg sm:text-xl">
                                             badge
                                         </span>{" "}
-                                        {"All Students"}
+                                        <span className="hidden sm:inline">All Students</span>
                                     </Link>
                                     <Link
                                         href={"/dashboard/manager"}
-                                        className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] ml-2"
+                                        className="bg-[#000000] text-[#ffffff] rounded-xl p-2 sm:p-3 min-w-[44px] min-h-[44px] items-center align-middle flex flex-row justify-center hover:bg-[#3b3b3b] sm:ml-2"
                                     >
-                                        <span className="material-icons">
+                                        <span className="material-icons text-lg sm:text-xl">
                                             home
                                         </span>
                                     </Link>
@@ -140,7 +140,7 @@ export default function StudentPage() {
                             </nav>
                         </header>
 
-                        <div className="relative isolate px-6 lg:px-8 justify-center items-center m-auto pt-8">
+                        <div className="relative isolate px-4 sm:px-6 lg:px-8 justify-center items-center m-auto pt-20 sm:pt-8">
                             <div
                                 className="absolute inset-x-0 px-40 -top-40 -z-10 transform-gpu overflow-hidden blur-2xl"
                                 aria-hidden="true"
@@ -148,12 +148,12 @@ export default function StudentPage() {
                                 <div className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[64%] -translate-x-1/2 rotate-[40deg] bg-linear-to-tr from-[#cea8a8] to-[#dea9a9] opacity-20" />
                             </div>
 
-                            <div className="mx-auto max-w-2xl pt-16 lg:pt-24 pb-8 mt-16">
+                            <div className="mx-auto max-w-2xl pt-8 sm:pt-16 lg:pt-24 pb-4 sm:pb-8 mt-8 sm:mt-16 px-4">
                                 <div className="text-center">
-                                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-gray-900 break-words">
                                         {studentData["studentName"]}
                                     </h1>
-                                    <p className="mt-4 text-lg leading-7 text-gray-500">
+                                    <p className="mt-2 sm:mt-4 text-sm sm:text-lg leading-6 sm:leading-7 text-gray-500 px-4">
                                         {studentData["studentRollNo"]} |{" "}
                                         {studentData["studentDept"]}{" "}
                                         {studentData["studentSection"]} |{" "}
@@ -163,14 +163,13 @@ export default function StudentPage() {
                                 </div>
                             </div>
 
-                            <h1 className="text-3xl text-center mb-2 my-32">
-                                {" "}
+                            <h1 className="text-2xl sm:text-3xl text-center mb-2 my-16 sm:my-32 px-4">
                                 Placements
                             </h1>
-                            <div className="relative mx-6 my-8 py-2 flex flex-wrap justify-center gap-4 items-center md:mx-16">
+                            <div className="relative mx-4 sm:mx-6 my-4 sm:my-8 py-2 flex flex-wrap justify-center gap-3 sm:gap-4 items-center md:mx-16">
                                 {studentPlacements.length === 0 ? (
-                                    <div className="border border-red-50 rounded-2xl mx-auto w-11/12 sm:max-w-11/12 md:max-w-md lg:max-w-md backdrop-blur-xl bg-red-200">
-                                        <p className="p-8 text-center text-red-900">
+                                    <div className="border border-red-50 rounded-2xl mx-auto w-full sm:w-11/12 sm:max-w-11/12 md:max-w-md lg:max-w-md backdrop-blur-xl bg-red-200">
+                                        <p className="p-6 sm:p-8 text-center text-sm sm:text-base text-red-900">
                                             No placements yet
                                         </p>
                                     </div>

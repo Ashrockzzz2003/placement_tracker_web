@@ -259,7 +259,7 @@ export default function HandleEditData() {
         <main className="flex h-full flex-1 flex-col justify-center">
             <header className="absolute inset-x-0 top-0 z-50">
                 <nav
-                    className="flex items-center justify-between p-6 lg:px-8"
+                    className="flex items-center justify-between p-4 sm:p-6 lg:px-8"
                     aria-label="Global"
                 >
                     <div className="lg:flex lg:gap-x-12">
@@ -269,15 +269,15 @@ export default function HandleEditData() {
                                 alt="Amrita logo"
                                 width={128}
                                 height={128}
-                                className="ml-auto mr-auto my-4"
+                                className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 ml-auto mr-auto my-2 sm:my-4"
                             />
                         </Link>
                     </div>
                     <Link
                         href={"/dashboard/student"}
-                        className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer"
+                        className="bg-[#000000] text-[#ffffff] rounded-xl p-2 sm:p-3 min-w-[44px] min-h-[44px] items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer"
                     >
-                        <span className="material-icons">home</span>
+                        <span className="material-icons text-lg sm:text-xl">home</span>
                     </Link>
                 </nav>
             </header>
@@ -295,9 +295,9 @@ export default function HandleEditData() {
                 />
             </div>
 
-            <div className="mt-32 border border-gray-300 rounded-2xl mx-auto w-11/12 sm:max-w-11/12 md:max-w-md lg:max-w-md backdrop-blur-xl bg-gray-50 mb-8">
+            <div className="mt-20 sm:mt-24 md:mt-32 border border-gray-300 rounded-2xl mx-auto w-11/12 sm:max-w-11/12 md:max-w-md lg:max-w-md backdrop-blur-xl bg-gray-50 mb-8">
                 <div className="mx-auto w-full sm:max-w-11/12 md:max-w-md lg:max-w-md">
-                    <div className="flex align-middle flex-row justify-center text-xl p-4">
+                    <div className="flex align-middle flex-row justify-center text-lg sm:text-xl p-3 sm:p-4">
                         <span className="material-icons mr-2 scale-100">
                             edit
                         </span>
@@ -306,10 +306,10 @@ export default function HandleEditData() {
                     <hr className="border-gray-300 w-full" />
                 </div>
 
-                <div className="mt-10 mx-auto w-full sm:max-w-11/12 md:max-w-md lg:max-w-md px-6 pb-8 lg:px-8">
-                    <form className="space-y-6" onSubmit={handleEditData}>
+                <div className="mt-6 sm:mt-10 mx-auto w-full sm:max-w-11/12 md:max-w-md lg:max-w-md px-4 sm:px-6 pb-6 sm:pb-8 lg:px-8">
+                    <form className="space-y-4 sm:space-y-6" onSubmit={handleEditData}>
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 Roll No
                             </label>
                             <div className="mt-2">
@@ -319,7 +319,7 @@ export default function HandleEditData() {
                                     value={studentRollNo}
                                     disabled={true}
                                     className={
-                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! uppercase ring-bGray"
+                                        "block text-base sm:text-lg w-full rounded-md py-3 px-3 sm:py-2 sm:px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! uppercase ring-bGray"
                                     }
                                     required
                                 />
@@ -327,7 +327,7 @@ export default function HandleEditData() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 Email ID
                             </label>
                             <div className="mt-2">
@@ -337,7 +337,7 @@ export default function HandleEditData() {
                                     value={studentEmail}
                                     disabled={true}
                                     className={
-                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!"
+                                        "block text-base sm:text-lg w-full rounded-md py-3 px-3 sm:py-2 sm:px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!"
                                     }
                                     required
                                 />
@@ -345,7 +345,7 @@ export default function HandleEditData() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 Full Name
                             </label>
                             <div className="mt-2">
@@ -358,7 +358,7 @@ export default function HandleEditData() {
                                         setStudentName(e.target.value);
                                     }}
                                     className={
-                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
+                                        "block text-base sm:text-lg w-full rounded-md py-3 px-3 sm:py-2 sm:px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                         (!isValidName && studentName
                                             ? " ring-red-500"
                                             : isValidName && studentName
@@ -371,7 +371,7 @@ export default function HandleEditData() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 Batch
                             </label>
                             <div className="mt-2">
@@ -383,7 +383,7 @@ export default function HandleEditData() {
                                         setStudentBatch(e.target.value);
                                     }}
                                     className={
-                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
+                                        "block text-base sm:text-lg w-full rounded-md py-3 px-3 sm:py-2 sm:px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
                                         (!isValidBatch && studentBatch
                                             ? " ring-red-500"
                                             : isValidBatch && studentBatch
@@ -396,7 +396,7 @@ export default function HandleEditData() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 Gender
                             </label>
                             <div className="mt-2">
@@ -407,12 +407,13 @@ export default function HandleEditData() {
                                     }}
                                     options={genderOptions}
                                     required
+                                    className="w-full"
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 Section
                             </label>
                             <div className="mt-2">
@@ -425,14 +426,14 @@ export default function HandleEditData() {
                                     optionLabel="name"
                                     optionValue="name"
                                     placeholder="Select a section"
-                                    className="w-full md:w-14rem"
+                                    className="w-full"
                                     required
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 Higher Studies ?
                             </label>
                             <div className="mt-2">
@@ -443,12 +444,13 @@ export default function HandleEditData() {
                                     }}
                                     options={higherStudiesOptions}
                                     required
+                                    className="w-full"
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-sm sm:text-md font-medium leading-6 text-black">
                                 CGPA
                             </label>
                             <div className="mt-2">
@@ -461,7 +463,7 @@ export default function HandleEditData() {
                                         e.target.value != NaN ? setCGPA(e.target.value) : "";
                                     }}
                                     className={
-                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
+                                        "block text-base sm:text-lg w-full rounded-md py-3 px-3 sm:py-2 sm:px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
                                         (!isValidCGPA && CGPA
                                             ? " ring-red-500"
                                             : isValidCGPA && CGPA
@@ -473,19 +475,19 @@ export default function HandleEditData() {
                             </div>
                         </div>
 
-                        <div className="flex">
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-0">
                             <Link
                                 href={"/dashboard/student/profile"}
-                                className="bg-[#ffffff] border-gray-300 border text-gray-600 rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer w-1/2"
+                                className="bg-[#ffffff] border-gray-300 border text-gray-600 rounded-xl py-3 px-4 sm:py-2 sm:p-2 min-h-[44px] items-center align-middle flex flex-row justify-center hover:bg-opacity-80 cursor-pointer w-full sm:w-1/2"
                             >
-                                <p className="mx-auto">Cancel</p>
+                                <p className="text-base sm:text-lg">Cancel</p>
                             </Link>
                             <input
                                 value="Update Profile"
                                 type="submit"
                                 disabled={!isValid || loading}
                                 className={
-                                    " ml-2 w-1/2 text-lg rounded-xl bg-black text-white p-2 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                    "sm:ml-2 w-full sm:w-1/2 text-base sm:text-lg rounded-xl bg-black text-white py-3 px-4 sm:py-2 sm:p-2 min-h-[44px] cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
                                 }
                             />
                         </div>

@@ -683,7 +683,7 @@ export default function AllPlacedStudentsScreen() {
                 <main className="mb-16" data-aos="fade-in">
                     <header className="absolute inset-x-0 top-0 z-50">
                         <nav
-                            className="flex items-center justify-between p-6 lg:px-8"
+                            className="flex items-center justify-between p-4 sm:p-6 lg:px-8"
                             aria-label="Global"
                         >
                             <div className="lg:flex lg:gap-x-12">
@@ -693,16 +693,16 @@ export default function AllPlacedStudentsScreen() {
                                         alt="Amrita logo"
                                         width={128}
                                         height={128}
-                                        className="ml-auto mr-auto my-4"
+                                        className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 ml-auto mr-auto my-2 sm:my-4"
                                     />
                                 </Link>
                             </div>
-                            <div className="flex lg:flex lg:flex-1 lg:justify-end">
+                            <div className="flex flex-wrap gap-2 lg:flex lg:flex-1 lg:justify-end">
                                 <Link
                                     href={"/dashboard/manager"}
-                                    className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] "
+                                    className="bg-[#000000] text-[#ffffff] rounded-xl p-2 sm:p-3 min-w-[44px] min-h-[44px] items-center align-middle flex flex-row justify-center hover:bg-[#3b3b3b] "
                                 >
-                                    <span className="material-icons">home</span>
+                                    <span className="material-icons text-lg sm:text-xl">home</span>
                                 </Link>
                                 <button
                                     onClick={() => {
@@ -725,7 +725,7 @@ export default function AllPlacedStudentsScreen() {
                         </nav>
                     </header>
 
-                    <div className="relative isolate px-6 lg:px-8 justify-center items-center m-auto pt-8">
+                    <div className="relative isolate px-4 sm:px-6 lg:px-8 justify-center items-center m-auto pt-20 sm:pt-8">
                         <div
                             className="absolute inset-x-0 px-20 -top-40 -z-10 transform-gpu overflow-hidden blur-2xl"
                             aria-hidden="true"
@@ -733,35 +733,37 @@ export default function AllPlacedStudentsScreen() {
                             <div className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[64%] -translate-x-1/2 rotate-[40deg] bg-linear-to-tr from-[#cea8a8] to-[#dea9a9] opacity-20" />
                         </div>
 
-                        <div className="mx-auto max-w-2xl pt-16 lg:pt-24 ">
+                        <div className="mx-auto max-w-2xl pt-8 sm:pt-16 lg:pt-24 px-4">
                             <div className="text-center">
-                                <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-gray-900">
                                     Students | {currentBatch} Batch
                                 </h1>
                                 <br />
                                 <input
                                     value={"Search For a different Batch"}
                                     type="submit"
-                                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-3 sm:py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 min-h-[44px]"
                                     onClick={openModal}
                                 />
                             </div>
                         </div>
 
-                        <div className="w-fit ml-auto mr-auto text-md bg-white rounded-xl border border-bGray my-8">
-                            <h1 className="text-xl font-bold text-center p-2">
+                        <div className="w-full sm:w-fit ml-auto mr-auto text-sm sm:text-md bg-white rounded-xl border border-bGray my-8 mx-4 sm:mx-0">
+                            <h1 className="text-lg sm:text-xl font-bold text-center p-3 sm:p-2">
                                 Power Search
                             </h1>
 
                             <hr className="w-full border-bGray" />
 
-                            <Searchbar
-                                onChange={(value) => setSearchText(value)}
-                                placeholderText={"Student Name or Roll Number"}
-                            />
+                            <div className="px-4 sm:px-0">
+                                <Searchbar
+                                    onChange={(value) => setSearchText(value)}
+                                    placeholderText={"Student Name or Roll Number"}
+                                />
+                            </div>
 
-                            <div className="flex flex-wrap border-t border-bGray justify-center items-center xl:flex-row">
-                                <div className="border-bGray p-4 xl:border-b-0 xl:border-r">
+                            <div className="flex flex-col sm:flex-wrap border-t border-bGray justify-center items-center xl:flex-row">
+                                <div className="border-bGray w-full sm:w-auto p-3 sm:p-4 xl:border-b-0 xl:border-r">
                                     <SelectButton
                                         value={genderValue}
                                         onChange={(e) => {
@@ -774,10 +776,11 @@ export default function AllPlacedStudentsScreen() {
                                             setGenderValue(e.value || "");
                                         }}
                                         options={genderOptions}
+                                        className="w-full"
                                     />
                                 </div>
 
-                                <div className="border-bGray p-4 xl:border-b-0 xl:border-r">
+                                <div className="border-bGray w-full sm:w-auto p-3 sm:p-4 xl:border-b-0 xl:border-r">
                                     <SelectButton
                                         value={isPlacedValue}
                                         onChange={(e) => {
@@ -791,10 +794,11 @@ export default function AllPlacedStudentsScreen() {
                                             );
                                         }}
                                         options={isPlacedOptions}
+                                        className="w-full"
                                     />
                                 </div>
 
-                                <div className="border-bGray p-4 xl:border-b-0 xl:border-r">
+                                <div className="border-bGray w-full sm:w-auto p-3 sm:p-4 xl:border-b-0 xl:border-r">
                                     <MultiSelect
                                         value={selectedSections}
                                         onChange={(e) => {
@@ -807,11 +811,11 @@ export default function AllPlacedStudentsScreen() {
                                         showClear={true}
                                         placeholder="Select Sections"
                                         maxSelectedLabels={2}
-                                        className="w-full md:w-20rem"
+                                        className="w-full"
                                     />
                                 </div>
 
-                                <div className="border-bGray p-4 xl:border-b-0 xl:border-r">
+                                <div className="border-bGray w-full sm:w-auto p-3 sm:p-4 xl:border-b-0 xl:border-r">
                                     <MultiSelect
                                         value={selectedCompanies}
                                         onChange={(e) => {
@@ -826,11 +830,11 @@ export default function AllPlacedStudentsScreen() {
                                         showClear={true}
                                         placeholder="Select Companies"
                                         maxSelectedLabels={2}
-                                        className="w-full md:w-20rem"
+                                        className="w-full"
                                     />
                                 </div>
 
-                                <div className="p-4">
+                                <div className="w-full sm:w-auto p-3 sm:p-4">
                                     <SelectButton
                                         value={isInternValue}
                                         onChange={(e) => {
@@ -844,11 +848,12 @@ export default function AllPlacedStudentsScreen() {
                                             );
                                         }}
                                         options={isInternOptions}
+                                        className="w-full"
                                     />
                                 </div>
                             </div>
-                            <div className="flex flex-wrap border-t border-bGray justify-center items-center xl:flex-row">
-                                <div className="p-4">
+                            <div className="flex flex-col sm:flex-wrap border-t border-bGray justify-center items-center xl:flex-row">
+                                <div className="w-full sm:w-auto p-3 sm:p-4">
                                     <SelectButton
                                         value={isHigherStudiesValue}
                                         onChange={(e) => {
@@ -863,10 +868,11 @@ export default function AllPlacedStudentsScreen() {
                                             );
                                         }}
                                         options={isHigherStudiesOptions}
+                                        className="w-full"
                                     />
                                 </div>
 
-                                <div className="p-4">
+                                <div className="w-full sm:w-auto p-3 sm:p-4">
                                     <SelectButton
                                         value={isPPOValue}
                                         onChange={(e) => {
@@ -880,10 +886,11 @@ export default function AllPlacedStudentsScreen() {
                                             );
                                         }}
                                         options={isPPOOptions}
+                                        className="w-full"
                                     />
                                 </div>
 
-                                <div className="p-4">
+                                <div className="w-full sm:w-auto p-3 sm:p-4">
                                     <SelectButton
                                         value={isOnCampusValue}
                                         onChange={(e) => {
@@ -897,10 +904,11 @@ export default function AllPlacedStudentsScreen() {
                                             );
                                         }}
                                         options={isOnCampusOptions}
+                                        className="w-full"
                                     />
                                 </div>
 
-                                <div className="p-4">
+                                <div className="w-full sm:w-auto p-3 sm:p-4">
                                     <SelectButton
                                         value={isGirlsDriveValue}
                                         onChange={(e) => {
@@ -914,56 +922,57 @@ export default function AllPlacedStudentsScreen() {
                                             );
                                         }}
                                         options={isGirlsDriveOptions}
+                                        className="w-full"
                                     />
                                 </div>
                             </div>
                         </div>
 
-                        <div className="flex flex-wrap justify-center items-center mb-8">
-                            <div className="border-t border-l border-b rounded-l-2xl">
+                        <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center mb-6 sm:mb-8 px-4 sm:px-0 gap-2 sm:gap-0">
+                            <div className="border-t border-l border-b rounded-tl-2xl sm:rounded-l-2xl sm:rounded-tl-none w-full sm:w-auto">
                                 <div className="text-center">
-                                    <h1 className="text-xl font-semibold text-center p-4">
+                                    <h1 className="text-lg sm:text-xl font-semibold text-center p-3 sm:p-4">
                                         Max CTC
                                     </h1>
                                     <hr className="w-full" />
-                                    <h1 className="text-lg font-light text-center p-3">
+                                    <h1 className="text-base sm:text-lg font-light text-center p-2 sm:p-3">
                                         {maxCTC} {" LPA"}
                                     </h1>
                                 </div>
                             </div>
 
-                            <div className="border">
+                            <div className="border w-full sm:w-auto">
                                 <div className="text-center">
-                                    <h1 className="text-xl font-semibold text-center p-4">
+                                    <h1 className="text-lg sm:text-xl font-semibold text-center p-3 sm:p-4">
                                         Avg CTC
                                     </h1>
                                     <hr className="w-full" />
-                                    <h1 className="text-lg font-light text-center p-3">
+                                    <h1 className="text-base sm:text-lg font-light text-center p-2 sm:p-3">
                                         {avgCTC} {" LPA"}
                                     </h1>
                                 </div>
                             </div>
 
-                            <div className="border-t border-r border-b rounded-r-2xl">
+                            <div className="border-t border-r border-b rounded-tr-2xl sm:rounded-r-2xl sm:rounded-tr-none w-full sm:w-auto">
                                 <div className="text-center">
-                                    <h1 className="text-xl font-semibold text-center p-4">
+                                    <h1 className="text-lg sm:text-xl font-semibold text-center p-3 sm:p-4">
                                         Min CTC
                                     </h1>
                                     <hr className="w-full" />
-                                    <h1 className="text-lg font-light text-center p-3">
+                                    <h1 className="text-base sm:text-lg font-light text-center p-2 sm:p-3">
                                         {minCTC} {" LPA"}
                                     </h1>
                                 </div>
                             </div>
 
-                            <div className="border mx-4 rounded-xl flex flex-wrap justify-center items-center">
+                            <div className="border mx-0 sm:mx-4 rounded-xl flex flex-wrap justify-center items-center w-full sm:w-auto">
                                 <div className="text-center">
-                                    <h1 className="text-xl font-semibold text-center p-4">
+                                    <h1 className="text-lg sm:text-xl font-semibold text-center p-3 sm:p-4">
                                         Students
                                     </h1>
                                     <hr className="w-full" />
                                     <div className="p-1">
-                                        <h1 className="text-lg font-light text-center">
+                                        <h1 className="text-base sm:text-lg font-light text-center">
                                             {
                                                 allPlacedStudentDataFiltered.length
                                             }{" "}
@@ -982,14 +991,14 @@ export default function AllPlacedStudentsScreen() {
                                 </div>
                             </div>
 
-                            <div className="border rounded-xl flex flex-wrap justify-center items-center">
+                            <div className="border rounded-xl flex flex-wrap justify-center items-center w-full sm:w-auto">
                                 <div className="text-center">
-                                    <h1 className="text-xl font-semibold text-center p-4">
+                                    <h1 className="text-lg sm:text-xl font-semibold text-center p-3 sm:p-4">
                                         Offers
                                     </h1>
                                     <hr className="w-full" />
                                     <div className="p-1">
-                                        <h1 className="text-lg font-light text-center">
+                                        <h1 className="text-base sm:text-lg font-light text-center">
                                             {tempTotalOffers} {" / "}{" "}
                                             {totalOffers}
                                         </h1>
@@ -1006,7 +1015,8 @@ export default function AllPlacedStudentsScreen() {
                             </div>
                         </div>
 
-                        <table className="max-w-11/12 ml-auto mr-auto my-4 rounded-2xl backdrop-blur-2xl bg-red-50 bg-opacity-30 text-center text-sm border-black border-separate border-spacing-0 border-solid">
+                        <div className="overflow-x-auto mx-4 sm:mx-0 -mx-4 sm:mx-0">
+                            <table className="w-full sm:max-w-11/12 ml-auto mr-auto my-4 rounded-2xl backdrop-blur-2xl bg-red-50 bg-opacity-30 text-center text-xs sm:text-sm border-black border-separate border-spacing-0 border-solid min-w-[800px]">
                             <thead className="border-0 text-lg font-medium">
                                 <tr className="bg-black text-white bg-opacity-90 backdrop-blur-xl">
                                     <th

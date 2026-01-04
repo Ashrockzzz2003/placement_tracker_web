@@ -22,6 +22,7 @@ import { MultiSelect } from "primereact/multiselect";
 import Searchbar from "@/util/SearchBar";
 import { Dialog, Transition } from "@headlessui/react";
 import { Chart } from "primereact/chart";
+import { ComparisonCharts } from "@/util/ComparisonCharts";
 
 export default function AllPlacedStudentsScreen() {
     const [allPlacedStudentData, setAllPlacedStudentData] = useState([]);
@@ -42,6 +43,10 @@ export default function AllPlacedStudentsScreen() {
     const [maxCTC, setMaxCTC] = useState(0);
     const [minCTC, setMinCTC] = useState(0);
     const [avgCTC, setAvgCTC] = useState(0);
+
+    // For comparison feature
+    const [allBatchesPlacementData, setAllBatchesPlacementData] = useState([]);
+    const [availableBatches, setAvailableBatches] = useState([]);
 
     const basicOptions = {
         maintainAspectRatio: false,
@@ -83,6 +88,65 @@ export default function AllPlacedStudentsScreen() {
             summary: summary,
             detail: detail,
         });
+    };
+
+    const loadMultipleBatchesData = async () => {
+        try {
+            const currentYear = new Date().getFullYear();
+            const batchesToLoad = [
+                currentYear,
+                currentYear - 1,
+                currentYear - 2,
+                currentYear - 3,
+            ];
+            const allPlacementsData = [];
+            const batchesWithData = [];
+
+            for (const batch of batchesToLoad) {
+                try {
+                    const response = await fetch(GET_ALL_PLACEMENTS_URL, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization:
+                                "Bearer " + secureLocalStorage.getItem("userAccess"),
+                        },
+                        body: JSON.stringify({ batch: batch }),
+                    });
+
+                    if (response.status === 200) {
+                        const data = await response.json();
+                        if (
+                            data.placementData &&
+                            data.placementData.length > 0
+                        ) {
+                            data.placementData.forEach((placement) => {
+                                allPlacementsData.push({
+                                    batch: batch,
+                                    companyName: placement.companyName,
+                                    ctc: placement.ctc,
+                                    studentId: placement.studentId,
+                                    studentName: placement.studentName,
+                                    jobRole: placement.jobRole,
+                                    placementId: placement.placementId,
+                                });
+                            });
+                            batchesWithData.push(batch);
+                        }
+                    }
+                } catch (err) {
+                    console.log(
+                        `Error loading data for batch ${batch}:`,
+                        err
+                    );
+                }
+            }
+
+            setAllBatchesPlacementData(allPlacementsData);
+            setAvailableBatches(batchesWithData);
+        } catch (err) {
+            console.log("Error loading multiple batches data:", err);
+        }
     };
 
     useEffect(() => {
@@ -318,6 +382,9 @@ export default function AllPlacedStudentsScreen() {
             })
             .finally(() => {
                 setIsLoading(false);
+
+                // Load data from multiple batches for comparison feature
+                loadMultipleBatchesData();
             })
             .catch((err) => {
                 console.log(err);
@@ -867,6 +934,15 @@ export default function AllPlacedStudentsScreen() {
                                 />
                             </div>
                         </div>
+
+                        {availableBatches.length > 1 && (
+                            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-8">
+                                <ComparisonCharts
+                                    allPlacementData={allBatchesPlacementData}
+                                    batches={availableBatches}
+                                />
+                            </div>
+                        )}
 
                         <div className="w-fit ml-auto mr-auto text-md bg-white rounded-xl border border-bGray my-8">
                             <h1 className="text-xl font-bold text-center p-2">

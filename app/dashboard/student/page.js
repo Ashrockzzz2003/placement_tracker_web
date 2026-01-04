@@ -236,13 +236,21 @@ export default function StudentDashboard() {
                                 </div>
                             </div>
 
-                            <div className="hover:cursor-pointer w-fit ml-auto mr-auto pt-10 pb-14">
+                            <div className="hover:cursor-pointer w-fit ml-auto mr-auto pt-10 pb-14 flex gap-4">
                                 <Link href={"/dashboard/student/newPlacement"}>
                                     <div className="bg-black text-white rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                         <span className="material-icons mr-2">
                                             add
                                         </span>{" "}
                                         {"Add Placement"}
+                                    </div>
+                                </Link>
+                                <Link href={"/dashboard/student/placements"}>
+                                    <div className="bg-blue-600 text-white rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
+                                        <span className="material-icons mr-2">
+                                            people
+                                        </span>{" "}
+                                        {"View Peer Placements"}
                                     </div>
                                 </Link>
                             </div>

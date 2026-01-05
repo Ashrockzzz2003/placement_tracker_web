@@ -25,6 +25,8 @@ import { Chart } from "primereact/chart";
 import { campusNames, campuses } from "@/util/config";
 
 export default function AllPlacedStudentsScreen() {
+    const [viewMode, setViewMode] = useState("table"); // table | card
+
     const [allPlacedStudentData, setAllPlacedStudentData] = useState([]);
     const [allPlacedStudentDataFiltered, setAllPlacedStudentDataFiltered] =
         useState([]);
@@ -1160,8 +1162,9 @@ export default function AllPlacedStudentsScreen() {
                                 style={{ width: "80%" }}
                             />
                         </div>
+                      {viewMode === "table" ? (
+    <table className="max-w-11/12 ml-auto mr-auto my-4 rounded-2xl backdrop-blur-2xl bg-red-50 bg-opacity-30 text-center text-sm border-black border-separate border-spacing-0 border-solid">
 
-                        <table className="max-w-11/12 ml-auto mr-auto my-4 rounded-2xl backdrop-blur-2xl bg-red-50 bg-opacity-30 text-center text-sm border-black border-separate border-spacing-0 border-solid">
                             <thead className="border-0 text-lg font-medium">
                                 <tr className="bg-black text-white bg-opacity-90 backdrop-blur-xl">
                                     <th
@@ -1398,7 +1401,58 @@ export default function AllPlacedStudentsScreen() {
                                 )}
                             </tbody>
                         </table>
+                                        ) : (
+    <div className="max-w-11/12 ml-auto mr-auto grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+        {allPlacedStudentDataFiltered.length === 0 ? (
+            <div className="text-center p-8 border rounded-xl">
+                No Data Found
+            </div>
+        ) : (
+            allPlacedStudentDataFiltered.map((student, index) => (
+                <div
+                    key={index}
+                    className="border rounded-xl p-4 bg-white shadow"
+                >
+                    <h2 className="font-semibold text-lg">
+                        {student.studentName}
+                    </h2>
+                    <p className="text-sm text-gray-600">
+                        {student.studentRollNo} • {student.studentDept}{" "}
+                        {student.studentSection}
+                    </p>
+                    <p className="text-sm">
+                        CGPA: {student.cgpa ?? "-"}
+                    </p>
+
+                    <hr className="my-2" />
+
+                    {student.placements.map((placement, pindex) => (
+                        <div
+                            key={pindex}
+                            className="border rounded-lg p-2 my-2"
+                        >
+                            <p className="font-medium">
+                                {placement.companyName}
+                            </p>
+                            <p className="text-sm">
+                                {placement.jobRole}
+                            </p>
+                            <p className="text-sm">
+                                {placement.ctc} LPA •{" "}
+                                {placement.jobLocation ?? "-"}
+                            </p>
+                        </div>
+                    ))}
+                </div>
+            ))
+        )}
+    </div>
+)}
+
                     </div>
+    )}
+
+
 
                     <Transition appear show={isOpen} as={Fragment}>
                         <Dialog

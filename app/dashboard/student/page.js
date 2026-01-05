@@ -14,6 +14,7 @@ import Link from "next/link";
 import Image from "next/image";
 import StudentPlacementCard from "@/util/StudentPlacementCard";
 import { Toast } from "primereact/toast";
+import { hashPassword } from "@/util/hash";
 
 export default function StudentDashboard() {
     /*
@@ -161,11 +162,15 @@ export default function StudentDashboard() {
                                 <div className="flex lg:flex lg:flex-1 lg:justify-end">
                                     <Link
                                         href={"/dashboard/student/profile"}
-                                        className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer"
+                                        className="bg-[#000000] text-[#ffffff] rounded-xl p-1 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer"
                                     >
-                                        <span className="material-icons">
-                                            person
-                                        </span>
+                                        <Image
+                                            src={`https://www.gravatar.com/avatar/${hashPassword(_studentEmail || "placements@cb.amrita.edu")}.jpg?s=200&d=robohash`}
+                                            alt="Profile"
+                                            width={32}
+                                            height={32}
+                                            className="rounded-lg"
+                                        />
                                     </Link>
                                     <button
                                         onClick={() => {

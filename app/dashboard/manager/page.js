@@ -15,6 +15,7 @@ import {
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
 import Top5PlacementCard from "@/util/Top5PlacementCard";
+import { hashPassword } from "@/util/hash";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { Dialog, Transition } from "@headlessui/react";
@@ -231,11 +232,15 @@ export default function AdminDashboard() {
                                 <div className="flex lg:flex lg:flex-1 lg:justify-end">
                                     <Link
                                         href={"/dashboard/manager/profile"}
-                                        className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer"
+                                        className="bg-[#000000] text-[#ffffff] rounded-xl p-1 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer"
                                     >
-                                        <span className="material-icons">
-                                            person
-                                        </span>
+                                        <Image
+                                            src={`https://www.gravatar.com/avatar/${hashPassword(managerEmail || "placements@cb.amrita.edu")}.jpg?s=200&d=robohash`}
+                                            alt="Profile"
+                                            width={32}
+                                            height={32}
+                                            className="rounded-lg"
+                                        />
                                     </Link>
                                     <button
                                         onClick={() => {

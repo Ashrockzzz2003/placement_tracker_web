@@ -4,6 +4,7 @@ import {
     GET_COMPANY_DATA_BY_BATCH_URL,
     GET_COMPANY_DATA_URL,
 } from "@/util/constants";
+import { fetchWithRetry } from "@/util/api";
 import Aos from "aos";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState } from "react";
@@ -43,7 +44,7 @@ export default function AllCompaniesScreen() {
                 router.replace("/login");
             }, 3000);
         } else {
-            fetch(GET_COMPANY_DATA_URL, {
+            fetchWithRetry(GET_COMPANY_DATA_URL, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${secureLocalStorage.getItem("userAccess")}`,
@@ -62,7 +63,7 @@ export default function AllCompaniesScreen() {
                             for (let i = 0; i < data.length; i++) {
                                 if (
                                     sectionOptions[
-                                        data[i]["studentSection"]
+                                    data[i]["studentSection"]
                                     ] === undefined
                                 ) {
                                     sectionOptions[data[i]["studentSection"]] =
@@ -75,7 +76,7 @@ export default function AllCompaniesScreen() {
                                 if (
                                     i > 0 &&
                                     finalData[k].companyId ===
-                                        data[i]["companyId"] &&
+                                    data[i]["companyId"] &&
                                     finalData[k].ctc === data[i]["ctc"] &&
                                     finalData[k].jobRole === data[i]["jobRole"]
                                 ) {
@@ -244,7 +245,7 @@ export default function AllCompaniesScreen() {
             setCurrentBatch("");
         }
 
-        fetch(
+        fetchWithRetry(
             mode === "0" ? GET_COMPANY_DATA_BY_BATCH_URL : GET_COMPANY_DATA_URL,
             {
                 headers: {
@@ -255,8 +256,8 @@ export default function AllCompaniesScreen() {
                 body:
                     mode === "0"
                         ? JSON.stringify({
-                              studentBatch: studentBatch,
-                          })
+                            studentBatch: studentBatch,
+                        })
                         : null,
             },
         )
@@ -282,7 +283,7 @@ export default function AllCompaniesScreen() {
                             if (
                                 i > 0 &&
                                 finalData[k].companyId ===
-                                    data[i]["companyId"] &&
+                                data[i]["companyId"] &&
                                 finalData[k].ctc === data[i]["ctc"] &&
                                 finalData[k].jobRole === data[i]["jobRole"]
                             ) {
@@ -562,7 +563,7 @@ export default function AllCompaniesScreen() {
                                                         className={
                                                             "border border-gray-200 px-4 py-2" +
                                                             (index ===
-                                                            companyHireDataFiltered.length -
+                                                                companyHireDataFiltered.length -
                                                                 1
                                                                 ? "border-separate rounded-bl-2xl"
                                                                 : "")
@@ -605,12 +606,12 @@ export default function AllCompaniesScreen() {
                                                                                 .sectionData[
                                                                                 section
                                                                             ] ===
-                                                                            undefined
+                                                                                undefined
                                                                                 ? 0
                                                                                 : pdata
-                                                                                      .sectionData[
-                                                                                      section
-                                                                                  ];
+                                                                                    .sectionData[
+                                                                                section
+                                                                                ];
                                                                         return (
                                                                             <td
                                                                                 className="border border-gray-200 px-4 py-2"
@@ -622,12 +623,12 @@ export default function AllCompaniesScreen() {
                                                                                     .sectionData[
                                                                                     section
                                                                                 ] ===
-                                                                                undefined
+                                                                                    undefined
                                                                                     ? 0
                                                                                     : pdata
-                                                                                          .sectionData[
-                                                                                          section
-                                                                                      ]}
+                                                                                        .sectionData[
+                                                                                    section
+                                                                                    ]}
                                                                             </td>
                                                                         );
                                                                     },
@@ -719,12 +720,12 @@ export default function AllCompaniesScreen() {
                                                                     className={
                                                                         "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
                                                                         (!isValidBatch &&
-                                                                        studentBatch
+                                                                            studentBatch
                                                                             ? " ring-red-500"
                                                                             : isValidBatch &&
                                                                                 studentBatch
-                                                                              ? " ring-green-500"
-                                                                              : " ring-bGray")
+                                                                                ? " ring-green-500"
+                                                                                : " ring-bGray")
                                                                     }
                                                                     required
                                                                 />

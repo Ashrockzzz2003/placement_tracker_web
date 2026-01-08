@@ -10,6 +10,7 @@ import "primereact/resources/themes/lara-light-blue/theme.css";
 
 import { useEffect, useRef, useState } from "react";
 import { STUDENT_EDIT_PROFILE_URL } from "@/util/constants";
+import { fetchWithRetry } from "@/util/api";
 import secureLocalStorage from "react-secure-storage";
 import { useRouter } from "next/navigation";
 
@@ -84,14 +85,14 @@ export default function HandleEditData() {
                 student.studentGender === "Male"
                     ? "Male"
                     : student.studentGender === "Female"
-                      ? "Female"
-                      : student.studentGender === "Other"
-                        ? "Other"
-                        : student.studentGender === "M"
-                          ? "Male"
-                          : student.studentGender === "F"
-                            ? "Female"
-                            : "Other",
+                        ? "Female"
+                        : student.studentGender === "Other"
+                            ? "Other"
+                            : student.studentGender === "M"
+                                ? "Male"
+                                : student.studentGender === "F"
+                                    ? "Female"
+                                    : "Other",
             );
             setStudentBatch(student.studentBatch);
             setStudentDept(student.studentDept);
@@ -99,10 +100,10 @@ export default function HandleEditData() {
                 student.isHigherStudies === "Yes"
                     ? "Yes"
                     : student.isHigherStudies === "No"
-                      ? "No"
-                      : student.isHigherStudies === "1"
-                        ? "Yes"
-                        : "No",
+                        ? "No"
+                        : student.isHigherStudies === "1"
+                            ? "Yes"
+                            : "No",
             );
             setIsPlaced(student.isPlaced);
             setCGPA(student.CGPA);
@@ -163,13 +164,13 @@ export default function HandleEditData() {
                     studentGender === "Male"
                         ? "M"
                         : studentGender === "Female"
-                          ? "F"
-                          : "O",
+                            ? "F"
+                            : "O",
                 studentBatch: studentBatch,
                 isHigherStudies: isHigherStudies === "Yes" ? "1" : "0",
                 CGPA: CGPA,
             };
-            const response = await fetch(STUDENT_EDIT_PROFILE_URL, {
+            const response = await fetchWithRetry(STUDENT_EDIT_PROFILE_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -362,8 +363,8 @@ export default function HandleEditData() {
                                         (!isValidName && studentName
                                             ? " ring-red-500"
                                             : isValidName && studentName
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     required
                                 />
@@ -387,8 +388,8 @@ export default function HandleEditData() {
                                         (!isValidBatch && studentBatch
                                             ? " ring-red-500"
                                             : isValidBatch && studentBatch
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     required
                                 />
@@ -465,8 +466,8 @@ export default function HandleEditData() {
                                         (!isValidCGPA && CGPA
                                             ? " ring-red-500"
                                             : isValidCGPA && CGPA
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     required
                                 />

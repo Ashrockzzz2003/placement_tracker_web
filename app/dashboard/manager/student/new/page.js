@@ -9,6 +9,7 @@ import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-blue/theme.css";
 import { useRef, useState } from "react";
 import { ADD_NEW_STUDENT_URL } from "@/util/constants";
+import { fetchWithRetry } from "@/util/api";
 import secureLocalStorage from "react-secure-storage";
 import { useRouter } from "next/navigation";
 import { emailRegex, rollNoRegex } from "@/util/config";
@@ -110,7 +111,7 @@ export default function RegisterStudent() {
         setLoading(true);
 
         try {
-            const response = await fetch(ADD_NEW_STUDENT_URL, {
+            const response = await fetchWithRetry(ADD_NEW_STUDENT_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -126,8 +127,8 @@ export default function RegisterStudent() {
                         studentGender === "Male"
                             ? "M"
                             : studentGender === "Female"
-                              ? "F"
-                              : "O",
+                                ? "F"
+                                : "O",
                     studentBatch: studentBatch,
                     studentDept: studentDept,
                     isHigherStudies: isHigherStudies === "Yes" ? "1" : "0",
@@ -281,7 +282,7 @@ export default function RegisterStudent() {
                                         if (e.target.value.length > 1) {
                                             setStudentEmail(
                                                 e.target.value.toLowerCase() +
-                                                    "@cb.students.amrita.edu",
+                                                "@cb.students.amrita.edu",
                                             );
                                         } else {
                                             setStudentEmail("");
@@ -292,8 +293,8 @@ export default function RegisterStudent() {
                                         (!isValidRollNo && studentRollNo
                                             ? " ring-red-500"
                                             : isValidRollNo && studentRollNo
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     required
                                 />
@@ -315,8 +316,8 @@ export default function RegisterStudent() {
                                         (!isValidEmail && studentEmail
                                             ? " ring-red-500"
                                             : isValidEmail && studentEmail
-                                              ? " ring-green-500"
-                                              : "")
+                                                ? " ring-green-500"
+                                                : "")
                                     }
                                     required
                                 />
@@ -340,8 +341,8 @@ export default function RegisterStudent() {
                                         (!isValidName && studentName
                                             ? " ring-red-500"
                                             : isValidName && studentName
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     required
                                 />
@@ -364,8 +365,8 @@ export default function RegisterStudent() {
                                         (!isValidBatch && studentBatch
                                             ? " ring-red-500"
                                             : isValidBatch && studentBatch
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     required
                                 />
@@ -441,8 +442,8 @@ export default function RegisterStudent() {
                                         (!isValidCGPA && CGPA
                                             ? " ring-red-500"
                                             : isValidCGPA && CGPA
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     required
                                 />

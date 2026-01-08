@@ -6,6 +6,7 @@ import {
     ADD_NEW_PLACEMENT_URL,
     GET_COMPANY_LIST_URL,
 } from "@/util/constants";
+import { fetchWithRetry } from "@/util/api";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -124,7 +125,7 @@ export default function NewPlacementScreen() {
     useEffect(() => {
         setUserAccess(secureLocalStorage.getItem("userAccess"));
 
-        fetch(GET_COMPANY_LIST_URL, {
+        fetchWithRetry(GET_COMPANY_LIST_URL, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -183,7 +184,7 @@ export default function NewPlacementScreen() {
         }
 
         try {
-            const response = await fetch(ADD_NEW_PLACEMENT_URL, {
+            const response = await fetchWithRetry(ADD_NEW_PLACEMENT_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -261,7 +262,7 @@ export default function NewPlacementScreen() {
             }
 
             try {
-                const response = await fetch(ADD_NEW_COMPANY_URL, {
+                const response = await fetchWithRetry(ADD_NEW_COMPANY_URL, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization:
@@ -461,8 +462,8 @@ export default function NewPlacementScreen() {
                                                     ? " ring-red-500"
                                                     : isValidRollNo &&
                                                         studentRollNo
-                                                      ? " ring-green-500"
-                                                      : " ring-bGray")
+                                                        ? " ring-green-500"
+                                                        : " ring-bGray")
                                             }
                                             required
                                         />
@@ -486,8 +487,8 @@ export default function NewPlacementScreen() {
                                                 (!isValidJobRole && jobRole
                                                     ? " ring-red-500"
                                                     : isValidJobRole && jobRole
-                                                      ? " ring-green-500"
-                                                      : " ring-bGray")
+                                                        ? " ring-green-500"
+                                                        : " ring-bGray")
                                             }
                                             required
                                         />
@@ -509,12 +510,12 @@ export default function NewPlacementScreen() {
                                             className={
                                                 "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                                 (!isValidJobLocation &&
-                                                jobLocation
+                                                    jobLocation
                                                     ? " ring-red-500"
                                                     : isValidJobLocation &&
                                                         jobLocation
-                                                      ? " ring-green-500"
-                                                      : " ring-bGray")
+                                                        ? " ring-green-500"
+                                                        : " ring-bGray")
                                             }
                                             required
                                         />
@@ -538,8 +539,8 @@ export default function NewPlacementScreen() {
                                                 (!isValidCtc && ctc
                                                     ? " ring-red-500"
                                                     : isValidCtc && ctc
-                                                      ? " ring-green-500"
-                                                      : " ring-bGray")
+                                                        ? " ring-green-500"
+                                                        : " ring-bGray")
                                             }
                                             required
                                         />
@@ -562,12 +563,12 @@ export default function NewPlacementScreen() {
                                             className={
                                                 "block text-lg w-full rounded-md py-1 pt-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
                                                 (!isValidPlacementDate &&
-                                                placementDate
+                                                    placementDate
                                                     ? " ring-red-500"
                                                     : isValidPlacementDate &&
                                                         placementDate
-                                                      ? " ring-green-500"
-                                                      : " ring-bGray")
+                                                        ? " ring-green-500"
+                                                        : " ring-bGray")
                                             }
                                             required
                                         />
@@ -738,12 +739,12 @@ export default function NewPlacementScreen() {
                                                                     className={
                                                                         "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                                                         (!isValidCompanyName &&
-                                                                        companyName
+                                                                            companyName
                                                                             ? " ring-red-500"
                                                                             : isValidCompanyName &&
                                                                                 companyName
-                                                                              ? " ring-green-500"
-                                                                              : " ring-bGray")
+                                                                                ? " ring-green-500"
+                                                                                : " ring-bGray")
                                                                     }
                                                                     required
                                                                 />

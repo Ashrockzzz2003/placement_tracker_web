@@ -2,6 +2,7 @@
 
 import { LoadingScreen } from "@/util/LoadingScreen/LoadingScreen";
 import { MANAGER_LOGIN_VERIFY_URL } from "@/util/constants";
+import { fetchWithRetry } from "@/util/api";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -65,7 +66,7 @@ export default function RegisterVerify() {
         setLoading(true);
 
         try {
-            const response = await fetch(MANAGER_LOGIN_VERIFY_URL, {
+            const response = await fetchWithRetry(MANAGER_LOGIN_VERIFY_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -234,13 +235,13 @@ export default function RegisterVerify() {
                                                 setOtp(otpCopy);
                                                 if (
                                                     e.target.value.length ===
-                                                        1 &&
+                                                    1 &&
                                                     index !== otp.length - 1
                                                 ) {
                                                     e.target.nextSibling.focus();
                                                 } else if (
                                                     e.target.value.length ===
-                                                        0 &&
+                                                    0 &&
                                                     index !== 0
                                                 ) {
                                                     e.target.previousSibling.focus();
@@ -268,8 +269,8 @@ export default function RegisterVerify() {
                                         (!isValidPassword && newPassword
                                             ? " ring-red-500"
                                             : isValidPassword && newPassword
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     onChange={(e) =>
                                         setNewPassword(e.target.value)
@@ -293,8 +294,8 @@ export default function RegisterVerify() {
                                         (!isValidPassword && confirmPassword
                                             ? " ring-red-500"
                                             : isValidPassword && confirmPassword
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     onChange={(e) =>
                                         setConfirmPassword(e.target.value)

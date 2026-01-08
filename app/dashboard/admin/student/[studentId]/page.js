@@ -1,6 +1,7 @@
 "use client";
 
 import { GET_STUDENT_PLACEMENTS_URL } from "@/util/constants";
+import { fetchWithRetry } from "@/util/api";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { useParams, useRouter } from "next/navigation";
@@ -85,7 +86,7 @@ export default function StudentDashboard() {
             delay: 100,
         });
 
-        fetch(GET_STUDENT_PLACEMENTS_URL, {
+        fetchWithRetry(GET_STUDENT_PLACEMENTS_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -152,10 +153,10 @@ export default function StudentDashboard() {
     return (
         <>
             {isLoading ||
-            userAccess === null ||
-            userAccess === undefined ||
-            studentPlacements === null ||
-            studentPlacements === undefined ? (
+                userAccess === null ||
+                userAccess === undefined ||
+                studentPlacements === null ||
+                studentPlacements === undefined ? (
                 <LoadingScreen />
             ) : (
                 <main>

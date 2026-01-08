@@ -20,32 +20,6 @@ export default function Welcome() {
     return (
         <main>
             <div data-aos="fade-in">
-                <header className="absolute inset-x-0 top-0 z-50">
-                    <nav
-                        className="flex items-center justify-between p-6 lg:px-8"
-                        aria-label="Global"
-                    >
-                        <div className="lg:flex lg:gap-x-12">
-                            <Link href={"/"}>
-                                <Image
-                                    src="/logo.png"
-                                    alt="Amrita logo"
-                                    width={128}
-                                    height={128}
-                                    className="ml-auto mr-auto my-4"
-                                />
-                            </Link>
-                        </div>
-                        <div className="lg:flex lg:flex-1 lg:justify-end">
-                            <Link
-                                href={"/login"}
-                                className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] "
-                            >
-                                <span className="material-icons">login</span>
-                            </Link>
-                        </div>
-                    </nav>
-                </header>
 
                 <div className="relative isolate px-6 lg:px-8 flex justify-center items-center h-screen m-auto pt-16">
                     <div
@@ -107,3 +81,5 @@ export default function Welcome() {
         </main>
     );
 }
+
+

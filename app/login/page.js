@@ -14,6 +14,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import "material-icons/iconfont/material-icons.css";
 
+
+import { useTheme } from "../providers/ThemeProvider";
+
+
 export default function Login() {
     useEffect(() => {
         secureLocalStorage.clear();
@@ -33,6 +37,11 @@ export default function Login() {
     const isValidPassword = userPassword.length >= 8;
 
     const router = useRouter();
+
+
+const { theme, toggleTheme } = useTheme();
+
+
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -200,43 +209,8 @@ export default function Login() {
 
     return (
         <main className="flex h-screen flex-1 flex-col justify-center">
-            <header className="absolute inset-x-0 top-0 z-50">
-                <nav
-                    className="flex items-center justify-between p-6 lg:px-8"
-                    aria-label="Global"
-                >
-                    <div className="lg:flex lg:gap-x-12">
-                        <Link href={"/"}>
-                            <Image
-                                src="/logo.png"
-                                alt="Amrita logo"
-                                width={128}
-                                height={128}
-                                className="ml-auto mr-auto my-4"
-                            />
-                        </Link>
-                    </div>
-                    <div className="flex flex-1 justify-end space-x-1">
-                        <Link
-                            replace={true}
-                            href={"/register"}
-                            className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] "
-                        >
-                            {"Register"}
-                            <span className="material-icons ml-2">
-                                app_registration
-                            </span>
-                        </Link>
-                        <Link
-                            href={"/"}
-                            className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-[#3b3b3b] "
-                        >
-                            <span className="material-icons">home</span>
-                        </Link>
-                    </div>
-                </nav>
-            </header>
-            <div className="border border-gray-300 rounded-2xl mx-auto w-11/12 sm:max-w-11/12 md:max-w-md lg:max-w-md backdrop-blur-xl bg-gray-50">
+            
+            <div className="border border-gray-300 dark:border-gray-700 rounded-2xl mx-auto w-11/12 sm:max-w-11/12 md:max-w-md lg:max-w-md backdrop-blur-xl bg-gray-50 dark:bg-gray-900">
                 <div
                     className="absolute inset-x-0 -top-10 -z-10 transform-gpu overflow-hidden blur-2xl"
                     aria-hidden="true"
@@ -252,7 +226,7 @@ export default function Login() {
 
                 <div className="mx-auto w-full sm:max-w-11/12 md:max-w-md lg:max-w-md">
                     <div className="flex flex-row justify-center">
-                        <h1 className="px-4 py-4 w-full text-2xl font-semibold text-center">
+                        <h1 className="px-4 py-4 w-full text-2xl font-semibold text-center text-black dark:text-white">
                             Sign In
                         </h1>
                     </div>
@@ -276,12 +250,16 @@ export default function Login() {
                                         )
                                     }
                                     className={
-                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
-                                        (!isValidEmail && userEmail
-                                            ? " ring-red-500"
-                                            : isValidEmail && userEmail
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                      "block text-lg w-full rounded-md py-2 px-2 " +
+                                      "bg-white dark:bg-gray-800 " +
+                                      "text-black dark:text-white " +
+                                      "ring-1 ring-inset ring-bGray " +
+                                      "placeholder:text-gray-400 outline-none!" +
+                                      (!isValidEmail && userEmail
+                                        ? " ring-red-500"
+                                        : isValidEmail && userEmail
+                                          ? " ring-green-500"
+                                          : "")
                                     }
                                     required
                                 />

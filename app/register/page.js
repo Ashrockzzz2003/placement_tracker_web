@@ -253,7 +253,7 @@ export default function Register() {
                 <div className="mt-10 mx-auto w-full sm:max-w-11/12 md:max-w-md lg:max-w-md px-6 pb-8 lg:px-8">
                     <form className="space-y-6" onSubmit={handleRegister}>
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-md font-medium leading-6 text-black dark:text-white">
                                 Roll No
                             </label>
                             <div className="mt-2">
@@ -299,7 +299,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-md font-medium leading-6 text-black dark:text-white">
                                 Email ID
                             </label>
                             <div className="mt-2">
@@ -309,7 +309,7 @@ export default function Register() {
                                     value={studentEmail}
                                     disabled={true}
                                     className={
-                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
+                                        "block text-lg w-full rounded-md py-2 px-2 bg-white dark:bg-gray-800 text-black dark:text-white ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                         (!isValidEmail && studentEmail
                                             ? " ring-red-500"
                                             : isValidEmail && studentEmail
@@ -322,7 +322,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-md font-medium leading-6 text-black dark:text-white">
                                 Full Name
                             </label>
                             <div className="mt-2">
@@ -334,7 +334,7 @@ export default function Register() {
                                         setStudentName(e.target.value);
                                     }}
                                     className={
-                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
+                                        "block text-lg w-full rounded-md py-2 px-2 bg-white dark:bg-gray-800 text-black dark:text-white ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                         (!isValidName && studentName
                                             ? " ring-red-500"
                                             : isValidName && studentName
@@ -347,7 +347,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-md font-medium leading-6 text-black dark:text-white">
                                 Batch
                             </label>
                             <div className="mt-2">
@@ -358,7 +358,7 @@ export default function Register() {
                                         setStudentBatch(e.target.value);
                                     }}
                                     className={
-                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
+                                        "block text-lg w-full rounded-md py-2 px-2 bg-white dark:bg-gray-800 text-black dark:text-white ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
                                         (!isValidBatch && studentBatch
                                             ? " ring-red-500"
                                             : isValidBatch && studentBatch
@@ -371,7 +371,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-md font-medium leading-6 text-black dark:text-white">
                                 Gender
                             </label>
                             <div className="mt-2">
@@ -387,7 +387,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-md font-medium leading-6 text-black dark:text-white">
                                 Section
                             </label>
                             <div className="mt-2">
@@ -407,7 +407,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-md font-medium leading-6 text-black dark:text-white">
                                 Higher Studies ?
                             </label>
                             <div className="mt-2">
@@ -423,7 +423,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-md font-medium leading-6 text-black dark:text-white">
                                 CGPA
                             </label>
                             <div className="mt-2">
@@ -435,7 +435,7 @@ export default function Register() {
                                         setCGPA(e.target.value);
                                     }}
                                     className={
-                                        "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
+                                        "block text-lg w-full rounded-md py-2 px-2 bg-white dark:bg-gray-800 text-black dark:text-white ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
                                         (!isValidCGPA && CGPA
                                             ? " ring-red-500"
                                             : isValidCGPA && CGPA
@@ -448,7 +448,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-md font-medium leading-6 text-black dark:text-white">
                                 Password
                             </label>
                             <div className="mt-2">
@@ -457,7 +457,7 @@ export default function Register() {
                                     autoComplete="current-password"
                                     placeholder="Enter your Password"
                                     className={
-                                        "block text-lg w-full rounded-md border-0 py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
+                                        "block text-lg w-full rounded-md border-0 py-2 px-2 bg-white dark:bg-gray-800 text-black dark:text-white ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                         (!isValidPassword && studentPassword
                                             ? " ring-red-500"
                                             : isValidPassword && studentPassword
@@ -473,7 +473,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <label className="block text-md font-medium leading-6 text-black">
+                            <label className="block text-md font-medium leading-6 text-black dark:text-white">
                                 Re-Enter Password
                             </label>
                             <div className="mt-2">
@@ -482,7 +482,7 @@ export default function Register() {
                                     autoComplete="confirm-password"
                                     placeholder="Re-Enter your Password"
                                     className={
-                                        "block text-lg w-full rounded-md border-0 py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
+                                        "block text-lg w-full rounded-md border-0 py-2 px-2 bg-white dark:bg-gray-800 text-black dark:text-white ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                         (!isValidPassword &&
                                         confirmStudentPassword
                                             ? " ring-red-500"
@@ -500,7 +500,6 @@ export default function Register() {
                                 />
                             </div>
                         </div>
-
                         {/* <p className="mt-10 text-center text-md text-gray-500">
                         {"Don't have an account? "}
                         <Link className="font-semibold leading-6 text-blue-600 hover:underline" href="/register">Register</Link>

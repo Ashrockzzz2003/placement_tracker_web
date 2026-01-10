@@ -208,7 +208,7 @@ const { theme, toggleTheme } = useTheme();
     };
 
     return (
-        <main className="flex h-screen flex-1 flex-col justify-center">
+        <main className="flex h-screen flex-1 flex-col justify-center bg-white dark:bg-black text-black dark:text-white">
             
             <div className="border border-gray-300 dark:border-gray-700 rounded-2xl mx-auto w-11/12 sm:max-w-11/12 md:max-w-md lg:max-w-md backdrop-blur-xl bg-gray-50 dark:bg-gray-900">
                 <div
@@ -233,42 +233,42 @@ const { theme, toggleTheme } = useTheme();
                     <hr className="border-gray-300 w-full" />
                 </div>
 
-                <div className="mt-10 mx-auto w-full sm:max-w-11/12 md:max-w-md lg:max-w-md px-6 pb-8 lg:px-8 ">
-                    <form className="space-y-6" onSubmit={handleLogin}>
-                        <div>
-                            <label className="block text-md font-medium leading-6 text-black">
-                                Email ID
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    type="email"
-                                    autoComplete="email"
-                                    placeholder="Enter your Email ID"
-                                    onChange={(e) =>
-                                        setUserEmail(
-                                            e.target.value.toLowerCase(),
-                                        )
-                                    }
-                                    className={
-                                      "block text-lg w-full rounded-md py-2 px-2 " +
-                                      "bg-white dark:bg-gray-800 " +
-                                      "text-black dark:text-white " +
-                                      "ring-1 ring-inset ring-bGray " +
-                                      "placeholder:text-gray-400 outline-none!" +
-                                      (!isValidEmail && userEmail
-                                        ? " ring-red-500"
-                                        : isValidEmail && userEmail
-                                          ? " ring-green-500"
-                                          : "")
-                                    }
-                                    required
-                                />
-                            </div>
-                        </div>
+              <div className="mt-10 mx-auto w-full sm:max-w-11/12 md:max-w-md lg:max-w-md px-6 pb-8 lg:px-8 ">
+                  <form className="space-y-6" onSubmit={handleLogin}>
+                      <div>
+                          <label className="block text-md font-medium leading-6 text-black dark:text-white">
+                              Email ID
+                          </label>
+                          <div className="mt-2">
+                              <input
+                                  type="email"
+                                  autoComplete="email"
+                                  placeholder="Enter your Email ID"
+                                  onChange={(e) =>
+                                      setUserEmail(
+                                          e.target.value.toLowerCase(),
+                                      )
+                                  }
+                                  className={
+                                    "block text-lg w-full rounded-md border-0 py-2 px-2 " +
+                                    "bg-white dark:bg-gray-800 " +
+                                    "text-black dark:text-white " +
+                                    "ring-1 ring-inset ring-bGray " +
+                                    "placeholder:text-gray-400 outline-none!" +
+                                    (!isValidPassword && userPassword
+                                      ? " ring-red-500"
+                                      : isValidPassword && userPassword
+                                        ? " ring-green-500"
+                                        : "")
+                                  }
+                                  required
+                              />
+                          </div>
+                      </div>
 
                         <div>
                             <div className="flex items-center justify-between">
-                                <label className="block text-md font-medium leading-6 text-black">
+                                <label className="block text-md font-medium leading-6 text-black dark:text-white">
                                     Password
                                 </label>
                                 <div className="text-md">
@@ -302,7 +302,7 @@ const { theme, toggleTheme } = useTheme();
                             </div>
                         </div>
 
-                        {/* <p className="mt-10 text-center text-md text-gray-500">
+                        {/* <p className="mt-10 text-center text-md text-gray-500 dark: text-gray-400">
                         {"Don't have an account? "}
                         <Link className="font-semibold leading-6 text-blue-600 hover:underline" href="/register">Register</Link>
                     </p> */}

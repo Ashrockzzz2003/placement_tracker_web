@@ -18,7 +18,7 @@ export default function Welcome() {
     }, []);
 
     return (
-        <main>
+        <main className="bg-white dark:bg-black text-black dark:text-white">
             <div data-aos="fade-in">
 
                 <div className="relative isolate px-6 lg:px-8 flex justify-center items-center h-screen m-auto pt-16">
@@ -35,7 +35,7 @@ export default function Welcome() {
                                 href={"https://www.amrita.edu"}
                                 target="_blank"
                             >
-                                <div className="relative rounded-full px-3 py-2 my-8 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 items-center align-middle flex flex-row">
+                                <div className="relative rounded-full px-3 py-2 my-8 text-sm leading-6 text-gray-700 dark:text-gray-300 ring-1 ring-gray-900/10 dark:ring-gray-700 hover:ring-gray-900/20 dark:hover:ring-gray-500 items-center align-middle flex flex-row">
                                     {"Amrita Vishwa Vidyapeetham, Coimbatore"}
                                     <span className="material-icons ml-2">
                                         open_in_new
@@ -44,10 +44,10 @@ export default function Welcome() {
                             </Link>
                         </div>
                         <div className="text-center">
-                            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+                            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
                                 Amrita Placement Tracker
                             </h1>
-                            <p className="mt-6 text-lg leading-8 text-gray-600">
+                            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
                                 One-stop platform to track all placement-related
                                 information of CSE Department, Amrita Vishwa
                                 Vidyapeetham, Coimbatore. Register to get
@@ -66,7 +66,7 @@ export default function Welcome() {
                                 </Link>
                                 <Link
                                     href="/register"
-                                    className="text-lg font-semibold text-gray-900 items-center align-middle flex flex-row  border border-gray-400 px-2 py-1 rounded-lg hover:bg-gray-100"
+                                    className="text-lg font-semibold text-gray-900 dark:text-white items-center align-middle flex flex-row  border border-gray-400 px-2 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
                                 >
                                     <span className="material-icons mr-2">
                                         app_registration

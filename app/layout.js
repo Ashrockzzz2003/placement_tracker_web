@@ -1,4 +1,6 @@
 import "./globals.css";
+import { ThemeProvider } from "./providers/ThemeProvider";
+import AppShell from "./components/AppShell";
 
 export const metadata = {
     title: "Amrita Placement Tracker",
@@ -9,7 +11,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body>{children}</body>
+            <body>
+              <ThemeProvider>
+                <AppShell>
+                  {children}
+                </AppShell>
+              </ThemeProvider>
+            </body>
         </html>
     );
 }

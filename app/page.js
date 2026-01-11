@@ -21,7 +21,7 @@ export default function Welcome() {
         <main className="bg-white dark:bg-black text-black dark:text-white">
             <div data-aos="fade-in">
 
-                <div className="relative isolate px-6 lg:px-8 flex justify-center items-center h-screen m-auto pt-16">
+                <div className="relative isolate px-6 lg:px-8 flex justify-center items-center">
                     <div
                         className="absolute inset-x-0 px-20 -top-40 -z-10 transform-gpu overflow-hidden blur-2xl"
                         aria-hidden="true"
@@ -29,7 +29,7 @@ export default function Welcome() {
                         <div className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[64%] -translate-x-1/2 rotate-[40deg] bg-linear-to-tr from-[#cea8a8] to-[#dea9a9] opacity-20" />
                     </div>
 
-                    <div className="mx-auto max-w-2xl py-48 lg:py-56">
+                    <div className="mx-auto max-w-2xl py-12 lg:py-16">
                         <div className="sm:mb-8 flex justify-center text-center">
                             <Link
                                 href={"https://www.amrita.edu"}

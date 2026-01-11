@@ -218,10 +218,10 @@ export default function Register() {
         studentDept === "CSE";
 
     return (
-        <main className="flex h-full flex-1 flex-col justify-center bg-white dark:bg-black text-black dark:text-white">
+        <main className="relative flex-1 flex-col overflow-hidden bg-white dark:bg-black text-black dark:text-white">
             
             <div
-                className="absolute inset-x-0 -top-10 -z-10 transform-gpu overflow-hidden blur-2xl"
+                className="absolute inset-x-0 -top-10 -z-10 transform-gpu blur-2xl"
                 aria-hidden="true"
             >
                 <div
@@ -233,12 +233,7 @@ export default function Register() {
                 />
             </div>
 
-            <div className="mt-32 border border-gray-300 dark:border-gray-700
-                rounded-2xl mx-auto
-                w-11/12 sm:max-w-11/12 md:max-w-md lg:max-w-md
-                backdrop-blur-xl
-                bg-gray-50 dark:bg-gray-900
-                mb-8">
+            <div className="pt-8 border border-gray-300 dark:border-gray-700 rounded-2xl mx-auto w-11/12 sm:max-w-11/12 md:max-w-md lg:max-w-md backdrop-blur-xl bg-gray-50 dark:bg-gray-900">
                 <div className="mx-auto w-full sm:max-w-11/12 md:max-w-md lg:max-w-md">
                     <div className="flex flex-row justify-center">
                         <div className="flex justify-center">

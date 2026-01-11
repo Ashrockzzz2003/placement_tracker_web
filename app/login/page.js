@@ -6,6 +6,7 @@ import secureLocalStorage from "react-secure-storage";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { emailRegex } from "@/util/config";
+import { fetchWithRetry } from "@/util/api";
 
 import { Toast } from "primereact/toast";
 import { LOGIN_URL } from "@/util/constants";
@@ -48,7 +49,7 @@ export default function Login() {
         }
 
         try {
-            const response = await fetch(LOGIN_URL, {
+            const response = await fetchWithRetry(LOGIN_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -280,8 +281,8 @@ export default function Login() {
                                         (!isValidEmail && userEmail
                                             ? " ring-red-500"
                                             : isValidEmail && userEmail
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     required
                                 />
@@ -313,8 +314,8 @@ export default function Login() {
                                         (!isValidPassword && userPassword
                                             ? " ring-red-500"
                                             : isValidPassword && userPassword
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     onChange={(e) =>
                                         setUserPassword(e.target.value)

@@ -13,6 +13,7 @@ import {
     GET_TOP_5_PLACEMENTS_URL,
     REGISTER_OFFICIAL_URL,
 } from "@/util/constants";
+import { fetchWithRetry } from "@/util/api";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
 import Top5PlacementCard from "@/util/Top5PlacementCard";
@@ -65,7 +66,7 @@ export default function AdminDashboard() {
             setAccountStatus(manager.accountStatus);
         }
 
-        fetch(GET_TOP_5_PLACEMENTS_URL, {
+        fetchWithRetry(GET_TOP_5_PLACEMENTS_URL, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -133,7 +134,7 @@ export default function AdminDashboard() {
             }
 
             try {
-                const response = await fetch(ADD_NEW_COMPANY_URL, {
+                const response = await fetchWithRetry(ADD_NEW_COMPANY_URL, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization:
@@ -236,7 +237,7 @@ export default function AdminDashboard() {
             }
 
             try {
-                const response = await fetch(REGISTER_OFFICIAL_URL, {
+                const response = await fetchWithRetry(REGISTER_OFFICIAL_URL, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization:
@@ -290,15 +291,15 @@ export default function AdminDashboard() {
     return (
         <>
             {isLoading ||
-            userAccess === null ||
-            userAccess === undefined ||
-            managerEmail === "" ||
-            managerName === "" ||
-            managerRole === "" ||
-            managerId === "" ||
-            accountStatus === "" ||
-            top5Placements === undefined ||
-            top5Placements === null ? (
+                userAccess === null ||
+                userAccess === undefined ||
+                managerEmail === "" ||
+                managerName === "" ||
+                managerRole === "" ||
+                managerId === "" ||
+                accountStatus === "" ||
+                top5Placements === undefined ||
+                top5Placements === null ? (
                 <LoadingScreen />
             ) : (
                 <main>
@@ -584,12 +585,12 @@ export default function AdminDashboard() {
                                                                 className={
                                                                     "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                                                     (!isValidOfficialName &&
-                                                                    officialName
+                                                                        officialName
                                                                         ? " ring-red-500"
                                                                         : isValidOfficialName &&
                                                                             officialName
-                                                                          ? " ring-green-500"
-                                                                          : " ring-bGray")
+                                                                            ? " ring-green-500"
+                                                                            : " ring-bGray")
                                                                 }
                                                                 required
                                                             />
@@ -614,12 +615,12 @@ export default function AdminDashboard() {
                                                                 className={
                                                                     "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                                                     (!isValidOfficialEmail &&
-                                                                    officialEmail
+                                                                        officialEmail
                                                                         ? " ring-red-500"
                                                                         : isValidOfficialEmail &&
                                                                             officialEmail
-                                                                          ? " ring-green-500"
-                                                                          : " ring-bGray")
+                                                                            ? " ring-green-500"
+                                                                            : " ring-bGray")
                                                                 }
                                                                 required
                                                             />
@@ -711,12 +712,12 @@ export default function AdminDashboard() {
                                                                     className={
                                                                         "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                                                         (!isValidCompanyName &&
-                                                                        companyName
+                                                                            companyName
                                                                             ? " ring-red-500"
                                                                             : isValidCompanyName &&
                                                                                 companyName
-                                                                              ? " ring-green-500"
-                                                                              : " ring-bGray")
+                                                                                ? " ring-green-500"
+                                                                                : " ring-bGray")
                                                                     }
                                                                     required
                                                                 />

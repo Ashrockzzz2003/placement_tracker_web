@@ -12,6 +12,7 @@ import { emailRegex, rollNoRegex, campuses } from "@/util/config";
 import { hashPassword } from "@/util/hash";
 import { useEffect, useRef, useState } from "react";
 import { REGISTER_URL } from "@/util/constants";
+import { fetchWithRetry } from "@/util/api";
 import secureLocalStorage from "react-secure-storage";
 import { useRouter } from "next/navigation";
 
@@ -124,7 +125,7 @@ export default function Register() {
         setLoading(true);
 
         try {
-            const response = await fetch(REGISTER_URL, {
+            const response = await fetchWithRetry(REGISTER_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -139,8 +140,8 @@ export default function Register() {
                         studentGender === "Male"
                             ? "M"
                             : studentGender === "Female"
-                              ? "F"
-                              : "O",
+                                ? "F"
+                                : "O",
                     studentBatch: studentBatch,
                     studentDept: studentDept,
                     isHigherStudies: isHigherStudies === "Yes" ? "1" : "0",
@@ -306,7 +307,7 @@ export default function Register() {
                                             ) {
                                                 setStudentEmail(
                                                     e.target.value.toLowerCase() +
-                                                        `@${rollNoPrefix}.students.amrita.edu`,
+                                                    `@${rollNoPrefix}.students.amrita.edu`,
                                                 );
                                             }
                                         } else {
@@ -318,8 +319,8 @@ export default function Register() {
                                         (!isValidRollNo && studentRollNo
                                             ? " ring-red-500"
                                             : isValidRollNo && studentRollNo
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     required
                                 />
@@ -341,8 +342,8 @@ export default function Register() {
                                         (!isValidEmail && studentEmail
                                             ? " ring-red-500"
                                             : isValidEmail && studentEmail
-                                              ? " ring-green-500"
-                                              : "")
+                                                ? " ring-green-500"
+                                                : "")
                                     }
                                     required
                                 />
@@ -366,8 +367,8 @@ export default function Register() {
                                         (!isValidName && studentName
                                             ? " ring-red-500"
                                             : isValidName && studentName
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     required
                                 />
@@ -390,8 +391,8 @@ export default function Register() {
                                         (!isValidBatch && studentBatch
                                             ? " ring-red-500"
                                             : isValidBatch && studentBatch
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     required
                                 />
@@ -467,8 +468,8 @@ export default function Register() {
                                         (!isValidCGPA && CGPA
                                             ? " ring-red-500"
                                             : isValidCGPA && CGPA
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     required
                                 />
@@ -489,8 +490,8 @@ export default function Register() {
                                         (!isValidPassword && studentPassword
                                             ? " ring-red-500"
                                             : isValidPassword && studentPassword
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     onChange={(e) =>
                                         setStudentPassword(e.target.value)
@@ -512,12 +513,12 @@ export default function Register() {
                                     className={
                                         "block text-lg w-full rounded-md border-0 py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                         (!isValidPassword &&
-                                        confirmStudentPassword
+                                            confirmStudentPassword
                                             ? " ring-red-500"
                                             : isValidPassword &&
                                                 confirmStudentPassword
-                                              ? " ring-green-500"
-                                              : " ring-bGray")
+                                                ? " ring-green-500"
+                                                : " ring-bGray")
                                     }
                                     onChange={(e) =>
                                         setConfirmStudentPassword(

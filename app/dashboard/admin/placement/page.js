@@ -5,6 +5,7 @@ import {
     GET_COMPANY_LIST_URL,
     GET_COMPANY_DATA_BY_BATCH_URL,
 } from "@/util/constants";
+import { fetchWithRetry } from "@/util/api";
 import Aos from "aos";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState } from "react";
@@ -93,7 +94,7 @@ export default function AllPlacedStudentsScreen() {
     useEffect(() => {
         setUserAccess(secureLocalStorage.getItem("userAccess"));
 
-        fetch(GET_COMPANY_DATA_BY_BATCH_URL, {
+        fetchWithRetry(GET_COMPANY_DATA_BY_BATCH_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -154,7 +155,7 @@ export default function AllPlacedStudentsScreen() {
                 );
             });
 
-        fetch(GET_ALL_PLACEMENTS_URL, {
+        fetchWithRetry(GET_ALL_PLACEMENTS_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -178,7 +179,7 @@ export default function AllPlacedStudentsScreen() {
                                     if (
                                         sections.length === 0 ||
                                         sections[sections.length - 1].name !==
-                                            obj["studentSection"]
+                                        obj["studentSection"]
                                     ) {
                                         sections.push({
                                             name: obj["studentSection"],
@@ -292,7 +293,7 @@ export default function AllPlacedStudentsScreen() {
                 );
             });
 
-        fetch(GET_COMPANY_LIST_URL, {
+        fetchWithRetry(GET_COMPANY_LIST_URL, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -584,7 +585,7 @@ export default function AllPlacedStudentsScreen() {
             return;
         }
 
-        fetch(GET_COMPANY_DATA_BY_BATCH_URL, {
+        fetchWithRetry(GET_COMPANY_DATA_BY_BATCH_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -645,7 +646,7 @@ export default function AllPlacedStudentsScreen() {
                 );
             });
 
-        fetch(GET_ALL_PLACEMENTS_URL, {
+        fetchWithRetry(GET_ALL_PLACEMENTS_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -669,7 +670,7 @@ export default function AllPlacedStudentsScreen() {
                                     if (
                                         sections.length === 0 ||
                                         sections[sections.length - 1].name !==
-                                            obj["studentSection"]
+                                        obj["studentSection"]
                                     ) {
                                         sections.push({
                                             name: obj["studentSection"],
@@ -976,8 +977,8 @@ export default function AllPlacedStudentsScreen() {
                                                 e.value === "Intern"
                                                     ? "1"
                                                     : e.value === "Full-Time"
-                                                      ? "0"
-                                                      : null,
+                                                        ? "0"
+                                                        : null,
                                             );
                                         }}
                                         options={isInternOptions}
@@ -995,8 +996,8 @@ export default function AllPlacedStudentsScreen() {
                                                     ? "1"
                                                     : e.value ===
                                                         "Not Higher Studies"
-                                                      ? "0"
-                                                      : null,
+                                                        ? "0"
+                                                        : null,
                                             );
                                         }}
                                         options={isHigherStudiesOptions}
@@ -1012,8 +1013,8 @@ export default function AllPlacedStudentsScreen() {
                                                 e.value === "PPO"
                                                     ? "1"
                                                     : e.value === "Normal"
-                                                      ? "0"
-                                                      : null,
+                                                        ? "0"
+                                                        : null,
                                             );
                                         }}
                                         options={isPPOOptions}
@@ -1029,8 +1030,8 @@ export default function AllPlacedStudentsScreen() {
                                                 e.value === "On Campus"
                                                     ? "1"
                                                     : e.value === "Off Campus"
-                                                      ? "0"
-                                                      : null,
+                                                        ? "0"
+                                                        : null,
                                             );
                                         }}
                                         options={isOnCampusOptions}
@@ -1046,8 +1047,8 @@ export default function AllPlacedStudentsScreen() {
                                                 e.value === "Girls Drive"
                                                     ? "1"
                                                     : e.value === "Normal"
-                                                      ? "0"
-                                                      : null,
+                                                        ? "0"
+                                                        : null,
                                             );
                                         }}
                                         options={isGirlsDriveOptions}
@@ -1236,7 +1237,7 @@ export default function AllPlacedStudentsScreen() {
                                                         className={
                                                             "border border-gray-200 px-2 py-1" +
                                                             (index ===
-                                                            allPlacedStudentDataFiltered.length -
+                                                                allPlacedStudentDataFiltered.length -
                                                                 1
                                                                 ? "border-separate rounded-bl-2xl"
                                                                 : "")
@@ -1249,7 +1250,7 @@ export default function AllPlacedStudentsScreen() {
                                                     >
                                                         {
                                                             student[
-                                                                "studentRollNo"
+                                                            "studentRollNo"
                                                             ]
                                                         }
                                                     </td>
@@ -1273,7 +1274,7 @@ export default function AllPlacedStudentsScreen() {
                                                     >
                                                         {
                                                             student[
-                                                                "studentGender"
+                                                            "studentGender"
                                                             ]
                                                         }
                                                     </td>
@@ -1288,7 +1289,7 @@ export default function AllPlacedStudentsScreen() {
                                                         {student["studentDept"]}{" "}
                                                         {
                                                             student[
-                                                                "studentSection"
+                                                            "studentSection"
                                                             ]
                                                         }
                                                     </td>
@@ -1310,17 +1311,17 @@ export default function AllPlacedStudentsScreen() {
                                                                 <td className="border border-gray-200 px-0.5 py-1 text-center">
                                                                     {
                                                                         placement[
-                                                                            "companyName"
+                                                                        "companyName"
                                                                         ]
                                                                     }
                                                                     {placement[
                                                                         "jobRole"
                                                                     ] !==
-                                                                    "-" ? (
+                                                                        "-" ? (
                                                                         <p className="text-xs text-gray-500">
                                                                             {
                                                                                 placement[
-                                                                                    "jobRole"
+                                                                                "jobRole"
                                                                                 ]
                                                                             }
                                                                         </p>
@@ -1340,7 +1341,7 @@ export default function AllPlacedStudentsScreen() {
                                                                     className={
                                                                         "border border-gray-200 px-2 py-1" +
                                                                         (index ===
-                                                                        allPlacedStudentDataFiltered.length -
+                                                                            allPlacedStudentDataFiltered.length -
                                                                             1
                                                                             ? " border-separate rounded-br-2xl"
                                                                             : "")
@@ -1350,7 +1351,7 @@ export default function AllPlacedStudentsScreen() {
                                                                         {placement[
                                                                             "isIntern"
                                                                         ] ===
-                                                                        "1" ? (
+                                                                            "1" ? (
                                                                             <div className="bg-yellow-100 rounded-xl p-2 m-1 text-[#544a15]">
                                                                                 Intern
                                                                             </div>
@@ -1358,7 +1359,7 @@ export default function AllPlacedStudentsScreen() {
                                                                         {placement[
                                                                             "isPPO"
                                                                         ] ===
-                                                                        "1" ? (
+                                                                            "1" ? (
                                                                             <div className="bg-green-100 rounded-xl p-2 m-1 text-[#21430e]">
                                                                                 PPO
                                                                             </div>
@@ -1366,7 +1367,7 @@ export default function AllPlacedStudentsScreen() {
                                                                         {placement[
                                                                             "isOnCampus"
                                                                         ] ===
-                                                                        "1" ? (
+                                                                            "1" ? (
                                                                             <div className="bg-purple-100 rounded-xl p-2 m-1 text-[#1d0e3a]">
                                                                                 On
                                                                                 Campus
@@ -1380,7 +1381,7 @@ export default function AllPlacedStudentsScreen() {
                                                                         {placement[
                                                                             "isGirlsDrive"
                                                                         ] ===
-                                                                        "1" ? (
+                                                                            "1" ? (
                                                                             <div className="bg-pink-100 rounded-xl p-2 m-1 text-[#461348]">
                                                                                 Girls
                                                                                 Drive
@@ -1464,12 +1465,12 @@ export default function AllPlacedStudentsScreen() {
                                                                     className={
                                                                         "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
                                                                         (!isValidBatch &&
-                                                                        studentBatch
+                                                                            studentBatch
                                                                             ? " ring-red-500"
                                                                             : isValidBatch &&
                                                                                 studentBatch
-                                                                              ? " ring-green-500"
-                                                                              : " ring-bGray")
+                                                                                ? " ring-green-500"
+                                                                                : " ring-bGray")
                                                                     }
                                                                     required
                                                                 />

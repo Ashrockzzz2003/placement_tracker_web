@@ -9,6 +9,7 @@ import {
     GET_REGISTERED_OFFICIALS_URL,
     TOGGLE_ACCOUNT_STATUS_URL,
 } from "@/util/constants";
+import { fetchWithRetry } from "@/util/api";
 import secureLocalStorage from "react-secure-storage";
 import { LoadingScreen } from "@/util/LoadingScreen/LoadingScreen";
 import { Toast } from "primereact/toast";
@@ -55,7 +56,7 @@ export default function AllOfficialsScreen() {
                 router.replace("/login");
             }, 3000);
         } else {
-            fetch(GET_REGISTERED_OFFICIALS_URL, {
+            fetchWithRetry(GET_REGISTERED_OFFICIALS_URL, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${secureLocalStorage.getItem("userAccess")}`,
@@ -109,7 +110,7 @@ export default function AllOfficialsScreen() {
             }, 3000);
         } else {
             try {
-                const response = await fetch(TOGGLE_ACCOUNT_STATUS_URL, {
+                const response = await fetchWithRetry(TOGGLE_ACCOUNT_STATUS_URL, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization:
@@ -297,10 +298,10 @@ export default function AllOfficialsScreen() {
                                                 e.value === "Teacher"
                                                     ? "0"
                                                     : e.value === "Admin"
-                                                      ? "1"
-                                                      : e.value === "Unknown"
-                                                        ? "2"
-                                                        : null,
+                                                        ? "1"
+                                                        : e.value === "Unknown"
+                                                            ? "2"
+                                                            : null,
                                             );
                                         }}
                                         options={roleOptions}
@@ -316,10 +317,10 @@ export default function AllOfficialsScreen() {
                                                 e.value === "Active"
                                                     ? "1"
                                                     : e.value === "Waitlist"
-                                                      ? "0"
-                                                      : e.value === "Blocked"
-                                                        ? "2"
-                                                        : null,
+                                                        ? "0"
+                                                        : e.value === "Blocked"
+                                                            ? "2"
+                                                            : null,
                                             );
                                         }}
                                         options={statusOptions}
@@ -373,7 +374,7 @@ export default function AllOfficialsScreen() {
                                                     className={
                                                         "border px-8 py-4" +
                                                         (index ===
-                                                        officialsFiltered.length -
+                                                            officialsFiltered.length -
                                                             1
                                                             ? " border-separate rounded-bl-2xl"
                                                             : "")
@@ -388,20 +389,20 @@ export default function AllOfficialsScreen() {
                                                     <span className="italic">
                                                         {
                                                             official[
-                                                                "managerEmail"
+                                                            "managerEmail"
                                                             ]
                                                         }
                                                     </span>
                                                 </td>
                                                 {official["managerRole"] ===
-                                                "0" ? (
+                                                    "0" ? (
                                                     <td className="border items-center">
                                                         <span className="bg-purple-100 rounded-xl p-2 w-fit text-[#1d0e3a]">
                                                             Teacher
                                                         </span>
                                                     </td>
                                                 ) : official["managerRole"] ===
-                                                  "1" ? (
+                                                    "1" ? (
                                                     <td className="border items-center">
                                                         <span className="bg-blue-100 rounded-xl p-2 text-[#0e1d3a]">
                                                             Admin
@@ -416,7 +417,7 @@ export default function AllOfficialsScreen() {
                                                 )}
 
                                                 {official["accountStatus"] ===
-                                                "1" ? (
+                                                    "1" ? (
                                                     <td
                                                         className={
                                                             "border items-center"
@@ -427,8 +428,8 @@ export default function AllOfficialsScreen() {
                                                         </span>
                                                     </td>
                                                 ) : official[
-                                                      "accountStatus"
-                                                  ] === "0" ? (
+                                                    "accountStatus"
+                                                ] === "0" ? (
                                                     <td
                                                         className={
                                                             "border items-center"
@@ -439,8 +440,8 @@ export default function AllOfficialsScreen() {
                                                         </span>
                                                     </td>
                                                 ) : official[
-                                                      "accountStatus"
-                                                  ] === "2" ? (
+                                                    "accountStatus"
+                                                ] === "2" ? (
                                                     <td
                                                         className={
                                                             "border items-center"
@@ -463,12 +464,12 @@ export default function AllOfficialsScreen() {
                                                 )}
 
                                                 {official["accountStatus"] ===
-                                                "2" ? (
+                                                    "2" ? (
                                                     <td
                                                         className={
                                                             "border flex justify-center items-center p-2" +
                                                             (index ===
-                                                            officialsFiltered.length -
+                                                                officialsFiltered.length -
                                                                 1
                                                                 ? " border-separate rounded-br-2xl"
                                                                 : "")
@@ -479,7 +480,7 @@ export default function AllOfficialsScreen() {
                                                                 toggleAccountStatus(
                                                                     e,
                                                                     official[
-                                                                        "id"
+                                                                    "id"
                                                                     ],
                                                                     "0",
                                                                 )
@@ -493,13 +494,13 @@ export default function AllOfficialsScreen() {
                                                         </button>
                                                     </td>
                                                 ) : official[
-                                                      "accountStatus"
-                                                  ] === "1" ? (
+                                                    "accountStatus"
+                                                ] === "1" ? (
                                                     <td
                                                         className={
                                                             "border flex justify-center items-center p-2" +
                                                             (index ===
-                                                            officialsFiltered.length -
+                                                                officialsFiltered.length -
                                                                 1
                                                                 ? " border-separate rounded-br-2xl"
                                                                 : "")
@@ -510,7 +511,7 @@ export default function AllOfficialsScreen() {
                                                                 toggleAccountStatus(
                                                                     e,
                                                                     official[
-                                                                        "id"
+                                                                    "id"
                                                                     ],
                                                                     "2",
                                                                 )
@@ -524,13 +525,13 @@ export default function AllOfficialsScreen() {
                                                         </button>
                                                     </td>
                                                 ) : official[
-                                                      "accountStatus"
-                                                  ] === "0" ? (
+                                                    "accountStatus"
+                                                ] === "0" ? (
                                                     <td
                                                         className={
                                                             "border flex justify-center items-center p-2" +
                                                             (index ===
-                                                            officialsFiltered.length -
+                                                                officialsFiltered.length -
                                                                 1
                                                                 ? " border-separate rounded-br-2xl"
                                                                 : "")
@@ -541,7 +542,7 @@ export default function AllOfficialsScreen() {
                                                                 toggleAccountStatus(
                                                                     e,
                                                                     official[
-                                                                        "id"
+                                                                    "id"
                                                                     ],
                                                                     "2",
                                                                 )
@@ -559,7 +560,7 @@ export default function AllOfficialsScreen() {
                                                         className={
                                                             "border flex justify-center items-center" +
                                                             (index ===
-                                                            officialsFiltered.length -
+                                                                officialsFiltered.length -
                                                                 1
                                                                 ? " border-separate rounded-br-2xl"
                                                                 : "")

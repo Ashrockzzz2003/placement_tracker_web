@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import secureLocalStorage from "react-secure-storage";
 import { Toast } from "primereact/toast";
 import { GET_STUDENT_PLACEMENTS_URL } from "@/util/constants";
+import { fetchWithRetry } from "@/util/api";
 import Aos from "aos";
 import StudentPlacementCard from "@/util/StudentPlacementCard";
 
@@ -41,7 +42,7 @@ export default function StudentPage() {
             }, 3000);
         }
 
-        fetch(GET_STUDENT_PLACEMENTS_URL, {
+        fetchWithRetry(GET_STUDENT_PLACEMENTS_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -94,10 +95,10 @@ export default function StudentPage() {
     return (
         <>
             {isLoading ||
-            studentPlacements === null ||
-            studentPlacements === undefined ||
-            studentData === null ||
-            studentData === undefined ? (
+                studentPlacements === null ||
+                studentPlacements === undefined ||
+                studentData === null ||
+                studentData === undefined ? (
                 <LoadingScreen />
             ) : (
                 <main>

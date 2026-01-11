@@ -2,6 +2,7 @@
 
 import { LoadingScreen } from "@/util/LoadingScreen/LoadingScreen";
 import { STUDENT_REGISTER_VERIFY_URL } from "@/util/constants";
+import { fetchWithRetry } from "@/util/api";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -54,7 +55,7 @@ export default function RegisterVerify() {
         setLoading(true);
 
         try {
-            const response = await fetch(STUDENT_REGISTER_VERIFY_URL, {
+            const response = await fetchWithRetry(STUDENT_REGISTER_VERIFY_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -231,13 +232,13 @@ export default function RegisterVerify() {
                                                 setOtp(otpCopy);
                                                 if (
                                                     e.target.value.length ===
-                                                        1 &&
+                                                    1 &&
                                                     index !== otp.length - 1
                                                 ) {
                                                     e.target.nextSibling.focus();
                                                 } else if (
                                                     e.target.value.length ===
-                                                        0 &&
+                                                    0 &&
                                                     index !== 0
                                                 ) {
                                                     e.target.previousSibling.focus();

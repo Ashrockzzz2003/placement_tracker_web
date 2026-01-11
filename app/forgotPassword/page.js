@@ -6,6 +6,7 @@ import {
     FORGOT_PASSWORD_VERIFY_URL,
     RESET_PASSWORD_URL,
 } from "@/util/constants";
+import { fetchWithRetry } from "@/util/api";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -93,7 +94,7 @@ export default function ForgotPassword() {
         }
 
         try {
-            const response = await fetch(FORGOT_PASSWORD_URL, {
+            const response = await fetchWithRetry(FORGOT_PASSWORD_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -181,7 +182,7 @@ export default function ForgotPassword() {
         }
 
         try {
-            let response = await fetch(FORGOT_PASSWORD_VERIFY_URL, {
+            let response = await fetchWithRetry(FORGOT_PASSWORD_VERIFY_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -198,7 +199,7 @@ export default function ForgotPassword() {
                 setResetPasswordToken(data.SECRET_TOKEN);
                 // console.log(data);
 
-                response = await fetch(RESET_PASSWORD_URL, {
+                response = await fetchWithRetry(RESET_PASSWORD_URL, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -293,8 +294,8 @@ export default function ForgotPassword() {
     return (
         <>
             {isLoading ||
-            (step2 === true &&
-                (otpVerifyToken === null || otpVerifyToken.length === 0)) ? (
+                (step2 === true &&
+                    (otpVerifyToken === null || otpVerifyToken.length === 0)) ? (
                 <LoadingScreen />
             ) : step1 === true && step2 === false ? (
                 <main
@@ -381,8 +382,8 @@ export default function ForgotPassword() {
                                                 (!isValidEmail && userEmail
                                                     ? " ring-red-500"
                                                     : isValidEmail && userEmail
-                                                      ? " ring-green-500"
-                                                      : " ring-bGray")
+                                                        ? " ring-green-500"
+                                                        : " ring-bGray")
                                             }
                                             required
                                         />
@@ -404,9 +405,9 @@ export default function ForgotPassword() {
                     </div>
                 </main>
             ) : step2 === true &&
-              step1 === false &&
-              otpVerifyToken !== null &&
-              otpVerifyToken.length !== 0 ? (
+                step1 === false &&
+                otpVerifyToken !== null &&
+                otpVerifyToken.length !== 0 ? (
                 <main
                     className="flex h-screen flex-1 flex-col justify-center"
                     data-aos="fade-in"
@@ -510,7 +511,7 @@ export default function ForgotPassword() {
                                                             e.target.value
                                                                 .length === 1 &&
                                                             index !==
-                                                                otp.length - 1
+                                                            otp.length - 1
                                                         ) {
                                                             e.target.nextSibling.focus();
                                                         } else if (
@@ -544,8 +545,8 @@ export default function ForgotPassword() {
                                                     ? " ring-red-500"
                                                     : isValidPassword &&
                                                         newPassword
-                                                      ? " ring-green-500"
-                                                      : " ring-bGray")
+                                                        ? " ring-green-500"
+                                                        : " ring-bGray")
                                             }
                                             onChange={(e) =>
                                                 setNewPassword(e.target.value)
@@ -567,12 +568,12 @@ export default function ForgotPassword() {
                                             className={
                                                 "block text-lg w-full rounded-md border-0 py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none!" +
                                                 (!isValidPassword &&
-                                                confirmPassword
+                                                    confirmPassword
                                                     ? " ring-red-500"
                                                     : isValidPassword &&
                                                         confirmPassword
-                                                      ? " ring-green-500"
-                                                      : " ring-bGray")
+                                                        ? " ring-green-500"
+                                                        : " ring-bGray")
                                             }
                                             onChange={(e) =>
                                                 setConfirmPassword(

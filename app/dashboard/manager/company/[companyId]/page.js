@@ -5,6 +5,7 @@ import "material-icons/iconfont/material-icons.css";
 import "aos/dist/aos.css";
 import { useParams, useRouter } from "next/navigation";
 import { GET_COMPANY_HIRE_DATA_URL } from "@/util/constants";
+import { fetchWithRetry } from "@/util/api";
 import { LoadingScreen } from "@/util/LoadingScreen/LoadingScreen";
 import Link from "next/link";
 import Image from "next/image";
@@ -84,7 +85,7 @@ export default function CompanyPage() {
                 router.replace("/login");
             }, 3000);
         } else {
-            fetch(GET_COMPANY_HIRE_DATA_URL, {
+            fetchWithRetry(GET_COMPANY_HIRE_DATA_URL, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${secureLocalStorage.getItem("userAccess")}`,
@@ -175,7 +176,7 @@ export default function CompanyPage() {
             setCurrentBatch("");
         }
 
-        fetch(GET_COMPANY_HIRE_DATA_URL, {
+        fetchWithRetry(GET_COMPANY_HIRE_DATA_URL, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${secureLocalStorage.getItem("userAccess")}`,
@@ -475,7 +476,7 @@ export default function CompanyPage() {
                                                             className={
                                                                 "border border-gray-200 px-2 py-1" +
                                                                 (index ===
-                                                                allHiredStudents.length -
+                                                                    allHiredStudents.length -
                                                                     1
                                                                     ? "border-separate rounded-bl-2xl"
                                                                     : "")
@@ -483,35 +484,35 @@ export default function CompanyPage() {
                                                         >
                                                             {
                                                                 student[
-                                                                    "studentRollNo"
+                                                                "studentRollNo"
                                                                 ]
                                                             }
                                                         </td>
                                                         <td className="border border-gray-200 px-2 py-1">
                                                             {
                                                                 student[
-                                                                    "studentName"
+                                                                "studentName"
                                                                 ]
                                                             }
                                                         </td>
                                                         <td className="border border-gray-200 px-2 py-1">
                                                             {
                                                                 student[
-                                                                    "studentGender"
+                                                                "studentGender"
                                                                 ]
                                                             }
                                                         </td>
                                                         <td className="border border-gray-200 px-2 py-1">
                                                             {
                                                                 student[
-                                                                    "studentDept"
+                                                                "studentDept"
                                                                 ]
                                                             }
                                                         </td>
                                                         <td className="border border-gray-200 px-2 py-1">
                                                             {
                                                                 student[
-                                                                    "studentSection"
+                                                                "studentSection"
                                                                 ]
                                                             }
                                                         </td>
@@ -522,7 +523,7 @@ export default function CompanyPage() {
                                                         <td className="border border-gray-200 px-2 py-1">
                                                             {
                                                                 student[
-                                                                    "studentBatch"
+                                                                "studentBatch"
                                                                 ]
                                                             }
                                                         </td>
@@ -555,7 +556,7 @@ export default function CompanyPage() {
                                                             className={
                                                                 "border border-gray-200 px-2 py-1" +
                                                                 (index ===
-                                                                allHiredStudents.length -
+                                                                    allHiredStudents.length -
                                                                     1
                                                                     ? " border-separate rounded-br-2xl"
                                                                     : "")
@@ -685,12 +686,12 @@ export default function CompanyPage() {
                                                                     className={
                                                                         "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
                                                                         (!isValidBatch &&
-                                                                        studentBatch
+                                                                            studentBatch
                                                                             ? " ring-red-500"
                                                                             : isValidBatch &&
                                                                                 studentBatch
-                                                                              ? " ring-green-500"
-                                                                              : " ring-bGray")
+                                                                                ? " ring-green-500"
+                                                                                : " ring-bGray")
                                                                     }
                                                                     required
                                                                 />

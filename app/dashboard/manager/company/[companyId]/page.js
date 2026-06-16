@@ -14,9 +14,12 @@ import secureLocalStorage from "react-secure-storage";
 import { Toast } from "primereact/toast";
 import { Dialog, Transition } from "@headlessui/react";
 import { Chart } from "primereact/chart";
+import { MultiSelect } from "primereact/multiselect";
+import { campusNames, campuses } from "@/util/config";
 
 export default function CompanyPage() {
     const [allHiredStudents, setAllHiredStudents] = useState([]);
+    const [filteredHiredStudents, setFilteredHiredStudents] = useState([]);
     const [deptSectionWiseHiredStudents, setDeptSectionWiseHiredStudents] =
         useState([]);
     const [
@@ -27,6 +30,11 @@ export default function CompanyPage() {
     const [_, setUserAccess] = useState({});
 
     const [companyName, setCompanyName] = useState("");
+    const [selectedCampuses, setSelectedCampuses] = useState(null);
+    const campusList = campuses.map((campus) => ({
+        id: campus,
+        campus: campusNames[campus],
+    }));
     const router = useRouter();
 
     const toast = useRef(null);
@@ -101,6 +109,7 @@ export default function CompanyPage() {
                         res.json().then((data) => {
                             setCompanyName(data.companyName);
                             setAllHiredStudents(data.allHiredStudents);
+                            setFilteredHiredStudents(data.allHiredStudents);
                             setDeptSectionWiseHiredStudents(
                                 data.deptSectionWiseHires,
                             );
@@ -154,12 +163,39 @@ export default function CompanyPage() {
     }
 
     useEffect(() => {
-        const tempArray = [...deptSectionWiseHiredStudents];
-        tempArray.sort((a, b) =>
+        const selectedCampusSet = new Set(selectedCampuses ?? []);
+        const hasCampusFilter = selectedCampusSet.size > 0;
+        const nextFilteredStudents = hasCampusFilter
+            ? allHiredStudents.filter((student) =>
+                  selectedCampusSet.has(
+                      (student.studentRollNo ?? "").slice(0, 2).toUpperCase(),
+                  ),
+              )
+            : allHiredStudents;
+
+        const nextDeptSectionHires = hasCampusFilter
+            ? Object.values(
+                  nextFilteredStudents.reduce((acc, student) => {
+                      const key = `${student.studentDept}-${student.studentSection}`;
+                      if (!acc[key]) {
+                          acc[key] = {
+                              studentDept: student.studentDept,
+                              studentSection: student.studentSection,
+                              totalHires: 0,
+                          };
+                      }
+                      acc[key].totalHires += 1;
+                      return acc;
+                  }, {}),
+              )
+            : [...deptSectionWiseHiredStudents];
+
+        nextDeptSectionHires.sort((a, b) =>
             a.studentSection.localeCompare(b.studentSection),
         );
-        setSortedDeptSectionWiseHiredStudents(tempArray);
-    }, [deptSectionWiseHiredStudents]);
+        setFilteredHiredStudents(nextFilteredStudents);
+        setSortedDeptSectionWiseHiredStudents(nextDeptSectionHires);
+    }, [allHiredStudents, deptSectionWiseHiredStudents, selectedCampuses]);
 
     const getBatchData = (e, mode) => {
         setIsLoading(true);
@@ -175,6 +211,7 @@ export default function CompanyPage() {
             setStudentBatch("");
             setCurrentBatch("");
         }
+        setSelectedCampuses(null);
 
         fetchWithRetry(GET_COMPANY_HIRE_DATA_URL, {
             headers: {
@@ -192,6 +229,7 @@ export default function CompanyPage() {
                     res.json().then((data) => {
                         setCompanyName(data.companyName);
                         setAllHiredStudents(data.allHiredStudents);
+                        setFilteredHiredStudents(data.allHiredStudents);
                         setDeptSectionWiseHiredStudents(
                             data.deptSectionWiseHires,
                         );
@@ -357,10 +395,35 @@ export default function CompanyPage() {
                     }
                     */}
 
-                        {allHiredStudents.length === 0 ? (
+                        {allHiredStudents.length > 0 ? (
+                            <div className="flex justify-center mb-8">
+                                <div className="border border-bGray rounded-xl bg-white/80 p-4 shadow-sm">
+                                    <MultiSelect
+                                        value={selectedCampuses}
+                                        onChange={(e) => {
+                                            setSelectedCampuses(e.value);
+                                        }}
+                                        options={campusList}
+                                        filter
+                                        filterPlaceholder="Enter Campus Name"
+                                        optionLabel="campus"
+                                        optionValue="id"
+                                        display="chip"
+                                        showClear={true}
+                                        placeholder="Select Campuses"
+                                        maxSelectedLabels={2}
+                                        className="w-full md:w-20rem"
+                                    />
+                                </div>
+                            </div>
+                        ) : null}
+
+                        {filteredHiredStudents.length === 0 ? (
                             <div className="border border-red-50 rounded-2xl mx-auto w-11/12 sm:max-w-11/12 md:max-w-md lg:max-w-md backdrop-blur-xl bg-red-200">
                                 <p className="p-8 text-center text-red-900">
-                                    No hires yet
+                                    {allHiredStudents.length === 0
+                                        ? "No hires yet"
+                                        : "No hires match the selected campus filter"}
                                 </p>
                             </div>
                         ) : (
@@ -468,7 +531,7 @@ export default function CompanyPage() {
                                     </thead>
 
                                     <tbody>
-                                        {allHiredStudents.map(
+                                        {filteredHiredStudents.map(
                                             (student, index) => {
                                                 return (
                                                     <tr key={index}>
@@ -476,7 +539,7 @@ export default function CompanyPage() {
                                                             className={
                                                                 "border border-gray-200 px-2 py-1" +
                                                                 (index ===
-                                                                    allHiredStudents.length -
+                                                                filteredHiredStudents.length -
                                                                     1
                                                                     ? "border-separate rounded-bl-2xl"
                                                                     : "")
@@ -484,35 +547,35 @@ export default function CompanyPage() {
                                                         >
                                                             {
                                                                 student[
-                                                                "studentRollNo"
+                                                                    "studentRollNo"
                                                                 ]
                                                             }
                                                         </td>
                                                         <td className="border border-gray-200 px-2 py-1">
                                                             {
                                                                 student[
-                                                                "studentName"
+                                                                    "studentName"
                                                                 ]
                                                             }
                                                         </td>
                                                         <td className="border border-gray-200 px-2 py-1">
                                                             {
                                                                 student[
-                                                                "studentGender"
+                                                                    "studentGender"
                                                                 ]
                                                             }
                                                         </td>
                                                         <td className="border border-gray-200 px-2 py-1">
                                                             {
                                                                 student[
-                                                                "studentDept"
+                                                                    "studentDept"
                                                                 ]
                                                             }
                                                         </td>
                                                         <td className="border border-gray-200 px-2 py-1">
                                                             {
                                                                 student[
-                                                                "studentSection"
+                                                                    "studentSection"
                                                                 ]
                                                             }
                                                         </td>
@@ -523,7 +586,7 @@ export default function CompanyPage() {
                                                         <td className="border border-gray-200 px-2 py-1">
                                                             {
                                                                 student[
-                                                                "studentBatch"
+                                                                    "studentBatch"
                                                                 ]
                                                             }
                                                         </td>
@@ -556,7 +619,7 @@ export default function CompanyPage() {
                                                             className={
                                                                 "border border-gray-200 px-2 py-1" +
                                                                 (index ===
-                                                                    allHiredStudents.length -
+                                                                filteredHiredStudents.length -
                                                                     1
                                                                     ? " border-separate rounded-br-2xl"
                                                                     : "")
@@ -686,12 +749,12 @@ export default function CompanyPage() {
                                                                     className={
                                                                         "block text-lg w-full rounded-md py-2 px-2 text-black  ring-1 ring-inset ring-bGray placeholder:text-gray-400 sm:text-md sm:leading-6 outline-none! normal-nums" +
                                                                         (!isValidBatch &&
-                                                                            studentBatch
+                                                                        studentBatch
                                                                             ? " ring-red-500"
                                                                             : isValidBatch &&
                                                                                 studentBatch
-                                                                                ? " ring-green-500"
-                                                                                : " ring-bGray")
+                                                                              ? " ring-green-500"
+                                                                              : " ring-bGray")
                                                                     }
                                                                     required
                                                                 />
